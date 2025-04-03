@@ -6,27 +6,23 @@
       check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
     </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <input type="text" style="padding: 20px; font-size: 1.2rem; margin-right: 5px;" v-model="nome" @keyup.enter="adivinhaNome"/>
+      <button style="padding: 20px; font-size: 1.2rem; margin-right: 5px;" @click="adivinhaNome">Adivinhar</button>
+    </div>    
+
+    <h3 v-if="carregando">Adivinhando seu nome...</h3>
+    <h3 v-if="btClicado">Seu nome é: {{ nome }}</h3>
+
+    <h3>Nomes Adivinhados</h3>
+
+    <div v-for="(nome, index) in listaNomesAdivinhados" :key="index">
+      {{ nome }}
+    </div>
+
   </div>
 </template>
 
@@ -35,6 +31,39 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+
+  data() {
+    return {
+      nome: null,
+      nomeAdivinhado: null,
+      btClicado: false,
+      carregando: false,
+      listaNomesAdivinhados: [],
+    }
+  },
+
+  methods: {
+    adivinhaNome() {
+      this.carregando = true;
+      this.nomeAdivinhado = this.nome;
+      this.listaNomesAdivinhados.push(this.nome);
+      this.nome = null;
+
+      setTimeout(() => {
+        this.carregando = false;
+        this.btClicado = true;        
+      }, 1500);
+
+      //this.autoLimpar();      
+    },
+
+    autoLimpar() {
+      setTimeout(() => {
+        this.nome = null;
+        this.btClicado = false;        
+      }, 10000);
+    }
   }
 }
 </script>

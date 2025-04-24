@@ -23,7 +23,7 @@
         <img
           v-if="isExpanded || isHovered || isMobileOpen"
           class="dark:hidden"
-          src="/images/logo/logo.svg"
+          src="/images/logo/logo.png"
           alt="Logo"
           width="150"
           height="40"
@@ -211,27 +211,27 @@
   </aside>
 </template>
 
-<script setup>
+<script setup lang="ts"> 
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 
 import {
   GridIcon,
-  CalenderIcon,
-  UserCircleIcon,
-  ChatIcon,
-  MailIcon,
-  DocsIcon,
-  PieChartIcon,
+  //CalenderIcon,
+  //UserCircleIcon,
+  //ChatIcon,
+  //MailIcon,
+  //DocsIcon,
+  //PieChartIcon,
   ChevronDownIcon,
   HorizontalDots,
-  PageIcon,
+  //PageIcon,
   TableIcon,
   ListIcon,
-  PlugInIcon,
+  //PlugInIcon,
 } from "../../icons";
 import SidebarWidget from "./SidebarWidget.vue";
-import BoxCubeIcon from "@/icons/BoxCubeIcon.vue";
+//import BoxCubeIcon from "@/icons/BoxCubeIcon.vue";
 import { useSidebar } from "@/composables/useSidebar";
 
 const route = useRoute();
@@ -247,7 +247,7 @@ const menuGroups = [
         name: "Dashboard",
         subItems: [{ name: "Ecommerce", path: "/", pro: false }],
       },
-      {
+      /*{
         icon: CalenderIcon,
         name: "Calendar",
         path: "/calendar",
@@ -256,31 +256,43 @@ const menuGroups = [
         icon: UserCircleIcon,
         name: "User Profile",
         path: "/profile",
-      },
+      },*/
 
       {
-        name: "Forms",
+        name: "Cadastro",
         icon: ListIcon,
         subItems: [
-          { name: "Form Elements", path: "/form-elements", pro: false },
+          { name: "Autor", path: "/form-elements", pro: false },
+          { name: "Genero", path: "/form-elements", pro: false },
+          { name: "Editora", path: "/form-elements", pro: false },
+          { name: "Cidade", path: "/form-elements", pro: false },
+          { name: "Estado", path: "/form-elements", pro: false },
         ],
       },
       {
-        name: "Tables",
+        name: "Consulta",
         icon: TableIcon,
-        subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
+        subItems: [
+          { name: "Usuarios", path: "/basic-tables", pro: false },
+          { name: "Livros", path: "/basic-tables", pro: false },
+          { name: "Autores", path: "/basic-tables", pro: false },
+          { name: "Generos", path: "/basic-tables", pro: false },
+          { name: "Editoras", path: "/basic-tables", pro: false },
+          { name: "Cidades", path: "/basic-tables", pro: false },
+          { name: "Estados", path: "/basic-tables", pro: false },
+        ],
       },
-      {
+      /*{
         name: "Pages",
         icon: PageIcon,
         subItems: [
           { name: "Black Page", path: "/blank", pro: false },
           { name: "404 Page", path: "/error-404", pro: false },
         ],
-      },
+      },*/
     ],
   },
-  {
+  /*{
     title: "Others",
     items: [
       {
@@ -313,7 +325,7 @@ const menuGroups = [
       },
       // ... Add other menu items here
     ],
-  },
+  },*/
 ];
 
 const isActive = (path) => route.path === path;

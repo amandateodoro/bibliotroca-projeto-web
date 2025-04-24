@@ -22,5 +22,5 @@ organizar a transferência.
    
    ```
 
-## Feature Comparison
-
+## Desenvolvido por:
+Amanda Teodoro & Leykezer Cruz

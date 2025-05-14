@@ -1,26 +1,39 @@
-# BIBLIOTROCA
-BiblioTroca é uma aplicação web projetada para conectar leitores que
-desejam trocar seus livros que já foram lidos, caso tenham o desejo de ler algo
-relacionado ou até continuações, ou doar livros, caso queiram descartar os que
-estão parados na estante juntando poeira ou que ocupam espaço. A plataforma
-permite que os usuários cadastrem livros disponíveis para troca ou doação,
-encontrem livros de interesse e entrem em contato com outros leitores para
-organizar a transferência.
+# bibliotroca-projeto-web
 
-## Iniciando App
-1. Instalação de  dependencias:
+This template should help get you started developing with Vue 3 in Vite.
 
-   ```bash
-   npm install
+## Recommended IDE Setup
 
-   ```
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-2. Iniciando o desenvolvimento:
+## Type Support for `.vue` Imports in TS
 
-   ```bash
-   npm run dev
-   
-   ```
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
 
-## Desenvolvido por:
-Amanda Teodoro & Leykezer Cruz
+## Customize configuration
+
+See [Vite Configuration Reference](https://vite.dev/config/).
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
+```

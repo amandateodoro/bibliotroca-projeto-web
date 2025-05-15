@@ -3,8 +3,9 @@
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Servidores</h6>
+                    <div class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
+                        <h6 class="text-white text-capitalize ps-3">Usuarios</h6>
+                        <button type="button" class="btn btn-warning me-3">Novo Usuario</button>
                     </div>
                 </div>
             </div>
@@ -16,42 +17,37 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nome
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    Siape</th>
+                                    Contato</th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Situacao
+                                    Avaliação
                                 </th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Cargo
+                                    Cidade
                                 </th>
                                 <th class="text-secondary opacity-7"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(servidor, index) in listaServidores" :key="index">
+                            <tr v-for="(usuario, index) in listaUsuarios" :key="index">
                                 <td>
                                     <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg"
-                                                alt="user1">
-                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{ servidor.nome }}</h6>
-                                            <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
+                                            <h6 class="mb-0 text-sm">{{ usuario.nome }}</h6>
+                                            <p class="text-xs text-secondary mb-0">{{usuario.email}}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="text-xs font-weight-bold mb-0">{{ servidor.siape }}</p>
+                                    <p class="text-xs font-weight-bold mb-0">{{ usuario.contato }}</p>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="badge badge-sm"
-                                        :class="{ 'bg-gradient-success': servidor.situacao, 'bg-gradient-secondary': !servidor.situacao }">{{
-                                            servidor.situacao ? 'Ativo' : 'Inativo' }}</span>
+                                    <span class="text-secondary text-xs font-weight-bold">{{usuario.avaliacao
+                                    }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                    <span class="text-secondary text-xs font-weight-bold">{{ servidor.cargo
+                                    <span class="text-secondary text-xs font-weight-bold">{{ usuario.cidade
                                     }}</span>
                                 </td>
                                 <td class="align-middle">
@@ -77,47 +73,58 @@ export default defineComponent({
 
     data() {
         return {
-            listaServidores: [] as Array<{ nome: string; siape: number, situacao: boolean; cargo: string }>,
+            listaUsuarios: [] as Array<{ nome: string; email: string; contato: string; avaliacao: number; cidade: string; }>,
         }
     },
 
     mounted() {
-        this.buscarServidores();
+        this.buscarUsuarios();
 
     },
 
     methods: {
-        buscarServidores() {
-            this.listaServidores.push({
-                nome: 'Joao Teixeira',
-                siape: 12345678,
-                situacao: true,
-                cargo: 'Docente'
+        buscarUsuarios() {
+            this.listaUsuarios.push({
+                nome: 'Rodrigo Fábio dos Santos',
+                email: 'rodrigofabiodossantos@bidoul.eng.br',
+                contato: '(69) 98706-1244',
+                avaliacao: 4,
+                cidade: 'Ji-Paraná'
             });
 
-            this.listaServidores.push({
-                nome: 'Jefferson dos Santos',
-                siape: 12345679,
-                situacao: true,
-                cargo: 'Docente'
+            this.listaUsuarios.push({
+                nome: 'Caleb Igor Novaes',
+                email: 'caleb.igor.novaes@dcazzainteriores.com.br',
+                contato: '(69) 98159-7254',
+                avaliacao: 5,
+                cidade: 'Ji-Paraná'
             });
 
-            this.listaServidores.push({
-                nome: 'Leticia Carvalho',
-                siape: 12345623,
-                situacao: true,
-                cargo: 'Diretora Geral'
+            this.listaUsuarios.push({
+                nome: 'Eduarda Eduarda Costa',
+                email: 'eduarda_costa@uel.br',
+                contato: '(69) 99413-8844',
+                avaliacao: 5,
+                cidade: 'Ji-Paraná'
             });
 
-            this.listaServidores.push({
-                nome: 'Emi Oliveira',
-                siape: 12345626,
-                situacao: false,
-                cargo: 'Docente'
+            this.listaUsuarios.push({
+                nome: 'Hugo Nathan Melo',
+                email: 'hugo_melo@xerocopiadora.com.br',
+                contato: '(69) 99468-4768',
+                avaliacao: 3,
+                cidade: 'Ji-Paraná'
+            });
+
+            this.listaUsuarios.push({
+                nome: 'Lívia Sophie Teixeira',
+                email: 'liviasophieteixeira@yool.com.br',
+                contato: '(69) 99242-9642',
+                avaliacao: 5,
+                cidade: 'Ji-Paraná'
             });
         },
     }
-
 
 });
 </script>

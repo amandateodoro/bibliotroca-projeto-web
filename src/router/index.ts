@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
@@ -13,6 +13,41 @@ const router = createRouter({
       path: '/servidores',
       name: 'servidores',
       component: () => import('../views/servidor/IndexView.vue'),
+    },
+    {
+      path: '/usuarios',
+      name: 'usuarios',
+      component: () => import('../views/Usuario/IndexView.vue'),
+    },
+    {
+      path: '/autores',
+      name: 'autores',
+      component: () => import('../views/Autor/IndexView.vue'),
+    },
+    {
+      path: '/cidades',
+      name: 'cidades',
+      component: () => import('../views/Cidade/IndexView.vue'),
+    },
+    {
+      path: '/editoras',
+      name: 'editoras',
+      component: () => import('../views/Editora/IndexView.vue'),
+    },
+    {
+      path: '/estados',
+      name: 'estados',
+      component: () => import('../views/estado/IndexView.vue'),
+    },
+    {
+      path: '/genero',
+      name: 'genero',
+      component: () => import('../views/Genero/IndexView.vue'),
+    },
+    {
+      path: '/livros',
+      name: 'livros',
+      component: () => import('../views/Livro/IndexView.vue'),
     },
   ],
 })

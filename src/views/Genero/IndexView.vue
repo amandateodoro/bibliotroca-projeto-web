@@ -4,7 +4,7 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Servidores</h6>
+                        <h6 class="text-white text-capitalize ps-3">Gêneros</h6>
                     </div>
                 </div>
             </div>
@@ -13,46 +13,26 @@
                     <table class="table align-items-center mb-0">
                         <thead>
                             <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nome
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Nome
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    Siape</th>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Situacao
-                                </th>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Cargo
+                                    Descricao
                                 </th>
                                 <th class="text-secondary opacity-7"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(servidor, index) in listaServidores" :key="index">
+                            <tr v-for="(genero, index) in listaGeneros" :key="index">
                                 <td>
                                     <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg"
-                                                alt="user1">
-                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{ servidor.nome }}</h6>
-                                            <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
+                                            <h6 class="mb-0 text-sm">{{ genero.nome }}</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="text-xs font-weight-bold mb-0">{{ servidor.siape }}</p>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="badge badge-sm"
-                                        :class="{ 'bg-gradient-success': servidor.situacao, 'bg-gradient-secondary': !servidor.situacao }">{{
-                                            servidor.situacao ? 'Ativo' : 'Inativo' }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                    <span class="text-secondary text-xs font-weight-bold">{{ servidor.cargo
-                                    }}</span>
+                                    <p class="text-xs font-weight-bold mb-0">{{ genero.descricao }}</p>
                                 </td>
                                 <td class="align-middle">
                                     <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
@@ -70,54 +50,52 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'IndexView',
 
     data() {
         return {
-            listaServidores: [] as Array<{ nome: string; siape: number, situacao: boolean; cargo: string }>,
+            listaGeneros: [] as Array<{
+                nome: string
+                descricao: string
+            }>,
         }
     },
 
     mounted() {
-        this.buscarServidores();
-
+        this.buscarGeneros()
     },
 
     methods: {
-        buscarServidores() {
-            this.listaServidores.push({
-                nome: 'Joao Teixeira',
-                siape: 12345678,
-                situacao: true,
-                cargo: 'Docente'
+        buscarGeneros() {
+            this.listaGeneros.push({
+                nome: 'Terror',
+                descricao: ' Caracterizado por elementos sobrenaturais, psicológicos ou grotescos, o terror explora os medos mais profundos da humanidade, como a morte, a solidão e o desconhecido.'
             });
 
-            this.listaServidores.push({
-                nome: 'Jefferson dos Santos',
-                siape: 12345679,
-                situacao: true,
-                cargo: 'Docente'
+            this.listaGeneros.push({
+                nome: 'Ficção Científica',
+                descricao: 'Diferentemente da fantasia, que incorpora elementos mágicos, a ficção científica se fundamenta em conceitos plausíveis dentro da ciência conhecida ou especulativa.'
             });
-
-            this.listaServidores.push({
-                nome: 'Leticia Carvalho',
-                siape: 12345623,
-                situacao: true,
-                cargo: 'Diretora Geral'
+            this.listaGeneros.push({
+                nome: 'Romance',
+                descricao: 'Um gênero literário e cinematográfico que explora relacionamentos amorosos e emoções profundas.'
             });
-
-            this.listaServidores.push({
-                nome: 'Emi Oliveira',
-                siape: 12345626,
-                situacao: false,
-                cargo: 'Docente'
+            this.listaGeneros.push({
+                nome: 'Manga',
+                descricao: 'Um estilo de quadrinhos japoneses que abrange diversos gêneros e públicos, caracterizado por arte expressiva e narrativa envolvente.'
+            });
+            this.listaGeneros.push({
+                nome: 'Fantasia',
+                descricao: 'Um gênero que explora mundos imaginários, magia e seres sobrenaturais, criando narrativas épicas e envolventes.'
+            });
+            this.listaGeneros.push({
+                nome: 'Infanto-Juvenil',
+                descricao: 'Asbrange obras destinadas a crianças e adolescentes, explorando temas como aventura, amizade e autodescoberta.'
             });
         },
-    }
-
-
-});
+    },
+})
 </script>

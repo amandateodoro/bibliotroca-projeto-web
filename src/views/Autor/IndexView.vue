@@ -4,7 +4,7 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Servidores</h6>
+                        <h6 class="text-white text-capitalize ps-3">Autores</h6>
                     </div>
                 </div>
             </div>
@@ -16,43 +16,29 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nome
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    Siape</th>
+                                    Nacionalidade</th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Situacao
-                                </th>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Cargo
+                                    Bibliografia
                                 </th>
                                 <th class="text-secondary opacity-7"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(servidor, index) in listaServidores" :key="index">
+                            <tr v-for="(autor, index) in listaAutores" :key="index">
                                 <td>
                                     <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg"
-                                                alt="user1">
-                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{ servidor.nome }}</h6>
-                                            <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
+                                            <h6 class="mb-0 text-sm">{{ autor.nome }}</h6>
+                                            <p class="text-xs text-secondary mb-0">{{autor.dataNascimento}}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="text-xs font-weight-bold mb-0">{{ servidor.siape }}</p>
+                                    <p class="text-xs font-weight-bold mb-0">{{ autor.nacionalidade }}</p>
                                 </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="badge badge-sm"
-                                        :class="{ 'bg-gradient-success': servidor.situacao, 'bg-gradient-secondary': !servidor.situacao }">{{
-                                            servidor.situacao ? 'Ativo' : 'Inativo' }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                    <span class="text-secondary text-xs font-weight-bold">{{ servidor.cargo
-                                    }}</span>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">{{ autor.biografia }}</p>
                                 </td>
                                 <td class="align-middle">
                                     <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
@@ -77,43 +63,50 @@ export default defineComponent({
 
     data() {
         return {
-            listaServidores: [] as Array<{ nome: string; siape: number, situacao: boolean; cargo: string }>,
+            listaAutores: [] as Array<{ nome: string; dataNascimento: string; nacionalidade: string; biografia: string; }>,
         }
     },
 
     mounted() {
-        this.buscarServidores();
+        this.buscarAutores();
 
     },
 
     methods: {
-        buscarServidores() {
-            this.listaServidores.push({
-                nome: 'Joao Teixeira',
-                siape: 12345678,
-                situacao: true,
-                cargo: 'Docente'
+        buscarAutores() {
+            this.listaAutores.push({
+                nome: 'J.K. Rowling',
+                dataNascimento: '31 de julho de 1965',
+                nacionalidade: 'Britânica',
+                biografia: 'Autora da série Harry Potter, Rowling transformou sua ideia concebida em um trem em uma das franquias literárias mais bem-sucedidas da história, vendendo mais de 600 milhões de cópias.'
             });
 
-            this.listaServidores.push({
-                nome: 'Jefferson dos Santos',
-                siape: 12345679,
-                situacao: true,
-                cargo: 'Docente'
+            this.listaAutores.push({
+                nome: 'Paula Hawkins',
+                dataNascimento: '26 de agosto de 1972',
+                nacionalidade: 'Britânica ',
+                biografia: 'Ganhou destaque mundial com o thriller A Garota no Trem, explorando temas como abuso e alcoolismo, após escrever comédias românticas sob pseudônimo.'
             });
 
-            this.listaServidores.push({
-                nome: 'Leticia Carvalho',
-                siape: 12345623,
-                situacao: true,
-                cargo: 'Diretora Geral'
+            this.listaAutores.push({
+                nome: 'Agatha Christie',
+                dataNascimento: '15 de setembro de 1890',
+                nacionalidade: 'Britânica',
+                biografia: 'Conhecida como a "Rainha do Crime", Christie escreveu mais de 80 romances policiais, sendo uma das autoras mais publicadas e traduzidas do mundo.'
             });
 
-            this.listaServidores.push({
-                nome: 'Emi Oliveira',
-                siape: 12345626,
-                situacao: false,
-                cargo: 'Docente'
+            this.listaAutores.push({
+                nome: 'Franz Kafka',
+                dataNascimento: '3 de julho de 1883',
+                nacionalidade: 'Boêmio ',
+                biografia: 'Escritor de língua alemã, Kafka é renomado por obras que exploram temas de alienação e burocracia opressiva, como A Metamorfose.'
+            });
+            
+            this.listaAutores.push({
+                nome: 'Jane Austen',
+                dataNascimento: '16 de dezembro de 1775',
+                nacionalidade: 'Britânica',
+                biografia: 'Romancista inglesa cujas obras, como Orgulho e Preconceito, criticam e comentam sobre a sociedade e a dependência feminina do casamento na Inglaterra do século XIX.'
             });
         },
     }

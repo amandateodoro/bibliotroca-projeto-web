@@ -7,7 +7,7 @@
             <a class="navbar-brand px-4 py-3 m-0"
                 href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
                 <img src="/img/logo-ct-dark.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
-                <span class="ms-1 text-sm text-dark">Gestao Facil</span>
+                <span class="ms-1 text-sm text-dark">BiblioTroca</span>
             </a>
         </div>
         <hr class="horizontal dark mt-0 mb-2">
@@ -16,16 +16,66 @@
                 <li class="nav-item">
                     <RouterLink class="nav-link text-dark" active-class="active bg-gradient-dark text-white" to="/">
                         <i class="material-symbols-rounded opacity-5">dashboard</i>
-                        <span class="nav-link-text ms-1">Dashboard</span>
+                        <span class="nav-link-text ms-1">Inicio</span>
                     </RouterLink>
                 </li>
 
                 <li class="nav-item">
                     <RouterLink class="nav-link text-dark" active-class="active bg-gradient-dark text-white" to="/servidores">
-                        <i class="material-symbols-rounded opacity-5">dashboard</i>
+                        <i class="material-symbols-rounded opacity-5">table_view</i>
                         <span class="nav-link-text ms-1">Servidores</span>
                     </RouterLink>
                 </li>
+                
+                <li class="nav-item">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-dark text-white" to="/usuarios">
+                        <i class="material-symbols-rounded opacity-5">table_view</i>
+                        <span class="nav-link-text ms-1">Usuario</span>
+                    </RouterLink>
+                </li>
+
+                <li class="nav-item">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-dark text-white" to="/autores">
+                        <i class="material-symbols-rounded opacity-5">table_view</i>
+                        <span class="nav-link-text ms-1">Autor</span>
+                    </RouterLink>
+                </li>
+
+                <li class="nav-item">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-dark text-white" to="/cidades">
+                        <i class="material-symbols-rounded opacity-5">table_view</i>
+                        <span class="nav-link-text ms-1">Cidade</span>
+                    </RouterLink>
+                </li>
+
+                <li class="nav-item">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-dark text-white" to="/editoras">
+                        <i class="material-symbols-rounded opacity-5">table_view</i>
+                        <span class="nav-link-text ms-1">Editora</span>
+                    </RouterLink>
+                </li>
+
+                <li class="nav-item">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-dark text-white" to="/estados">
+                        <i class="material-symbols-rounded opacity-5">table_view</i>
+                        <span class="nav-link-text ms-1">Estado</span>
+                    </RouterLink>
+                </li>
+
+                <li class="nav-item">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-dark text-white" to="/generos">
+                        <i class="material-symbols-rounded opacity-5">table_view</i>
+                        <span class="nav-link-text ms-1">Genero</span>
+                    </RouterLink>
+                </li>
+
+                <li class="nav-item">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-dark text-white" to="/livros">
+                        <i class="material-symbols-rounded opacity-5">table_view</i>
+                        <span class="nav-link-text ms-1">Livro</span>
+                    </RouterLink>
+                </li>
+                <!--
 
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="../pages/tables.html">
@@ -79,16 +129,14 @@
                         <span class="nav-link-text ms-1">Sign Up</span>
                     </a>
                 </li>
+
+                -->
             </ul>
         </div>
         <div class="sidenav-footer position-absolute w-100 bottom-0 ">
             <div class="mx-3">
-                <a class="btn btn-outline-dark mt-4 w-100"
-                    href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard?ref=sidebarfree"
-                    type="button">Documentation</a>
-                <a class="btn bg-gradient-dark w-100"
-                    href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree"
-                    type="button">Upgrade to pro</a>
+                <a class="btn btn-outline-danger mt-4 w-100"
+                    type="button">Sair</a>
             </div>
         </div>
     </aside>

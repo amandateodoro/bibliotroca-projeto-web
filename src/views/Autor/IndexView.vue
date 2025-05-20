@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+                    <div class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Autores</h6>
                     </div>
                 </div>
@@ -14,6 +14,8 @@
                         <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nome
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Data de Nascimento
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Nacionalidade</th>
@@ -30,9 +32,11 @@
                                     <div class="d-flex px-2 py-1">
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm">{{ autor.nome }}</h6>
-                                            <p class="text-xs text-secondary mb-0">{{autor.dataNascimento}}</p>
                                         </div>
                                     </div>
+                                </td>
+                                <td>
+                                    <p class="text-xs text-secondary mb-0">{{autor.dataNascimento}}</p>
                                 </td>
                                 <td>
                                     <p class="text-xs font-weight-bold mb-0">{{ autor.nacionalidade }}</p>

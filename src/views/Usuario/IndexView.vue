@@ -16,6 +16,8 @@
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nome
                                 </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">E-mail
+                                </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Contato</th>
                                 <th
@@ -34,10 +36,12 @@
                                 <td>
                                     <div class="d-flex px-2 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{ usuario.nome }}</h6>
-                                            <p class="text-xs text-secondary mb-0">{{usuario.email}}</p>
+                                            <h6 class="mb-0 text-sm">{{ usuario.nome }}</h6>                                            
                                         </div>
                                     </div>
+                                </td>
+                                <td>
+                                    <p class="text-xs text-secondary mb-0">{{usuario.email}}</p>
                                 </td>
                                 <td>
                                     <p class="text-xs font-weight-bold mb-0">{{ usuario.contato }}</p>

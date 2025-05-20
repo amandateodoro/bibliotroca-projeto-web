@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+                    <div class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Editora</h6>
                     </div>
                 </div>
@@ -15,6 +15,8 @@
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nome
                                 </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Url
+                                </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Contato</th>
                                 <th class="text-secondary opacity-7"></th>
@@ -24,15 +26,13 @@
                             <tr v-for="(editora, index) in listaEditoras" :key="index">
                                 <td>
                                     <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="{{editora.url}}/logo.png" class="avatar avatar-sm me-3 border-radius-lg"
-                                                alt="user1">
-                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm">{{ editora.nome }}</h6>
-                                            <p class="text-xs text-secondary mb-0">{{editora.url}}</p>
                                         </div>
                                     </div>
+                                </td>
+                                <td>
+                                    <p class="text-xs text-secondary mb-0">{{editora.url}}</p>
                                 </td>
                                 <td>
                                     <p class="text-xs font-weight-bold mb-0">{{ editora.contato }}</p>

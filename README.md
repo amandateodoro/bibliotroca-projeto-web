@@ -1,39 +1,46 @@
-# app-web
+🎉 **Bem-vindo a BiblioTroca** 🚀
 
-This template should help get you started developing with Vue 3 in Vite.
+Este projeto está em desenvolvimento como parte da avaliação final da disciplina Programação Web II, do curso de Análise e Desenvolvimento de Sistemas.
 
-## Recommended IDE Setup
+Abaixo, você encontrará mais detalhes sobre o propósito do sistema, suas funcionalidades e as tecnologias utilizadas na implementação.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## ℹ️ Sobre o Projeto
 
-## Type Support for `.vue` Imports in TS
+A BiblioTroca é uma aplicação web projetada para conectar leitores que
+desejam trocar seus livros que já foram lidos, caso tenham o desejo de ler algo
+relacionado ou até continuações, ou doar livros, caso queiram descartar os que
+estão parados na estante juntando poeira ou que ocupam espaço. A plataforma
+permite que os usuários cadastrem livros disponíveis para troca ou doação,
+encontrem livros de interesse e entrem em contato com outros leitores para
+organizar a transferência.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+A aplicação possui as funcionalidades básicas de CRUD (Create, Read, Update, Delete) para gerenciar tarefas.
 
-## Customize configuration
+## 🛠️ Ferramentas Utilizadas
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- Vue.Js
+- Typescript
+- Bootstrap
+- MySql Workbench
+- HTML
 
-## Project Setup
+## 🚀 Executando o Projeto
 
-```sh
-npm install
-```
+Siga as instruções abaixo para executar o projeto em seu ambiente local:
 
-### Compile and Hot-Reload for Development
+1. **Instale as dependências:**
 
-```sh
-npm run dev
-```
+   ```
+   npm install
+   ```
 
-### Type-Check, Compile and Minify for Production
+2. **Execute a aplicação:**
 
-```sh
-npm run build
-```
+   ```
+   npm run dev
+   ```
 
-### Lint with [ESLint](https://eslint.org/)
+### 👨‍💻👩‍💻 Autores:
 
-```sh
-npm run lint
-```
+- Amanda Teodoro Cunha
+- Leyukezer Cruz de Lima

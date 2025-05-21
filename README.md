@@ -14,8 +14,6 @@ permite que os usuários cadastrem livros disponíveis para troca ou doação,
 encontrem livros de interesse e entrem em contato com outros leitores para
 organizar a transferência.
 
-A aplicação possui as funcionalidades básicas de CRUD (Create, Read, Update, Delete) para gerenciar tarefas.
-
 ## 🛠️ Ferramentas Utilizadas
 
 - Vue.Js

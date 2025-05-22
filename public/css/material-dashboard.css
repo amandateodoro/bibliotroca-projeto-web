@@ -29,18 +29,18 @@
   --bs-gray-700: #404040;
   --bs-gray-800: #262626;
   --bs-gray-900: #171717;
-  --bs-primary: #e91e63;
-  --bs-secondary: #737373;
+  --bs-primary: #17b5dc;
+  --bs-secondary: #dc9427d1;
   --bs-success: #4CAF50;
   --bs-info: #1A73E8;
-  --bs-warning: #fb8c00;
+  --bs-warning: #fbb800;
   --bs-danger: #F44335;
   --bs-light: #e5e5e5;
   --bs-dark: #262626;
   --bs-white: #fff;
   --bs-dark-blue: #1A237E;
-  --bs-primary-rgb: 233, 30, 99;
-  --bs-secondary-rgb: 115, 115, 115;
+  --bs-primary-rgb: 23, 181, 220;
+  --bs-secondary-rgb: 220, 148, 39;
   --bs-success-rgb: 76, 175, 80;
   --bs-info-rgb: 26, 115, 232;
   --bs-warning-rgb: 251, 140, 0;
@@ -77,7 +77,7 @@
   --bs-black-rgb: 10, 10, 10;
   --bs-font-sans-serif: Inter, Helvetica, Arial, sans-serif;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  --bs-gradient: linear-gradient(40deg, #FBD38D,#fd7e14;);
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
@@ -2858,9 +2858,10 @@ progress {
   appearance: none;
   background-color: transparent;
   background-clip: padding-box;
-  border: 1px solid #d2d6da;
+  border: 2px solid var(--bs-gradient);
   border-radius: 0.375rem;
   transition: 0.2s ease;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2883,6 +2884,8 @@ progress {
   border-color: transparent;
   outline: 0;
   box-shadow: none;
+  border: 1px solid #000000;
+  border-radius: 0.375rem;
 }
 
 .form-control::-webkit-date-and-time-value {
@@ -2897,7 +2900,7 @@ progress {
 }
 
 .form-control::placeholder {
-  color: #737373;
+  color: #c19b5d;
   opacity: 1;
 }
 
@@ -3880,7 +3883,7 @@ fieldset:disabled .btn {
 
 .btn-secondary {
   --bs-btn-color: #fff;
-  --bs-btn-bg: #737373;
+  --bs-btn-bg: var(--bs-secondary);
   --bs-btn-border-color: #737373;
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: rgb(97.75, 97.75, 97.75);
@@ -11375,11 +11378,11 @@ fieldset:disabled .btn {
 }
 
 .bg-primary {
-  background-color: #e91e63 !important;
+  background-color: var(--bs-primary) !important;
 }
 
 .bg-secondary {
-  background-color: #737373 !important;
+  background-color: var(--bs-secondary) !important;
 }
 
 .bg-success {
@@ -24005,7 +24008,7 @@ label,
 }
 
 .bg-gradient-primary {
-  background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
+  background-image: var(--bs-gradient);
 }
 
 .bg-gradient-secondary {

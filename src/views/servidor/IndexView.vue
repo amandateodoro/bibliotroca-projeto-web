@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
-                <div class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3">
+                <div class="bg-primary shadow-dark border-radius-lg pt-4 pb-3">
                     <h6 class="text-white text-capitalize ps-3">Servidores</h6>
                 </div>
             </div>

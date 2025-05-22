@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
-                <div class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
+                <div class="bg-primary shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
                     <h6 class="text-white text-capitalize ps-3">Gêneros</h6>
                     <button type="button" class="btn btn-warning me-3">Novo Gênero</button>
                 </div>

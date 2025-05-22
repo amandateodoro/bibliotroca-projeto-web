@@ -2,9 +2,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
-                <div class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
+                <div class="bg-primary shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
                     <h6 class="text-white text-capitalize ps-3">Autores</h6>
-                    <button type="button" class="btn btn-light me-3">Novo Autor</button>
+                    <a href="/autores/create" type="button" class="btn btn-light me-3">Novo Autor</a>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -104,7 +104,7 @@ export default defineComponent({
                 nacionalidade: 'Boêmio ',
                 biografia: 'Escritor de língua alemã, Kafka é renomado por obras que exploram temas de alienação e burocracia opressiva, como A Metamorfose.'
             });
-            
+
             this.listaAutores.push({
                 nome: 'Jane Austen',
                 dataNascimento: '16 de dezembro de 1775',

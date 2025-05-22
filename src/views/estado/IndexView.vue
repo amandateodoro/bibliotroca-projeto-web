@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
-                <div class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
+                <div class="bg-primary shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
                     <h6 class="text-white text-capitalize ps-3">Estados</h6>
                     <button type="button" class="btn btn-warning me-3">Novo Estado</button>
                 </div>
@@ -54,9 +54,9 @@ export default defineComponent({
 
     data() {
         return {
-            listaEstados: [] as Array<{ 
-                uf: string; 
-                nome: string 
+            listaEstados: [] as Array<{
+                uf: string;
+                nome: string
             }>,
         }
     },
@@ -71,27 +71,27 @@ export default defineComponent({
             this.listaEstados.push({
                 uf: 'RO',
                 nome: 'Rondônia'
-            });   
+            });
 
             this.listaEstados.push({
                 uf: 'RR',
                 nome: 'Roraima'
-            });  
+            });
 
             this.listaEstados.push({
                 uf: 'MG',
                 nome: 'Minas Gerais'
-            });   
+            });
 
             this.listaEstados.push({
                 uf: 'SC',
                 nome: 'Santa Catarina'
-            });   
+            });
 
             this.listaEstados.push({
                 uf: 'PI',
                 nome: 'Piauí'
-            });            
+            });
         },
     }
 

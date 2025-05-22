@@ -14,63 +14,63 @@
         <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-success text-white" to="/">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/">
                         <i class="material-symbols-rounded opacity-5">dashboard</i>
                         <span class="nav-link-text ms-1">Inicio</span>
                     </RouterLink>
                 </li>
 
                 <li class="nav-item">
-                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-success text-white" to="/servidores">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/servidores">
                         <i class="material-symbols-rounded opacity-5">table_view</i>
                         <span class="nav-link-text ms-1">Servidores</span>
                     </RouterLink>
                 </li>
-                
+
                 <li class="nav-item">
-                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-success text-white" to="/usuarios">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/usuarios">
                         <i class="material-symbols-rounded opacity-5">table_view</i>
                         <span class="nav-link-text ms-1">Usuario</span>
                     </RouterLink>
                 </li>
 
                 <li class="nav-item">
-                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-success text-white" to="/autores">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/autores">
                         <i class="material-symbols-rounded opacity-5">table_view</i>
                         <span class="nav-link-text ms-1">Autor</span>
                     </RouterLink>
                 </li>
 
                 <li class="nav-item">
-                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-success text-white" to="/cidades">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/cidades">
                         <i class="material-symbols-rounded opacity-5">table_view</i>
                         <span class="nav-link-text ms-1">Cidade</span>
                     </RouterLink>
                 </li>
 
                 <li class="nav-item">
-                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-success text-white" to="/editoras">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/editoras">
                         <i class="material-symbols-rounded opacity-5">table_view</i>
                         <span class="nav-link-text ms-1">Editora</span>
                     </RouterLink>
                 </li>
 
                 <li class="nav-item">
-                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-success text-white" to="/estados">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/estados">
                         <i class="material-symbols-rounded opacity-5">table_view</i>
                         <span class="nav-link-text ms-1">Estado</span>
                     </RouterLink>
                 </li>
 
                 <li class="nav-item">
-                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-success text-white" to="/generos">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/generos">
                         <i class="material-symbols-rounded opacity-5">table_view</i>
                         <span class="nav-link-text ms-1">Genero</span>
                     </RouterLink>
                 </li>
 
                 <li class="nav-item">
-                    <RouterLink class="nav-link text-dark" active-class="active bg-gradient-success text-white" to="/livros">
+                    <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/livros">
                         <i class="material-symbols-rounded opacity-5">table_view</i>
                         <span class="nav-link-text ms-1">Livro</span>
                     </RouterLink>
@@ -135,8 +135,11 @@
         </div>
         <div class="sidenav-footer position-absolute w-100 bottom-0 ">
             <div class="mx-3">
-                <a class="btn btn-outline-danger mt-4 w-100"
-                    type="button">Sair</a>
+                <a
+                class="btn btn-outline-danger mt-4 w-100"
+                type="button"
+                href="/login"
+                >Sair</a>
             </div>
         </div>
     </aside>

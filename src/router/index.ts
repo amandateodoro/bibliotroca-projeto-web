@@ -6,47 +6,57 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: HomeView,
     },
     {
       path: '/servidores',
-      name: 'servidores',
+      name: 'Servidores',
       component: () => import('../views/servidor/IndexView.vue'),
     },
     {
       path: '/usuarios',
-      name: 'usuarios',
+      name: 'Usuarios',
       component: () => import('../views/Usuario/IndexView.vue'),
     },
     {
       path: '/autores',
-      name: 'autores',
+      name: 'Autores',
       component: () => import('../views/Autor/IndexView.vue'),
     },
     {
+      path: '/autores/create',
+      name: 'Autor',
+      component: () => import('../views/Autor/FormView.vue'),
+    },
+    {
       path: '/cidades',
-      name: 'cidades',
+      name: 'Cidades',
       component: () => import('../views/Cidade/IndexView.vue'),
     },
     {
+      path: '/cidades/create',
+      name: 'Cidade',
+      component: () => import('../views/Cidade/FormView.vue'),
+    },
+    {
       path: '/editoras',
-      name: 'editoras',
+      name: 'Editoras',
       component: () => import('../views/Editora/IndexView.vue'),
     },
     {
       path: '/estados',
-      name: 'estados',
+      name: 'Estados',
       component: () => import('../views/estado/IndexView.vue'),
     },
     {
       path: '/generos',
-      name: 'generos',
+      name: 'Generos',
       component: () => import('../views/Genero/IndexView.vue'),
     },
     {
       path: '/livros',
-      name: 'livros',
+      name: 'Livros',
       component: () => import('../views/Livro/IndexView.vue'),
     },
   ],

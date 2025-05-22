@@ -40,8 +40,8 @@ const router = createRouter({
       component: () => import('../views/estado/IndexView.vue'),
     },
     {
-      path: '/genero',
-      name: 'genero',
+      path: '/generos',
+      name: 'generos',
       component: () => import('../views/Genero/IndexView.vue'),
     },
     {

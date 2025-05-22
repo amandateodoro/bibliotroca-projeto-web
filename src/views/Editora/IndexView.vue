@@ -2,10 +2,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
-                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Editora</h6>
-                    </div>
+                <div class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
+                    <h6 class="text-white text-capitalize ps-3">Editoras</h6>
+                    <button type="button" class="btn btn-warning me-3">Nova Editora</button>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">

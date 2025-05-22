@@ -2,11 +2,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
-                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div
-                        class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
-                        <h6 class="text-white text-capitalize ps-3">Livros</h6>
-                    </div>
+                <div class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
+                    <h6 class="text-white text-capitalize ps-3">Livros</h6>
+                    <button type="button" class="btn btn-warning me-3">Novo Livro</button>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -42,7 +40,7 @@
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm">{{ livro.nome }}</h6>
-                                            <p class="text-xs text-secondary mb-0 text-wrap text-break"
+                                            <p class="text-xs text-secondary mb-0 text-wrap"
                                                 style="white-space: pre-line;">{{ livro.descricao }}</p>
                                         </div>
                                     </div>

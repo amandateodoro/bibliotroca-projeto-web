@@ -2,10 +2,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
-                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Autores</h6>
-                    </div>
+                <div class="bg-gradient-success shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
+                    <h6 class="text-white text-capitalize ps-3">Autores</h6>
+                    <button type="button" class="btn btn-light me-3">Novo Autor</button>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -42,7 +41,7 @@
                                     <p class="text-xs font-weight-bold mb-0">{{ autor.nacionalidade }}</p>
                                 </td>
                                 <td>
-                                    <p class="text-xs font-weight-bold mb-0">{{ autor.biografia }}</p>
+                                    <p class="text-xs font-weight-bold mb-0 text-wrap">{{ autor.biografia }}</p>
                                 </td>
                                 <td class="align-middle">
                                     <a href="javascript:;" class="text-secondary font-weight-bold text-xs"

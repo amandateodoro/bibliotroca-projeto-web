@@ -4,7 +4,7 @@
             <div class="card my-4">
                 <div class="bg-primary shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
                     <h6 class="text-white text-capitalize ps-3">Estados</h6>
-                    <button type="button" class="btn btn-warning me-3">Novo Estado</button>
+                    <a href="/estados/create" type="button" class="btn btn-light me-3">Novo Estado</a>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">

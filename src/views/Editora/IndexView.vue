@@ -4,7 +4,7 @@
             <div class="card my-4">
                 <div class="bg-primary shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
                     <h6 class="text-white text-capitalize ps-3">Editoras</h6>
-                    <button type="button" class="btn btn-warning me-3">Nova Editora</button>
+                    <a href="/editoras/create" type="button" class="btn btn-light me-3">Nova Editora</a>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -17,7 +17,7 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Url
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    Contato</th>
+                                    E-mail para Contato</th>
                                 <th class="text-secondary opacity-7"></th>
                             </tr>
                         </thead>
@@ -34,7 +34,7 @@
                                     <p class="text-xs text-secondary mb-0">{{editora.url}}</p>
                                 </td>
                                 <td>
-                                    <p class="text-xs font-weight-bold mb-0">{{ editora.contato }}</p>
+                                    <p class="text-xs font-weight-bold mb-0">{{ editora.email }}</p>
                                 </td>
                                 <td class="align-middle">
                                     <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
@@ -62,7 +62,7 @@ export default defineComponent({
             listaEditoras: [] as Array<{
                 nome: string;
                 url: string;
-                contato: string
+                email: string
             }>,
         }
     },
@@ -77,27 +77,27 @@ export default defineComponent({
             this.listaEditoras.push({
                 nome: 'Rocco',
                 url: 'rocco.com.br',
-                contato: '(00)0 0000-0000'
+                email: 'rocco@gmail.com'
             });
             this.listaEditoras.push({
                 nome: 'Record',
                 url: 'record.com.br',
-                contato: '(00)0 0000-0000'
+                email: 'record@gmail.com'
             });
             this.listaEditoras.push({
                 nome: 'HarperCollins',
                 url: 'harpercollins.com.br',
-                contato: '(00)0 0000-0000'
+                email: 'harpercollins@gmail.com'
             });
             this.listaEditoras.push({
                 nome: 'Camelot',
                 url: 'camelot.com.br',
-                contato: '(00)0 0000-0000'
+                email: 'camelot@gmail.com'
             });
             this.listaEditoras.push({
                 nome: 'Martin Claret',
                 url: 'martinclaret.com.br',
-                contato: '(00)0 0000-0000'
+                email: 'martinclaret@gmail.com'
             });
         },
     }

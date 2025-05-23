@@ -14,11 +14,20 @@ const router = createRouter({
       name: 'Servidores',
       component: () => import('../views/servidor/IndexView.vue'),
     },
+
+    // USUÁRIO
     {
       path: '/usuarios',
       name: 'Usuarios',
       component: () => import('../views/Usuario/IndexView.vue'),
     },
+    {
+      path: '/usuarios/create',
+      name: 'Novo Usuario',
+      component: () => import('../views/Usuario/FormView.vue'),
+    },
+
+    // AUTOR
     {
       path: '/autores',
       name: 'Autores',
@@ -26,9 +35,11 @@ const router = createRouter({
     },
     {
       path: '/autores/create',
-      name: 'Autor',
+      name: 'Cadastrar Autor',
       component: () => import('../views/Autor/FormView.vue'),
     },
+
+    // CIDADE
     {
       path: '/cidades',
       name: 'Cidades',
@@ -36,28 +47,56 @@ const router = createRouter({
     },
     {
       path: '/cidades/create',
-      name: 'Cidade',
+      name: 'Cadastrar Cidade',
       component: () => import('../views/Cidade/FormView.vue'),
     },
+
+    // EDITORA
     {
       path: '/editoras',
       name: 'Editoras',
       component: () => import('../views/Editora/IndexView.vue'),
     },
     {
+      path: '/editoras/create',
+      name: 'Cadastrar Editora',
+      component: () => import('../views/Editora/FormView.vue'),
+    },    
+
+    // ESTADO
+    {
       path: '/estados',
       name: 'Estados',
-      component: () => import('../views/estado/IndexView.vue'),
+      component: () => import('../views/Estado/IndexView.vue'),
     },
+    {
+      path: '/estados/create',
+      name: 'Cadastrar Estado',
+      component: () => import('../views/Estado/FormView.vue'),
+    },
+    
+    // GENERO
     {
       path: '/generos',
       name: 'Generos',
       component: () => import('../views/Genero/IndexView.vue'),
     },
     {
+      path: '/generos/create',
+      name: 'Cadastrar Genero',
+      component: () => import('../views/Genero/FormView.vue'),
+    },
+
+    // LIVRO
+    {
       path: '/livros',
       name: 'Livros',
       component: () => import('../views/Livro/IndexView.vue'),
+    },
+    {
+      path: '/livros/create',
+      name: 'Cadastrar Livro',
+      component: () => import('../views/Livro/FormView.vue'),
     },
   ],
 })

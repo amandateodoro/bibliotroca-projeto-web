@@ -77,7 +77,5 @@ export default defineComponent({
 
     },
   }
-
-
 });
 </script>

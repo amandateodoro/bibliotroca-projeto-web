@@ -4,7 +4,7 @@
             <div class="card my-4">
                 <div class="bg-primary shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
                     <h6 class="text-white text-capitalize ps-3">Livros</h6>
-                    <button type="button" class="btn btn-warning me-3">Novo Livro</button>
+                    <a href="/livros/create" type="button" class="btn btn-light me-3">Novo Livro</a>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -13,12 +13,12 @@
                         <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Nome</th>
+                                    Livro</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Data Aquisicao</th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Estado/Situação
+                                    Estado de Conservação
                                 </th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -50,11 +50,11 @@
                                 </td>
                                 <td class="align-middle text-center text-sm">
                                     <span class="badge badge-sm" :class="{
-                                        'bg-success': livro.estado === 'Novo',
-                                        'bg-warning': livro.estado === 'Usado',
-                                        'bg-danger': livro.estado === 'Danificado'
+                                        'bg-success': livro.conservacao === 'Novo',
+                                        'bg-warning': livro.conservacao === 'Usado',
+                                        'bg-danger': livro.conservacao === 'Danificado'
                                     }">
-                                        {{ livro.estado }}
+                                        {{ livro.conservacao }}
                                     </span>
                                 </td>
                                 <td class="align-middle text-center">
@@ -87,7 +87,7 @@ export default defineComponent({
 
     data() {
         return {
-            listaLivros: [] as Array<{ nome: string; descricao: string, dataAquisicao: string; estado: string; editora: string; autor: string; }>,
+            listaLivros: [] as Array<{ nome: string; descricao: string, dataAquisicao: string; conservacao: string; editora: string; autor: string; }>,
         }
     },
 
@@ -102,7 +102,7 @@ export default defineComponent({
                 nome: 'Harry Potter e a Ordem da Fênix',
                 descricao: 'Após um verão desastroso, Harry volta para o seu quinto ano em Hogwarts, um dos mais difíceis que terá de encarar. Pouquíssimos alunos e pais acreditam nele ou em Dumbledore sobre a volta de Voldemort, e uma série interminável de artigos circula dizendo que eles estão completamente malucos. Ainda por cima, Dolores Umbridge, a nova professora de Defesa Contra as Artes das Trevas, prova ser a pessoa mais repugnante que Harry já conheceu.',
                 dataAquisicao: '01/01/2025',
-                estado: 'Danificado',
+                conservacao: 'Danificado',
                 editora: 'Rocco',
                 autor: 'J.K. Rowling'
             });
@@ -110,7 +110,7 @@ export default defineComponent({
                 nome: 'A Garota no Trem',
                 descricao: 'Uma mulher alcoólatra passa todos os dias em frente à sua antiga casa com o trem, que ela pega para sair. Embora ver o ex-marido com a nova esposa e o bebê a deixe extremamente triste, ela gosta de imaginar que outro casal que mora nas proximidades é a combinação perfeita. Mas quando ela testemunha algo que a faz duvidar, ela fica tão revoltada que decide agir para mudar os fatos.',
                 dataAquisicao: '01/01/2025',
-                estado: 'Danificado',
+                conservacao: 'Danificado',
                 editora: 'Record',
                 autor: 'Paula Hawkins'
             });
@@ -118,7 +118,7 @@ export default defineComponent({
                 nome: 'Assassinato no Expresso do Oriente',
                 descricao: 'Ocorre um assassinato em um luxuoso trem. O famoso detetive Hercule Poirot, que também estava a bordo, precisa correr contra o tempo para resolver o caso.',
                 dataAquisicao: '01/01/2025',
-                estado: 'Usado',
+                conservacao: 'Usado',
                 editora: 'HarperCollins',
                 autor: 'Agatha Christie'
             });
@@ -126,7 +126,7 @@ export default defineComponent({
                 nome: 'A Metamorfose',
                 descricao: 'A Metamorfose, de Franz Kafka, narra a história de Gregor Samsa, um caixeiro-viajante, que acorda transformado em um inseto monstruoso. A narrativa aborda a sua vida após a metamorfose, a reação da família e as consequências da alienação e da exclusão social. ',
                 dataAquisicao: '01/01/2025',
-                estado: 'Usado',
+                conservacao: 'Usado',
                 editora: 'Camelot',
                 autor: 'Franz Kafka'
             });
@@ -134,7 +134,7 @@ export default defineComponent({
                 nome: 'Orgulho e Preconceito',
                 descricao: 'A história de Orgulho e Preconceito gira em torno das cinco irmãs Bennet, que viviam na área rural do interior da Inglaterra, no século XVIII. Aborda a questão da sucessão em uma família sem herdeiros homens, dentro de uma sociedade patriarcal, onde o casamento era fundamental para as mulheres.',
                 dataAquisicao: '01/01/2025',
-                estado: 'Novo',
+                conservacao: 'Novo',
                 editora: 'Martin Claret',
                 autor: 'Jane Austen'
             });

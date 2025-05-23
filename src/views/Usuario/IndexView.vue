@@ -4,7 +4,7 @@
             <div class="card my-4">
                 <div class="bg-primary shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
                     <h6 class="text-white text-capitalize ps-3">Usuarios</h6>
-                    <button type="button" class="btn btn-warning me-3">Novo Usuario</button>
+                    <a href="/usuarios/create" type="button" class="btn btn-light me-3">Novo Usuário</a>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -17,7 +17,7 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">E-mail
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    Contato</th>
+                                    Telefone para Contato</th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Avaliação
@@ -42,7 +42,7 @@
                                     <p class="text-xs text-secondary mb-0">{{usuario.email}}</p>
                                 </td>
                                 <td>
-                                    <p class="text-xs font-weight-bold mb-0">{{ usuario.contato }}</p>
+                                    <p class="text-xs font-weight-bold mb-0">{{ usuario.telefone }}</p>
                                 </td>
                                 <td class="align-middle text-center text-sm">
                                     <span class="text-secondary text-xs font-weight-bold">{{usuario.avaliacao
@@ -75,7 +75,7 @@ export default defineComponent({
 
     data() {
         return {
-            listaUsuarios: [] as Array<{ nome: string; email: string; contato: string; avaliacao: number; cidade: string; }>,
+            listaUsuarios: [] as Array<{ nome: string; email: string; telefone: string; avaliacao: number; cidade: string; }>,
         }
     },
 
@@ -89,7 +89,7 @@ export default defineComponent({
             this.listaUsuarios.push({
                 nome: 'Rodrigo Fábio dos Santos',
                 email: 'rodrigofabiodossantos@bidoul.eng.br',
-                contato: '(69) 98706-1244',
+                telefone: '(69) 98706-1244',
                 avaliacao: 4,
                 cidade: 'Ji-Paraná'
             });
@@ -97,7 +97,7 @@ export default defineComponent({
             this.listaUsuarios.push({
                 nome: 'Caleb Igor Novaes',
                 email: 'caleb.igor.novaes@dcazzainteriores.com.br',
-                contato: '(69) 98159-7254',
+                telefone: '(69) 98159-7254',
                 avaliacao: 5,
                 cidade: 'Ji-Paraná'
             });
@@ -105,7 +105,7 @@ export default defineComponent({
             this.listaUsuarios.push({
                 nome: 'Eduarda Eduarda Costa',
                 email: 'eduarda_costa@uel.br',
-                contato: '(69) 99413-8844',
+                telefone: '(69) 99413-8844',
                 avaliacao: 5,
                 cidade: 'Ji-Paraná'
             });
@@ -113,7 +113,7 @@ export default defineComponent({
             this.listaUsuarios.push({
                 nome: 'Hugo Nathan Melo',
                 email: 'hugo_melo@xerocopiadora.com.br',
-                contato: '(69) 99468-4768',
+                telefone: '(69) 99468-4768',
                 avaliacao: 3,
                 cidade: 'Ji-Paraná'
             });
@@ -121,7 +121,7 @@ export default defineComponent({
             this.listaUsuarios.push({
                 nome: 'Lívia Sophie Teixeira',
                 email: 'liviasophieteixeira@yool.com.br',
-                contato: '(69) 99242-9642',
+                telefone: '(69) 99242-9642',
                 avaliacao: 5,
                 cidade: 'Ji-Paraná'
             });

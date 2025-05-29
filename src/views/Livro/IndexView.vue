@@ -4,7 +4,7 @@
             <div class="card my-4">
                 <div class="bg-primary shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
                     <h6 class="text-white text-capitalize ps-3">Livros</h6>
-                    <a href="/livros/create" type="button" class="btn btn-light me-3">Novo Livro</a>
+                    <RouterLink to="/livros/create" class="btn btn-light me-3">Novo Livro</RouterLink>
                 </div>
             </div>
             <div class="card-body px-0 pb-2">

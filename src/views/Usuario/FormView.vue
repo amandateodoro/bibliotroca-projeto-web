@@ -52,9 +52,12 @@
                 <label for="txtCidade" class="form-label">Cidade <a style="color: red;">*</a></label>
                 <select name="txtCidade" id="txtCidade" class="form-control px-2"
                   v-for="(cidade, index) in listaCidades" :key="index">
-                  <option value="" disabled selected>Selecione uma Cidade</option>
-                  <option value=""> {{ cidade.nome }} {{ cidade.uf }}</option>
+                  <option disabled selected>Selecione uma Cidade</option>
+                  <option value="{{ index }}"> {{ cidade.nome }} {{ cidade.uf }}</option>
                 </select>
+                <div class="text-danger"  v-if="v$.formDados.cidade.$errors.length">
+                  <p class="fs-6" v-for="error of v$.formDados.cidade.$errors" :key="error.$uuid">{{ error.$message }}</p>
+                </div>
               </div>
             </div>
             <div class="d-flex justify-content-start gap-3">
@@ -70,7 +73,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useVuelidate } from '@vuelidate/core'
-import { required, email ,minLength, helpers} from '@vuelidate/validators'
+import { required, email ,minLength, helpers, numeric} from '@vuelidate/validators'
 
 export default defineComponent({
   name: 'FormView',
@@ -96,10 +99,10 @@ export default defineComponent({
   validations() {
     return {
       formDados: {
-        nome: { required: helpers.withMessage('o Nome é Obrigatório', required), minLength: helpers.withMessage('Nome precisa conter no mínimo 4 letras!', minLength(4))  },
-        email: { required, email },
-        telefone: { required },
-        cidade: { required },
+        nome: { required: helpers.withMessage('O nome é Obrigatório', required), minLength: helpers.withMessage('Nome precisa conter no mínimo 4 letras!', minLength(4))  },
+        email: { required: helpers.withMessage('O email é obrigatório', required), email: helpers.withMessage('O email é inválido!', email) },
+        telefone: { required: helpers.withMessage('O telefone é obrigatório', required), numeric: helpers.withMessage('O telefone precisa ser apenas numeros (ex: 69992653985)', numeric)},
+        cidade: { required: helpers.withMessage('A cidade é obrigatória', required) },
       }
     }
   },

@@ -22,7 +22,7 @@
             </div>
             <div class="row mt-2">
               <div class="col-5">
-                <label for="txtDescricao" class="form-label">Descrição<a style="color: red;">*</a></label>
+                <label for="txtDescricao" class="form-label">Descrição <a style="color: red;">*</a></label>
                 <textarea name="txtBibliografia" id="txtBibliografia" class="form-control mt-1 p-2"
                   placeholder="Informações sobre o gênero literário" v-model="formDados.descricao"></textarea>
                 <div class="text-danger" v-if="v$.formDados.descricao.$errors.length">
@@ -31,8 +31,8 @@
                 </div>
               </div>
             </div>
-            <div class="d-flex justify-content-start">
-              <RouterLink to="/generos" class="btn btn-warning mt-4 px-9">Voltar</RouterLink>
+            <div class="d-flex justify-content-start gap-3">
+              <RouterLink class="btn btn-warning mt-4 px-9" to="/generos">Voltar</RouterLink>
               <button type="submit" class="btn btn-secondary mt-4 px-9">Cadastrar</button>
             </div>
           </div>

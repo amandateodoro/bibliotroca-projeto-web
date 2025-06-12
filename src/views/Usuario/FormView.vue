@@ -72,8 +72,8 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useVuelidate } from '@vuelidate/core'
-import { required, email ,minLength, helpers, numeric} from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core';
+import { required, email ,minLength, helpers, numeric} from '@vuelidate/validators';
 
 export default defineComponent({
   name: 'FormView',

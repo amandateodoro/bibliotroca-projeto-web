@@ -21,7 +21,7 @@
             </div>
             <div class="row mt-2">
               <div class="col-5">
-                <label for="txtSinopse" class="form-label">Descrição</label>
+                <label for="txtSinopse" class="form-label">Descrição <a style="color: red;">*</a></label>
                 <textarea name="txtSinopse" id="txtSinopse" class="form-control mt-1 p-2"
                   placeholder="Sinopse do livro" v-model="formDados.descricao"></textarea>
                   <div class="text-danger"  v-if="v$.formDados.descricao.$errors.length">
@@ -31,7 +31,7 @@
             </div>
             <div class="row mt-2">
               <div class="col-5">
-                <label for="txtData" class="form-label">Data de Aquisição</label>
+                <label for="txtData" class="form-label">Data de Aquisição <a style="color: red;">*</a></label>
                 <input type="date" class="form-control p-2" id="txtData" placeholder=" Data de aquisição do livro" v-model="formDados.dataAquisicao">
                 <div class="text-danger"  v-if="v$.formDados.dataAquisicao.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.dataAquisicao.$errors" :key="error.$uuid">{{ error.$message }}</p>
@@ -40,7 +40,7 @@
             </div>
             <div class="row mt-2">
               <div class="col-5">
-                <label for="txtEstado" class="form-label">Estado de Conservação<a style="color: red;">*</a></label>
+                <label for="txtEstado" class="form-label">Estado de Conservação <a style="color: red;">*</a></label>
                 <select name="txtEstado" id="txtEstado" class="form-control px-2" v-model="formDados.conservacao">
                   <option disabled selected>Selecione o estado de conservação do livro</option>
                   <option value="NOVO">Novo</option>

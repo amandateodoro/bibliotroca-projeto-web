@@ -26,7 +26,7 @@
           </div>
           <div class="row mt-2">
             <div class="col-5">
-              <label for="txtContact" class="form-label">Email Contato</label>
+              <label for="txtContact" class="form-label">Email Contato <a style="color: red;">*</a></label>
               <input type="email" class="form-control p-2" id="txtContact" placeholder=" E-mail para contato" v-model="formDados.email">
               <div class="text-danger"  v-if="v$.formDados.email.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.email.$errors" :key="error.$uuid">{{ error.$message }}</p>
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="d-flex justify-content-start gap-3">
-            <RouterLink to="/editoras" type="button" class="btn btn-secondary mt-4 px-9">Cadastrar</RouterLink>
+            <RouterLink to="/editoras" type="button" class="btn btn-secondary mt-4 px-9">Voltar</RouterLink>
             <button type="submit" class="btn btn-secondary mt-4 px-9">Cadastrar</button>
           </div>
         </form>

@@ -29,7 +29,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(usuario, index) in listaUsuarios" :key="index">
+              <tr v-for="(usuario, index) in usuarios" :key="index">
                 <td>
                   <div class="d-flex px-2 py-1">
                     <div class="d-flex flex-column justify-content-center">
@@ -48,8 +48,7 @@
                   }}</span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ usuario.cidade
-                  }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">{{ buscarCidade(usuario.id_cid) }}</span>
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
@@ -67,6 +66,7 @@
 </template>
 
 <script lang="ts">
+import axios from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -74,56 +74,40 @@ export default defineComponent({
 
   data() {
     return {
-      listaUsuarios: [] as Array<{ nome: string; email: string; telefone: string; avaliacao: number; cidade: string; }>,
+      usuarios: [] as Array<{ nome: string; email: string; telefone: string; avaliacao: number; id_cid: number; }>,
     }
   },
 
   mounted() {
     this.buscarUsuarios();
-
   },
 
   methods: {
-    buscarUsuarios() {
-      this.listaUsuarios.push({
-        nome: 'Rodrigo Fábio dos Santos',
-        email: 'rodrigofabiodossantos@bidoul.eng.br',
-        telefone: '(69) 98706-1244',
-        avaliacao: 4,
-        cidade: 'Ji-Paraná'
-      });
+    async buscarCidade(cidade:number){
+      try {
+        const response = await axios.get('http://localhost:3000/cidade', {
+          params:{
+            id: cidade
+        }});
 
-      this.listaUsuarios.push({
-        nome: 'Caleb Igor Novaes',
-        email: 'caleb.igor.novaes@dcazzainteriores.com.br',
-        telefone: '(69) 98159-7254',
-        avaliacao: 5,
-        cidade: 'Ji-Paraná'
-      });
+        if (response.status == 200) {
+          return response.data.nome.toString();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async buscarUsuarios() {
+      try {
+        const response = await axios.get('http://localhost:3000/usuario');
 
-      this.listaUsuarios.push({
-        nome: 'Eduarda Eduarda Costa',
-        email: 'eduarda_costa@uel.br',
-        telefone: '(69) 99413-8844',
-        avaliacao: 5,
-        cidade: 'Ji-Paraná'
-      });
-
-      this.listaUsuarios.push({
-        nome: 'Hugo Nathan Melo',
-        email: 'hugo_melo@xerocopiadora.com.br',
-        telefone: '(69) 99468-4768',
-        avaliacao: 3,
-        cidade: 'Ji-Paraná'
-      });
-
-      this.listaUsuarios.push({
-        nome: 'Lívia Sophie Teixeira',
-        email: 'liviasophieteixeira@yool.com.br',
-        telefone: '(69) 99242-9642',
-        avaliacao: 5,
-        cidade: 'Ji-Paraná'
-      });
+        if (response.status == 200) {
+          this.usuarios = response.data;
+          console.log('Lista de Usuarios carregados!');
+        }
+      } catch (error) {
+        console.error(error);
+      }
     },
   }
 

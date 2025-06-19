@@ -1,0 +1,61 @@
+{
+    "estado": [
+        {
+            "id": 1,
+            "uf": "RO",
+            "nome": "Rondônia"
+        }
+    ],
+    "cidade": [
+        {
+            "id": 1,
+            "nome": "Ji-Paraná",
+            "id_est": 1
+        }
+    ],
+    "usuario": [
+        {
+            "id": 1,
+            "nome": "admin",
+            "email": "admin@email.com",
+            "contato": "(69)99280-5678",
+            "admin": true,
+            "senha": "admin",
+            "avaliacao": 5,
+            "id_cid": 1
+        }
+    ],
+    "editora": [
+        {
+            "id": 1,
+            "nome": "Rocco",
+            "url": "https://rocco.com.br/rocco/",
+            "contato": "rocco@rocco.com.br"
+        }
+    ],
+    "autor": [
+        {
+            "id":1,
+            "nome": "J.K. Rowling",
+            "email": "Info@jkrowling.com",
+            "imagem": "https://d.ibtimes.co.uk/en/full/1407361/j-k-rowling.webp?w=736&f=2b2c9a7c0a49ac2bb1207276a337a04f"
+        }
+    ],
+    "livro": [
+        {
+            "id":1,
+            "nome":"Harry Potter e a Ordem da Fênix",
+            "imagem": "https://img.bertrand.pt/images/harry-potter-e-a-ordem-da-fenix-j-k-rowling/NDV8NDUzNjJ8NzU0Mjl8MTQxNDM2ODAwMDAwMA==/500x",
+            "descricao":"Após um verão desastroso, Harry volta para o seu quinto ano em Hogwarts, um dos mais difíceis que terá de encarar. Pouquíssimos alunos e pais acreditam nele ou em Dumbledore sobre a volta de Voldemort, e uma série interminável de artigos circula dizendo que eles estão completamente malucos. Ainda por cima, Dolores Umbridge, a nova professora de Defesa Contra as Artes das Trevas, prova ser a pessoa mais repugnante que Harry já conheceu.",
+            "dataAquisicao":"2025-01-01",
+            "id_edi": 1,
+            "id_aut": 1
+        }
+    ],
+    "genero": [
+        {
+            "id":1,
+            "nome":"Ficção Científica"
+        }
+    ]
+}

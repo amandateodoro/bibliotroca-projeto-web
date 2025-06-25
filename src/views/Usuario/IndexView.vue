@@ -74,7 +74,7 @@ export default defineComponent({
 
   data() {
     return {
-      usuarios: [] as Array<{ nome: string; email: string; telefone: string; avaliacao: number; id_cid: number; }>,
+      usuarios: [] as Array<{id: number; nome: string; email: string; telefone: string; avaliacao: number; id_cid: number; }>,
     }
   },
 

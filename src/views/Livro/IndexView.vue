@@ -56,11 +56,11 @@
                   </span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ this.buscarEditora(livro.id_edi) }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">{{ buscarEditora(livro.id_edi) }}</span>
                 </td>
 
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ this.buscarAutor(livro.id_aut) }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">{{ buscarAutor(livro.id_aut) }}</span>
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
@@ -78,6 +78,7 @@
 </template>
 
 <script lang="ts">
+import axios from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({

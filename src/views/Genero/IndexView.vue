@@ -49,6 +49,7 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios';
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -56,9 +57,7 @@ export default defineComponent({
 
     data() {
         return {
-            listaGeneros: [] as Array<{
-                nome: string
-                descricao: string
+            listaGeneros: [] as Array<{id: number; nome: string; descricao: string
             }>,
         }
     },
@@ -68,33 +67,18 @@ export default defineComponent({
     },
 
     methods: {
-        buscarGeneros() {
-            this.listaGeneros.push({
-                nome: 'Terror',
-                descricao: ' Caracterizado por elementos sobrenaturais, psicológicos ou grotescos, o terror explora os medos mais profundos da humanidade, como a morte, a solidão e o desconhecido.'
-            });
+       async buscarGeneros() {
+      try {
+        const response = await axios.get('http://localhost:3000/genero');
 
-            this.listaGeneros.push({
-                nome: 'Ficção Científica',
-                descricao: 'Diferentemente da fantasia, que incorpora elementos mágicos, a ficção científica se fundamenta em conceitos plausíveis dentro da ciência conhecida ou especulativa.'
-            });
-            this.listaGeneros.push({
-                nome: 'Romance',
-                descricao: 'Um gênero literário e cinematográfico que explora relacionamentos amorosos e emoções profundas.'
-            });
-            this.listaGeneros.push({
-                nome: 'Manga',
-                descricao: 'Um estilo de quadrinhos japoneses que abrange diversos gêneros e públicos, caracterizado por arte expressiva e narrativa envolvente.'
-            });
-            this.listaGeneros.push({
-                nome: 'Fantasia',
-                descricao: 'Um gênero que explora mundos imaginários, magia e seres sobrenaturais, criando narrativas épicas e envolventes.'
-            });
-            this.listaGeneros.push({
-                nome: 'Infanto-Juvenil',
-                descricao: 'Asbrange obras destinadas a crianças e adolescentes, explorando temas como aventura, amizade e autodescoberta.'
-            });
-        },
+        if (response.status == 200) {
+          this.listaGeneros = response.data;
+          console.log('Lista de Generos carregados!');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
     },
 })
 </script>

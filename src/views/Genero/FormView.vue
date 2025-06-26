@@ -42,8 +42,10 @@
   </div>
 </template>
 <script lang="ts">
+import { Toast } from "@/common/toast";
 import useVuelidate from "@vuelidate/core";
 import { helpers, minLength, required } from "@vuelidate/validators";
+import axios from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -80,13 +82,55 @@ export default defineComponent({
   },
 
   methods: {
+    async buscarIdGenero() {
+      try {
+        const response = await axios.get('http://localhost:3000/genero');
+
+        if (response.status == 200) {
+          const listaGenero = response.data;
+          const ultimoid = listaGenero.length + 1;
+          return ultimoid;
+          }
+          else {
+            return 1;
+          }
+        } catch (error) {
+        console.error(error);
+      }
+
+    },
     async salvar() {
       const result = await this.v$.$validate()
       if (!result) {
         return
       }
 
-      console.log('Dados do formulario', this.formDados);
+      const dados = {
+        ...this.formDados,
+        id: this.buscarIdGenero()
+      }
+
+      try {
+        const response = await axios.post('http://localhost:3000/genero', dados);
+
+        if(response.status == 200 || response.status == 201){
+          Toast.fire({
+            icon: "success",
+            title:"Gênero adicionado com Sucesso!"
+          }).then(() => {
+          this.$router.push('/generos')
+        });
+        }
+
+      } catch (error) {
+        Toast.fire({
+            icon: "error",
+            title:"Não foi possivel cadastrar Gênero!"
+          }).then(() => {
+          this.$router.push('/generos')
+        });
+        console.error(error);
+      }
     }
   }
 });

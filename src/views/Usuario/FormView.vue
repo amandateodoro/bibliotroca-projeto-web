@@ -145,7 +145,6 @@ export default defineComponent({
       } catch (error) {
         console.error(error);
       }
-
     },
     async buscarCidades() {
       try {
@@ -178,7 +177,9 @@ export default defineComponent({
           Toast.fire({
             icon: 'success',
             title: 'Usuario Adicionado com sucesso!'
-          });
+          }).then(() => {
+          this.$router.push('/usuarios')
+        });
         }
       } catch (error) {
         Toast.fire({

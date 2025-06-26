@@ -56,9 +56,9 @@
               <div class="col-5">
                 <label for="txtEditora" class="form-label">Editora <a style="color: red;">*</a></label>
                 <select name="txtEditora" id="txtEditora" class="form-control px-2" v-for="(editora, index) in listaEditoras"
-                :key="index" v-model="formDados.editora">
+                :key="index" v-model="formDados.id_edi">
                   <option disabled selected>Selecione um Estado</option>
-                  <option value="{{ editora.nome }}"> {{ editora.nome }} </option>
+                  <option value="{{ editora.id }}"> {{ editora.nome }} </option>
                 </select>
                 <div class="text-danger"  v-if="v$.formDados.editora.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.editora.$errors" :key="error.$uuid">{{ error.$message }}</p>
@@ -69,9 +69,9 @@
               <div class="col-5">
                 <label for="txtAutor" class="form-label">Autor <a style="color: red;">*</a></label>
                 <select name="txtAutor" id="txtAutor" class="form-control px-2" v-for="(autor, index) in listaAutores"
-                :key="index" v-model="formDados.autor">
+                :key="index" v-model="formDados.id_aut">
                   <option disabled selected>Selecione um Estado</option>
-                  <option value="{{ autor.nome }}"> {{ autor.nome }} </option>
+                  <option value="{{ autor.id }}"> {{ autor.nome }} </option>
                 </select>
                 <div class="text-danger"  v-if="v$.formDados.autor.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.autor.$errors" :key="error.$uuid">{{ error.$message }}</p>
@@ -92,6 +92,8 @@
 import { defineComponent } from "vue";
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers, minLength} from '@vuelidate/validators';
+import axios from "axios";
+import { Toast } from "@/common/toast";
 
 export default defineComponent({
   name: 'FormView',
@@ -106,14 +108,15 @@ export default defineComponent({
     return {
       formDados: {
         nome: '',
+        imagem: '',
         descricao: '',
         dataAquisicao: '',
         conservacao: '',
-        editora: '',
-        autor: ''
+        id_edi: '',
+        id_aut: ''
       },
-      listaEditoras: [] as Array<{ nome: string; }>,
-      listaAutores: [] as Array<{ nome: string; }>,
+      listaEditoras: [] as Array<{ id:number; nome: string; }>,
+      listaAutores: [] as Array<{ id:number; nome: string; }>,
     }
   },
 
@@ -136,24 +139,77 @@ export default defineComponent({
   },
 
   methods: {
-    buscarEditoras() {
-      this.listaEditoras.push({
-        nome: 'Rocco'
-      });
+    async buscarIdLivro() {
+      try {
+        const response = await axios.get('http://localhost:3000/livro');
+
+        if (response.status == 200) {
+          const listaUsuario = response.data;
+          const ultimoid = listaUsuario.length + 1;
+          return ultimoid;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
     },
-    buscarAutores() {
-      this.listaAutores.push({
-        nome: 'J.K. Rowling'
-      });
+    async buscarEditoras() {
+      try {
+        const response = await axios.get('http://localhost:3000/editora');
+
+        if (response.status == 200) {
+          this.listaEditoras = response.data;
+          console.log('Editoras carregadas!');
+        }
+
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async buscarAutores() {
+      try {
+        const response = await axios.get('http://localhost:3000/autor');
+
+        if (response.status == 200) {
+          this.listaAutores = response.data;
+          console.log('Autoras carregadas!');
+        }
+
+      } catch (error) {
+        console.error(error);
+      }
     },
     async salvar(){
       const result = await this.v$.$validate()
       if (!result) {
-
         return
       }
 
-      console.log('Dados do formulario', this.formDados);
+      const dados = {
+        ...this.formDados,
+        id: this.buscarIdLivro()
+      }
+
+      try {
+        const response = await axios.post('http://localhost:3000/usuario', dados);
+
+        if (response.status == 201 || response.status == 200) {
+          Toast.fire({
+            icon: 'success',
+            title: 'Livro Adicionado com sucesso!'
+          }).then(() => {
+          this.$router.push('/livros')
+        });
+        }
+      } catch (error) {
+        Toast.fire({
+          icon:'error',
+          title: 'Não foi possivel Cadastrar Livro!'
+        }).then(() => {
+          this.$router.push('/livros')
+        });
+        console.error(error);
+      }
     },
   }
 });

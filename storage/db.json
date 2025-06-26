@@ -56,7 +56,8 @@
     "genero": [
         {
             "id":1,
-            "nome":"Ficção Científica"
+            "nome":"Ficção Científica",
+            "descricao": "Diferentemente da fantasia, que incorpora elementos mágicos, a ficção científica se fundamenta em conceitos plausíveis dentro da ciência conhecida ou especulativa."
         }
     ]
 }

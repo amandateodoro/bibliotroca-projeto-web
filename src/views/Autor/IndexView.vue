@@ -29,6 +29,10 @@
                             <tr v-for="(autor, index) in listaAutores" :key="index">
                                 <td>
                                     <div class="d-flex px-2 py-1">
+                                        <div>
+                                            <img :src="autor.imagem" class="avatar avatar-sm me-3 border-radius-lg"
+                                                alt="user1">
+                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm">{{ autor.nome }}</h6>
                                         </div>
@@ -38,7 +42,7 @@
                                     <p class="text-xs text-secondary mb-0">{{autor.dataNascimento}}</p>
                                 </td>
                                 <td>
-                                    <p class="text-xs font-weight-bold mb-0">{{ autor.nacionalidade }}</p>
+                                    <p class="text-xs font-weight-bold mb-0">{{ autor.email }}</p>
                                 </td>
                                 <td>
                                     <p class="text-xs font-weight-bold mb-0 text-wrap">{{ autor.biografia }}</p>
@@ -59,6 +63,7 @@
 </template>
 
 <script lang="ts">
+import axios from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -66,7 +71,7 @@ export default defineComponent({
 
     data() {
         return {
-            listaAutores: [] as Array<{ nome: string; dataNascimento: string; nacionalidade: string; biografia: string; }>,
+            listaAutores: [] as Array<{ id: number; imagem: string; nome: string; dataNascimento: string; email: string; biografia: string; }>,
         }
     },
 
@@ -76,41 +81,16 @@ export default defineComponent({
     },
 
     methods: {
-        buscarAutores() {
-            this.listaAutores.push({
-                nome: 'J.K. Rowling',
-                dataNascimento: '31 de julho de 1965',
-                nacionalidade: 'Britânica',
-                biografia: 'Autora da série Harry Potter, Rowling transformou sua ideia concebida em um trem em uma das franquias literárias mais bem-sucedidas da história, vendendo mais de 600 milhões de cópias.'
-            });
-
-            this.listaAutores.push({
-                nome: 'Paula Hawkins',
-                dataNascimento: '26 de agosto de 1972',
-                nacionalidade: 'Britânica ',
-                biografia: 'Ganhou destaque mundial com o thriller A Garota no Trem, explorando temas como abuso e alcoolismo, após escrever comédias românticas sob pseudônimo.'
-            });
-
-            this.listaAutores.push({
-                nome: 'Agatha Christie',
-                dataNascimento: '15 de setembro de 1890',
-                nacionalidade: 'Britânica',
-                biografia: 'Conhecida como a "Rainha do Crime", Christie escreveu mais de 80 romances policiais, sendo uma das autoras mais publicadas e traduzidas do mundo.'
-            });
-
-            this.listaAutores.push({
-                nome: 'Franz Kafka',
-                dataNascimento: '3 de julho de 1883',
-                nacionalidade: 'Boêmio ',
-                biografia: 'Escritor de língua alemã, Kafka é renomado por obras que exploram temas de alienação e burocracia opressiva, como A Metamorfose.'
-            });
-
-            this.listaAutores.push({
-                nome: 'Jane Austen',
-                dataNascimento: '16 de dezembro de 1775',
-                nacionalidade: 'Britânica',
-                biografia: 'Romancista inglesa cujas obras, como Orgulho e Preconceito, criticam e comentam sobre a sociedade e a dependência feminina do casamento na Inglaterra do século XIX.'
-            });
+       async buscarAutores() {
+            try {
+              const response = await axios.get('http://localhost:3000/autor');
+              if (response.status == 200) {
+                this.listaAutores = response.data
+                console.log('Lista de Autores Carregada!');
+              }
+            } catch (error) {
+              console.error(error);
+            }
         },
     }
 

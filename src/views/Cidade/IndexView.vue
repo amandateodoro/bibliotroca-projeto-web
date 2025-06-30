@@ -34,7 +34,7 @@
                   </div>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ cidade.estado }}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ buscarEstadoId(cidade.id_est) }}</p>
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
@@ -52,6 +52,7 @@
 </template>
 
 <script lang="ts">
+import axios from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -59,22 +60,40 @@ export default defineComponent({
 
   data() {
     return {
-      listaCidades: [] as Array<{ nome: string; estado: string; }>,
+      listaCidades: [] as Array<{ id: number; nome: string; id_est: number; }>,
     }
   },
 
   mounted() {
     this.buscarCidades();
-
   },
 
   methods: {
-    buscarCidades() {
-      this.listaCidades.push({
-        nome: 'Ji-Paraná',
-        estado: 'Rondônia'
-      });
+    async buscarEstadoId(estado: number) {
+      try {
+        const response = await axios.get('http://localhost:3000/estado', {
+          params: {
+            id: estado
+          }
+        });
 
+        if (response.status == 200) {
+          return response.data.nome.toString();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async buscarCidades() {
+      try {
+        const response = await axios.get('http://localhost:3000/cidade');
+        if (response.status == 200) {
+          this.listaCidades = response.data;
+          console.log('Lista de Cidades Carregadas!');
+        }
+      } catch (error) {
+        console.error(error);
+      }
     },
   }
 });

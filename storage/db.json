@@ -37,6 +37,8 @@
         {
             "id":1,
             "nome": "J.K. Rowling",
+            "dataNascimento": "1965-01-31",
+            "biografia": "J.K. Rowling é uma escritora britânica nascida em 31 de julho de 1965, conhecida mundialmente por criar a série *Harry Potter*, que se tornou um fenômeno literário e cinematográfico. Antes do sucesso, enfrentou dificuldades pessoais e financeiras, mas persistiu na escrita. Além de *Harry Potter*, escreveu romances adultos como *Morte Súbita* e a série policial *Cormoran Strike* sob o pseudônimo Robert Galbraith. Ela também é conhecida por seu envolvimento em causas sociais e por controvérsias relacionadas a suas opiniões sobre questões de gênero.",
             "email": "Info@jkrowling.com",
             "imagem": "https://d.ibtimes.co.uk/en/full/1407361/j-k-rowling.webp?w=736&f=2b2c9a7c0a49ac2bb1207276a337a04f"
         }

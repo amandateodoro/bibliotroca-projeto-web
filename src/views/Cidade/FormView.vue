@@ -12,23 +12,25 @@
           <div class="row">
             <div class="col-5">
               <label for="txtName" class="form-label">Nome <a style="color: red;">*</a></label>
-              <input type="text" class="form-control p-2" id="txtName" placeholder=" Nome da Cidade" v-model="formDados.nome">
-              <div class="text-danger"  v-if="v$.formDados.nome.$errors.length">
-                <p class="fs-6" v-for="error of v$.formDados.nome.$errors" :key="error.$uuid"> <small>{{ error.$message }}</small></p>
+              <input type="text" class="form-control p-2" id="txtName" placeholder=" Nome da Cidade"
+                v-model="formDados.nome">
+              <div class="text-danger" v-if="v$.formDados.nome.$errors.length">
+                <p class="fs-6" v-for="error of v$.formDados.nome.$errors" :key="error.$uuid"> <small>{{ error.$message
+                    }}</small></p>
               </div>
             </div>
           </div>
           <div class="row mt-2">
             <div class="col-5">
               <label for="txtName" class="form-label">Estado <a style="color: red;">*</a></label>
-              <select name="txtEstado" id="txtEstado" class="form-control px-2" 
-              v-for="(estado, index) in listaEstados" :key="index">
+              <select name="txtEstado" id="txtEstado" class="form-control px-2" v-for="(estado, index) in listaEstados"
+                :key="index" v-model="formDados.id_est">
                 <option disabled selected>Selecione um Estado</option>
-                <option value="{{ index }}"> {{ estado.nome }} - {{ estado.uf }}</option>
+                <option value="{{ estado.id }}"> {{ estado.nome }} - {{ estado.uf }}</option>
               </select>
-              <div class="text-danger"  v-if="v$.formDados.uf.$errors.length">
-                  <p class="fs-6" v-for="error of v$.formDados.uf.$errors" :key="error.$uuid">{{ error.$message }}</p>
-                </div>
+              <div class="text-danger" v-if="v$.formDados.id_est.$errors.length">
+                <p class="fs-6" v-for="error of v$.formDados.id_est.$errors" :key="error.$uuid">{{ error.$message }}</p>
+              </div>
             </div>
           </div>
           <div class="d-flex justify-content-start gap-3">
@@ -43,7 +45,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { helpers, required, minLength, maxLength } from "@vuelidate/validators";
+import { helpers, required, minLength } from "@vuelidate/validators";
+import axios from "axios";
+import { Toast } from "@/common/toast";
 
 export default defineComponent({
   name: 'FormView',
@@ -56,10 +60,10 @@ export default defineComponent({
 
   data() {
     return {
-      listaEstados: [] as Array<{ nome: string; uf: string; }>,
+      listaEstados: [] as Array<{ id: number; nome: string; uf: string; }>,
       formDados: {
         nome: '',
-        uf: ''
+        id_est: ''
       },
     }
   },
@@ -68,8 +72,7 @@ export default defineComponent({
     return {
       formDados: {
         nome: { required: helpers.withMessage('O nome é Obrigatório', required), minLength: helpers.withMessage('Nome precisa conter no mínimo 4 letras!', minLength(4)) },
-        uf: { required: helpers.withMessage('A sigla é obrigatória', required), maxLength: helpers.withMessage('A sigla só pode conter 2 caracteres', maxLength(2)), 
-        minLength: helpers.withMessage('A sigla precisa conter no mínimo 2 caracteres', minLength(2)) }
+        id_est: { required: helpers.withMessage('O estado é obrigatório!', required) }
       },
     }
   },
@@ -79,11 +82,28 @@ export default defineComponent({
   },
 
   methods: {
-    buscarEstados() {
-      this.listaEstados.push({
-        nome: 'Rondônia',
-        uf: 'RO'
-      });
+    async buscarEstados() {
+      try {
+        const response = await axios.get('http://localhost:3000/estado');
+        if (response.status == 200) {
+          this.listaEstados = response.data;
+          console.log('Estados Carregados!');
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async buscarIdCidade() {
+      try {
+        const response = await axios.get('http://localhost:3000/cidade');
+        if (response.status == 200) {
+          const listaCidade = response.data;
+          const ultimoid = listaCidade.length + 1;
+          return ultimoid;
+        }
+      } catch (error) {
+        console.error(error);
+      }
     },
     async salvar() {
       const result = await this.v$.$validate()
@@ -92,7 +112,31 @@ export default defineComponent({
         return
       }
 
-      console.log('Dados do Formulário', this.formDados);
+      const dados = {
+        ...this.formDados,
+        id: this.buscarIdCidade()
+      }
+
+      try {
+        const response = await axios.post('http://localhost:3000/cidade', dados);
+
+        if (response.status == 200 || response.status == 201) {
+          Toast.fire({
+            icon: 'success',
+            title: 'Cidade Adicionada com sucesso!'
+          }).then(() => {
+            this.$router.push('/cidades')
+          });
+        }
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: 'Não foi possivel Cadastrar Cidade!'
+        }).then(() => {
+          this.$router.push('/cidades')
+        });
+        console.error(error);
+      }
     }
   }
 });

@@ -39,8 +39,10 @@
   </div>
 </template>
 <script lang="ts">
+import { Toast } from "@/common/toast";
 import useVuelidate from "@vuelidate/core";
 import { helpers, maxLength, minLength, required } from "@vuelidate/validators";
+import axios from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -75,14 +77,52 @@ export default defineComponent({
   },
 
   methods: {
+    async buscarIdEstado() {
+      try {
+        const response = await axios.get('http://localhost:3000/estado');
+
+        if (response.status == 200) {
+          const listaEstado = response.data;
+
+          const ultimoid = listaEstado.length + 1;
+
+          return ultimoid;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async salvar() {
       const result = await this.v$.$validate()
       if (!result) {
         return
       }
 
-      console.log('Dados do Formulário', this.formDados);
+      const dados = {
+        ...this.formDados,
+        id: this.buscarIdEstado()
+      }
 
+      try {
+        const response = await axios.post('http://localhost:3000/estado', dados);
+
+        if (response.status == 200 || response.status == 201) {
+          Toast.fire({
+            icon: 'success',
+            title: 'Estado Adicionado com sucesso!'
+          }).then(() => {
+            this.$router.push('/estados')
+          });
+        }
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: 'Não foi possivel Cadastrar Estado!'
+        }).then(() => {
+          this.$router.push('/estados')
+        });
+        console.error(error);
+      }
     }
   }
 });

@@ -43,8 +43,10 @@
   </div>
 </template>
 <script lang="ts">
+import { Toast } from "@/common/toast";
 import useVuelidate from "@vuelidate/core";
 import { email, helpers, minLength, required } from "@vuelidate/validators";
+import axios from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -80,6 +82,19 @@ export default defineComponent({
   },
 
   methods: {
+    async buscarIdEditora(){
+      try {
+        const response = await axios.get('http://localhost:3000/editora');
+        if (response.status == 200) {
+          const listaEditora = response.data;
+
+          const ultimoid = listaEditora.length + 1;
+          return ultimoid;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async salvar() {
       const result = await this.v$.$validate()
 
@@ -87,8 +102,30 @@ export default defineComponent({
         return
       }
 
-      console.log('Dados dO Formulário', this.formDados);
+      const dados = {
+        ...this.formDados,
+        id: this.buscarIdEditora()
+      }
 
+      try {
+        const response = await axios.post('http://localhost:3000/editora', dados);
+        if (response.status == 200 || response.status == 201) {
+          Toast.fire({
+            icon:'success',
+            title:'Editora Adicionada com Sucesso!'
+          }).then(()=>{
+            this.$router.push('/editoras')
+          });
+        }
+      } catch (error) {
+        Toast.fire({
+            icon:'error',
+            title:'não foi possivel Cadastrar Editora!'
+          }).then(()=>{
+            this.$router.push('/editoras')
+          });
+        console.error(error);
+      }
     }
   }
 });

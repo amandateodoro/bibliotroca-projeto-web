@@ -52,6 +52,7 @@
 </template>
 
 <script lang="ts">
+import axios from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -60,6 +61,7 @@ export default defineComponent({
     data() {
         return {
             listaEditoras: [] as Array<{
+                id: number;
                 nome: string;
                 url: string;
                 email: string
@@ -73,32 +75,17 @@ export default defineComponent({
     },
 
     methods: {
-        buscarEditoras() {
-            this.listaEditoras.push({
-                nome: 'Rocco',
-                url: 'rocco.com.br',
-                email: 'rocco@gmail.com'
-            });
-            this.listaEditoras.push({
-                nome: 'Record',
-                url: 'record.com.br',
-                email: 'record@gmail.com'
-            });
-            this.listaEditoras.push({
-                nome: 'HarperCollins',
-                url: 'harpercollins.com.br',
-                email: 'harpercollins@gmail.com'
-            });
-            this.listaEditoras.push({
-                nome: 'Camelot',
-                url: 'camelot.com.br',
-                email: 'camelot@gmail.com'
-            });
-            this.listaEditoras.push({
-                nome: 'Martin Claret',
-                url: 'martinclaret.com.br',
-                email: 'martinclaret@gmail.com'
-            });
+        async buscarEditoras() {
+          try {
+            const response = await axios.get('http://localhost:3000/editora');
+
+            if (response.status == 200) {
+              this.listaEditoras = response.data;
+              console.log('Lista de Editoras carregadas!');
+            }
+          } catch (error) {
+            console.error(error);
+          }
         },
     }
 

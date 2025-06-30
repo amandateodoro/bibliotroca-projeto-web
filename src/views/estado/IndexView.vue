@@ -47,6 +47,7 @@
 </template>
 
 <script lang="ts">
+import axios from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -55,6 +56,7 @@ export default defineComponent({
     data() {
         return {
             listaEstados: [] as Array<{
+                id:number;
                 uf: string;
                 nome: string
             }>,
@@ -67,31 +69,17 @@ export default defineComponent({
     },
 
     methods: {
-        buscarEstados() {
-            this.listaEstados.push({
-                uf: 'RO',
-                nome: 'Rondônia'
-            });
+        async buscarEstados() {
+            try {
+        const response = await axios.get('http://localhost:3000/estado');
 
-            this.listaEstados.push({
-                uf: 'RR',
-                nome: 'Roraima'
-            });
-
-            this.listaEstados.push({
-                uf: 'MG',
-                nome: 'Minas Gerais'
-            });
-
-            this.listaEstados.push({
-                uf: 'SC',
-                nome: 'Santa Catarina'
-            });
-
-            this.listaEstados.push({
-                uf: 'PI',
-                nome: 'Piauí'
-            });
+        if (response.status == 200) {
+          this.listaEstados = response.data;
+          console.log('Lista de Estados carregados!');
+        }
+      } catch (error) {
+        console.error(error);
+      }
         },
     }
 

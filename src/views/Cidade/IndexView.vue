@@ -34,7 +34,7 @@
                   </div>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ buscarEstadoId(cidade.id_est) }}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ cidade.id_est }}</p>
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"

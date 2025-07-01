@@ -46,10 +46,10 @@
             <div class="row mt-2">
               <div class="col-5">
                 <label for="txtCidade" class="form-label">Cidade <a style="color: red;">*</a></label>
-                <select name="txtCidade" id="txtCidade" class="form-control px-2"
-                  v-for="(cidade, index) in listaCidades" :key="index" v-model="formDados.id_cid">
+                <select name="txtCidade" id="txtCidade" class="form-control px-2" v-model="formDados.id_cid">
                   <option disabled selected>Selecione uma Cidade</option>
-                  <option value="{{ cidade.id }}"> {{ cidade.nome }}</option>
+                  <option v-for="(cidade, index) in listaCidades" :key="index" :value="cidade.id"> {{ cidade.nome }}
+                  </option>
                 </select>
                 <div class="text-danger" v-if="v$.formDados.id_cid.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.id_cid.$errors" :key="error.$uuid">{{ error.$message }}
@@ -127,24 +127,19 @@ export default defineComponent({
   },
 
   methods: {
-    async buscarIdUsuario() {
+    async buscarIdUsuario(): Promise<number> {
       try {
         const response = await axios.get('http://localhost:3000/usuario');
 
         if (response.status == 200) {
           const listaUsuario = response.data;
-
-          if (listaUsuario.length > 0) {
-            const ultimoid = listaUsuario.length + 1;
-            return ultimoid;
-          }
-          else {
-            return 1;
-          }
+          const ultimoid = listaUsuario.length + 1;
+          return ultimoid;
         }
       } catch (error) {
         console.error(error);
       }
+      return 1;
     },
     async buscarCidades() {
       try {
@@ -178,8 +173,8 @@ export default defineComponent({
             icon: 'success',
             title: 'Usuario Adicionado com sucesso!'
           }).then(() => {
-          this.$router.push('/usuarios')
-        });
+            this.$router.push('/usuarios')
+          });
         }
       } catch (error) {
         Toast.fire({

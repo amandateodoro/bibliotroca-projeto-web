@@ -23,10 +23,10 @@
           <div class="row mt-2">
             <div class="col-5">
               <label for="txtName" class="form-label">Estado <a style="color: red;">*</a></label>
-              <select name="txtEstado" id="txtEstado" class="form-control px-2" v-for="(estado, index) in listaEstados"
-                :key="index" v-model="formDados.id_est">
+              <select name="txtEstado" id="txtEstado" class="form-control px-2" v-model="formDados.id_est">
                 <option disabled selected>Selecione um Estado</option>
-                <option value="{{ estado.id }}"> {{ estado.nome }} - {{ estado.uf }}</option>
+                <option v-for="(estado, index) in listaEstados"
+                :key="index" :value="estado.id"> {{ estado.nome }} - {{ estado.uf }}</option>
               </select>
               <div class="text-danger" v-if="v$.formDados.id_est.$errors.length">
                 <p class="fs-6" v-for="error of v$.formDados.id_est.$errors" :key="error.$uuid">{{ error.$message }}</p>

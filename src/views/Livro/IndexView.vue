@@ -34,11 +34,11 @@
                 <td>
                   <div class="d-flex px-2 py-1">
                     <div>
-                      <img src="/img/team-2.jpg" class="avatar avatar-lg me-3" alt="user1">
+                      <img :src="livro.imagem" class="img-thumbnail">
                     </div>
-                    <div class="d-flex flex-column justify-content-center">
+                    <div class="d-flex flex-column justify-content-center ms-4">
                       <h6 class="mb-0 text-sm">{{ livro.nome }}</h6>
-                      <p class="text-xs text-secondary mb-0 text-wrap" style="white-space: pre-line;">{{ livro.descricao
+                      <p class="text-xs text-secondary mb-0 text-wrap ms-1" style="white-space: pre-line;">{{ livro.descricao
                         }}</p>
                     </div>
                   </div>
@@ -56,11 +56,11 @@
                   </span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ buscarEditora(livro.id_edi) }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">{{ livro.id_edi }}</span>
                 </td>
 
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ buscarAutor(livro.id_aut) }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">{{ livro.id_aut }}</span>
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
@@ -86,7 +86,7 @@ export default defineComponent({
 
   data() {
     return {
-      listaLivros: [] as Array<{ id: number; nome: string; descricao: string, dataAquisicao: string; conservacao: string; id_edi: number; id_aut: number; }>,
+      listaLivros: [] as Array<{ id: number; imagem:string; nome: string; descricao: string, dataAquisicao: string; conservacao: string; id_edi: number; id_aut: number; }>,
     }
   },
 
@@ -108,7 +108,7 @@ export default defineComponent({
         console.error(error);
       }
     },
-    async buscarEditora(editora: number) {
+    async buscarEditora(editora: number): Promise<string> {
       try {
         const response = await axios.get('http://localhost:3000/editora', {
           params: {
@@ -116,12 +116,13 @@ export default defineComponent({
           }
         });
 
-        if (response.status == 200) {
-          return response.data.nome.toString();
+        if (response.status == 200 || response.status == 201) {
+          return response.data.nome;
         }
       } catch (error) {
         console.error(error);
       }
+      return 'Desconhecida'
     },
     async buscarAutor(autor: number) {
       try {

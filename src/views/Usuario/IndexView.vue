@@ -41,14 +41,14 @@
                   <p class="text-xs text-secondary mb-0">{{ usuario.email }}</p>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ usuario.telefone }}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ usuario.contato }}</p>
                 </td>
                 <td class="align-middle text-center text-sm">
                   <span class="text-secondary text-xs font-weight-bold">{{ usuario.avaliacao
                   }}</span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ buscarCidade(usuario.id_cid) }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">{{ usuario.id_cid }}</span>
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
@@ -74,7 +74,7 @@ export default defineComponent({
 
   data() {
     return {
-      usuarios: [] as Array<{id: number; nome: string; email: string; telefone: string; avaliacao: number; id_cid: number; }>,
+      usuarios: [] as Array<{ id: number; nome: string; email: string; contato: string; avaliacao: number; id_cid: number; }>,
     }
   },
 
@@ -83,19 +83,22 @@ export default defineComponent({
   },
 
   methods: {
-    async buscarCidade(cidade:number){
+    async buscarCidade(cidade: number) {
       try {
         const response = await axios.get('http://localhost:3000/cidade', {
-          params:{
+          params: {
             id: cidade
-        }});
+          }
+        });
 
-        if (response.status == 200) {
-          return response.data.nome.toString();
+        if(response.status == 200){
+          return response.data;
         }
+
       } catch (error) {
         console.error(error);
       }
+      return 'Desconhecida';
     },
     async buscarUsuarios() {
       try {

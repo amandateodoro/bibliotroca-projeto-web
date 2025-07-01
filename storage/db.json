@@ -1,65 +1,89 @@
 {
-    "estado": [
-        {
-            "id": 1,
-            "uf": "RO",
-            "nome": "Rondônia"
-        }
-    ],
-    "cidade": [
-        {
-            "id": 1,
-            "nome": "Ji-Paraná",
-            "id_est": 1
-        }
-    ],
-    "usuario": [
-        {
-            "id": 1,
-            "nome": "admin",
-            "email": "admin@email.com",
-            "contato": "(69)99280-5678",
-            "admin": true,
-            "senha": "admin",
-            "avaliacao": 5,
-            "id_cid": 1
-        }
-    ],
-    "editora": [
-        {
-            "id": 1,
-            "nome": "Rocco",
-            "url": "https://rocco.com.br/rocco/",
-            "contato": "rocco@rocco.com.br"
-        }
-    ],
-    "autor": [
-        {
-            "id":1,
-            "nome": "J.K. Rowling",
-            "dataNascimento": "1965-01-31",
-            "biografia": "J.K. Rowling é uma escritora britânica nascida em 31 de julho de 1965, conhecida mundialmente por criar a série *Harry Potter*, que se tornou um fenômeno literário e cinematográfico. Antes do sucesso, enfrentou dificuldades pessoais e financeiras, mas persistiu na escrita. Além de *Harry Potter*, escreveu romances adultos como *Morte Súbita* e a série policial *Cormoran Strike* sob o pseudônimo Robert Galbraith. Ela também é conhecida por seu envolvimento em causas sociais e por controvérsias relacionadas a suas opiniões sobre questões de gênero.",
-            "email": "Info@jkrowling.com",
-            "imagem": "https://d.ibtimes.co.uk/en/full/1407361/j-k-rowling.webp?w=736&f=2b2c9a7c0a49ac2bb1207276a337a04f"
-        }
-    ],
-    "livro": [
-        {
-            "id":1,
-            "nome":"Harry Potter e a Ordem da Fênix",
-            "imagem": "https://img.bertrand.pt/images/harry-potter-e-a-ordem-da-fenix-j-k-rowling/NDV8NDUzNjJ8NzU0Mjl8MTQxNDM2ODAwMDAwMA==/500x",
-            "descricao":"Após um verão desastroso, Harry volta para o seu quinto ano em Hogwarts, um dos mais difíceis que terá de encarar. Pouquíssimos alunos e pais acreditam nele ou em Dumbledore sobre a volta de Voldemort, e uma série interminável de artigos circula dizendo que eles estão completamente malucos. Ainda por cima, Dolores Umbridge, a nova professora de Defesa Contra as Artes das Trevas, prova ser a pessoa mais repugnante que Harry já conheceu.",
-            "dataAquisicao":"2025-01-01",
-            "conservacao": "Usado",
-            "id_edi": 1,
-            "id_aut": 1
-        }
-    ],
-    "genero": [
-        {
-            "id":1,
-            "nome":"Ficção Científica",
-            "descricao": "Diferentemente da fantasia, que incorpora elementos mágicos, a ficção científica se fundamenta em conceitos plausíveis dentro da ciência conhecida ou especulativa."
-        }
-    ]
+  "estado": [
+    {
+      "id": 1,
+      "uf": "RO",
+      "nome": "Rondônia"
+    }
+  ],
+  "cidade": [
+    {
+      "id": 1,
+      "nome": "Ji-Paraná",
+      "id_est": 1
+    }
+  ],
+  "usuario": [
+    {
+      "id": 1,
+      "nome": "admin",
+      "email": "admin@email.com",
+      "contato": "(69)99280-5678",
+      "admin": true,
+      "senha": "admin",
+      "avaliacao": 5,
+      "id_cid": 1
+    },
+    {
+      "id": 2,
+      "nome": "Leyukezer Cruz de Lima",
+      "email": "leyukezer@gmail.com",
+      "contato": "69993542265",
+      "admin": false,
+      "senha": "leyukezer",
+      "avaliacao": 0,
+      "id_cid": 1
+    }
+  ],
+  "editora": [
+    {
+      "id": 1,
+      "nome": "Rocco",
+      "url": "https://rocco.com.br/rocco/",
+      "contato": "rocco@rocco.com.br"
+    },
+    {
+      "id": {},
+      "nome": "Galera",
+      "url": "https://www.record.com.br/editoras/galera/",
+      "email": "sac@record.com.br"
+    }
+  ],
+  "autor": [
+    {
+      "id": 1,
+      "nome": "J.K. Rowling",
+      "dataNascimento": "1965-01-31",
+      "biografia": "J.K. Rowling é uma escritora britânica nascida em 31 de julho de 1965, conhecida mundialmente por criar a série *Harry Potter*, que se tornou um fenômeno literário e cinematográfico. Antes do sucesso, enfrentou dificuldades pessoais e financeiras, mas persistiu na escrita. Além de *Harry Potter*, escreveu romances adultos como *Morte Súbita* e a série policial *Cormoran Strike* sob o pseudônimo Robert Galbraith. Ela também é conhecida por seu envolvimento em causas sociais e por controvérsias relacionadas a suas opiniões sobre questões de gênero.",
+      "email": "Info@jkrowling.com",
+      "imagem": "https://d.ibtimes.co.uk/en/full/1407361/j-k-rowling.webp?w=736&f=2b2c9a7c0a49ac2bb1207276a337a04f"
+    },
+    {
+      "id": {},
+      "nome": "Cassandra Clare",
+      "dataNascimento": "1983-07-27",
+      "biografia": "Cassandra Clare é filha de pais americanos e nasceu em Teerã, Irã, e passou grande parte de sua infância viajando com sua família, incluindo uma expedição ao Himalaia quando bebê, que a fez viver durante um mês dentro da mochila de seu pai. Ela viveu na França, Inglaterra e Suíça antes de completar dez anos. Por sua família mudar-se tanto, ela encontrou conforto nos livros e sempre tinha um em baixo dos braços.",
+      "email": "cassandraclare@gmail.com",
+      "imagem": "https://th.bing.com/th/id/OIP.felCVoiZewmjyOXEAC9bPQHaEK?w=299&h=180&c=7&r=0&o=7&pid=1.7&rm=3"
+    }
+  ],
+  "livro": [
+    {
+      "id": 1,
+      "nome": "Harry Potter e a Ordem da Fênix",
+      "imagem": "https://img.bertrand.pt/images/harry-potter-e-a-ordem-da-fenix-j-k-rowling/NDV8NDUzNjJ8NzU0Mjl8MTQxNDM2ODAwMDAwMA==",
+      "descricao": "Após um verão desastroso, Harry volta para o seu quinto ano em Hogwarts, um dos mais difíceis que terá de encarar. Pouquíssimos alunos e pais acreditam nele ou em Dumbledore sobre a volta de Voldemort, e uma série interminável de artigos circula dizendo que eles estão completamente malucos. Ainda por cima, Dolores Umbridge, a nova professora de Defesa Contra as Artes das Trevas, prova ser a pessoa mais repugnante que Harry já conheceu.",
+      "dataAquisicao": "2025-01-01",
+      "conservacao": "Usado",
+      "id_edi": 1,
+      "id_aut": 1
+    }
+  ],
+  "genero": [
+    {
+      "id": 1,
+      "nome": "Ficção Científica",
+      "descricao": "Diferentemente da fantasia, que incorpora elementos mágicos, a ficção científica se fundamenta em conceitos plausíveis dentro da ciência conhecida ou especulativa."
+    }
+  ]
 }

@@ -28,13 +28,13 @@ Siga as instruções abaixo para executar o projeto em seu ambiente local:
 
 1. **Instale as dependências:**
 
-   ```
+   ```bash
    npm install
    ```
 
 2. **Execute a aplicação:**
 
-   ```
+   ```bash
    npm run dev
    ```
 

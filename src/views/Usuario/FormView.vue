@@ -4,7 +4,7 @@
       <div class="card my-4">
         <div
           class="bg-secondary shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-start align-items-center">
-          <h6 class="text-white  ps-3">Novo Cadastro de Usuário</h6>
+          <h6 class="text-white  ps-3">Usuário</h6>
         </div>
       </div>
       <div class="container px-0 pb-2">
@@ -85,6 +85,8 @@ import { useVuelidate } from '@vuelidate/core';
 import { required, email, minLength, helpers, numeric } from '@vuelidate/validators';
 import { api } from "@/common/http";
 import { Toast } from "@/common/toast";
+import { AxiosError } from "axios";
+import Swal from "sweetalert2";
 
 export default defineComponent({
   name: 'FormView',
@@ -92,6 +94,24 @@ export default defineComponent({
   setup() {
     return {
       v$: useVuelidate()
+    }
+  },
+
+  computed: {
+    id() {
+      return this.$route.params.id || null;
+    },
+
+    ehEdicao() {
+      return !!this.id;
+    }
+  },
+
+  mounted() {
+    this.buscarCidades();
+
+    if (this.ehEdicao) {
+      this.carregarDados();
     }
   },
 
@@ -122,39 +142,56 @@ export default defineComponent({
     }
   },
 
-  mounted() {
-    this.buscarCidades();
-  },
-
   methods: {
-    async buscarIdUsuario(): Promise<number> {
-      try {
-        const response = await api.get('/usuario');
+    async carregarDados() {
 
-        if (response.status == 200) {
-          const listaUsuario = response.data;
-          const ultimoid = listaUsuario.length + 1;
-          return ultimoid;
+      try {
+        const response = await api.get(`/usuario/${this.id}`);
+
+        if (response.status != 200) {
+          Toast.fire({
+            icon: 'error',
+            title: 'Ocorreram Erros ao buscar a Informação!'
+          }).then(() => {
+            this.$router.push('/usuarios');
+          });
         }
+
+        const dados = response.data;
+
+        this.formDados = {
+          nome: dados.nome,
+          email: dados.email,
+          contato: dados.contato,
+          admin: dados.admin,
+          senha: dados.senha,
+          avaliacao: dados.avaliacao,
+          cidade: dados.cidade.id
+        }
+
       } catch (error) {
         console.error(error);
       }
-      return 1;
+
     },
+
     async buscarCidades() {
       try {
         const response = await api.get('/cidade');
 
         if (response.status == 200) {
-          this.listaCidades = response.data;
-          console.log('Cidades carregadas!');
+          if (response.data.length > 0) {
+            this.listaCidades = response.data;
+          }
         }
 
       } catch (error) {
         console.error(error);
       }
     },
+
     async salvar() {
+
       const result = await this.v$.$validate()
       if (!result) {
         return
@@ -165,6 +202,12 @@ export default defineComponent({
       }
 
       try {
+        if (this.ehEdicao) {
+          this.edicaoSalvar(dados);
+
+          return;
+        }
+
         const response = await api.post('/usuario', dados).then(() => {
           Toast.fire({
             icon: 'success',
@@ -172,21 +215,76 @@ export default defineComponent({
           }).then(() => {
             this.$router.push('/usuarios');
           });
-        });;
+        });
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          const { status, response } = error;
 
-        if (response.status == 201 || response.status == 200) {
-          
+          if (status && status >= 500) {
+            Toast.fire({
+              icon: 'error',
+              title: 'Não foi possivel Cadastrar Usuario!'
+            }).then(() => {
+              this.$router.push('/usuarios');
+            });
+            console.error(error);
+          }
+
+          const mensagensError = this.extrairMensagensDeErro(response?.data?.errors);
+
+          Swal.fire({
+            text: mensagensError.join(', '),
+            icon: 'error',
+            showConfirmButton: true,
+            timer: 5000,
+          });
+
+        }
+      }
+    },
+
+    async edicaoSalvar(dados) {
+      try {
+        const response = await api.put(`/usuario/${this.id}`, dados);
+
+        if (!this.notificarError(response.status)) {
+          Toast.fire({
+            icon: 'success',
+            title: 'Usuario atualizado com sucesso!'
+          }).then(() => {
+            this.$router.push('/usuarios');
+          });
         }
       } catch (error) {
-        Toast.fire({
-          icon: 'error',
-          title: 'Não foi possivel Cadastrar Usuario!'
-        }).then(() => {
-          this.$router.push('/usuarios');
-        });
         console.error(error);
       }
     },
+    notificarError(status: any) {
+      if (status != 200 && status != 201) {
+        Toast.fire({
+          icon: "error",
+          title: "Ocorreram erros ao processar os dados!"
+        });
+
+        return true;
+      }
+
+      return false;
+    },
+
+    extrairMensagensDeErro(errors: any) {
+      const mensagens = [];
+
+      if (errors) {
+        for (const campo in errors) {
+          if (Array.isArray(errors[campo])) {
+            mensagens.push(...errors[campo]);
+          }
+        }
+      }
+
+      return mensagens;
+    }
   }
 });
 </script>

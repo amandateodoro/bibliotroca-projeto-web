@@ -26,6 +26,11 @@ const router = createRouter({
       name: 'Novo Usuario',
       component: () => import('../views/Usuario/FormView.vue'),
     },
+    {
+      path: '/usuarios/:id/update',
+      name: 'Editar Usuario',
+      component: () => import('../views/Usuario/FormView.vue'),
+    },
 
     // AUTOR
     {
@@ -61,7 +66,7 @@ const router = createRouter({
       path: '/editoras/create',
       name: 'Cadastrar Editora',
       component: () => import('../views/Editora/FormView.vue'),
-    },    
+    },
 
     // ESTADO
     {
@@ -74,7 +79,7 @@ const router = createRouter({
       name: 'Cadastrar Estado',
       component: () => import('../views/Estado/FormView.vue'),
     },
-    
+
     // GENERO
     {
       path: '/generos',

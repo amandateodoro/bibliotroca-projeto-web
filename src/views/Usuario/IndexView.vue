@@ -45,7 +45,7 @@
                 </td>
                 <td class="align-middle text-center text-sm">
                   <span class="text-secondary text-xs font-weight-bold">{{ usuario.avaliacao
-                  }}</span>
+                    }}</span>
                 </td>
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ usuario.cidade.nome }}</span>
@@ -67,6 +67,8 @@
 
 <script lang="ts">
 import { api } from '@/common/http';
+import { Toast } from '@/common/toast';
+import Swal from 'sweetalert2';
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -94,6 +96,53 @@ export default defineComponent({
       } catch (error) {
         console.error(error);
       }
+    },
+    editar(id) {
+      this.$router.push(`/usuarios/${id}/update`);
+    },
+
+    excluir(usuario) {
+
+      Swal.fire({
+        icon: "warning",
+        title: `Deseja realmente excluir o Usuairo ${usuario.nome}?`,
+        // showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Sim",
+        // confirmButtonColor: "#F68537",
+        cancelButtonText: 'Não',
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.excluirSalvar(usuario);
+        }
+      });
+
+    },
+
+
+    async excluirSalvar(usuario) {
+      try {
+
+        const response = await api.delete(`usuario/${usuario.id}`);
+
+        if (response.status == 200) {
+          Toast.fire({
+            icon: "success",
+            title: `Usuario excluido com sucesso!`
+          });
+
+          this.buscarUsuarios();
+
+          return;
+        }
+
+        Toast.fire({
+          icon: "error",
+          title: 'Ocorreram erros ao processar a solicitação'
+        });
+
+      } catch { }
     },
   }
 

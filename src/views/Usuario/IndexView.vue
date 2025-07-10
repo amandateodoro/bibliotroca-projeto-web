@@ -48,7 +48,7 @@
                   }}</span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ usuario.id_cid }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">{{ usuario.cidade.nome }}</span>
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
@@ -66,7 +66,7 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
+import { api } from '@/common/http';
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -74,7 +74,7 @@ export default defineComponent({
 
   data() {
     return {
-      usuarios: [] as Array<{ id: number; nome: string; email: string; contato: string; avaliacao: number; id_cid: number; }>,
+      usuarios: [],
     }
   },
 
@@ -83,26 +83,9 @@ export default defineComponent({
   },
 
   methods: {
-    async buscarCidade(cidade: number) {
-      try {
-        const response = await axios.get('http://localhost:3000/cidade', {
-          params: {
-            id: cidade
-          }
-        });
-
-        if(response.status == 200){
-          return response.data;
-        }
-
-      } catch (error) {
-        console.error(error);
-      }
-      return 'Desconhecida';
-    },
     async buscarUsuarios() {
       try {
-        const response = await axios.get('http://localhost:3000/usuario');
+        const response = await api.get('/usuario');
 
         if (response.status == 200) {
           this.usuarios = response.data;

@@ -46,13 +46,13 @@
             <div class="row mt-2">
               <div class="col-5">
                 <label for="txtCidade" class="form-label">Cidade <a style="color: red;">*</a></label>
-                <select name="txtCidade" id="txtCidade" class="form-control px-2" v-model="formDados.id_cid">
+                <select name="txtCidade" id="txtCidade" class="form-control px-2" v-model="formDados.cidade">
                   <option disabled selected>Selecione uma Cidade</option>
                   <option v-for="(cidade, index) in listaCidades" :key="index" :value="cidade.id"> {{ cidade.nome }}
                   </option>
                 </select>
-                <div class="text-danger" v-if="v$.formDados.id_cid.$errors.length">
-                  <p class="fs-6" v-for="error of v$.formDados.id_cid.$errors" :key="error.$uuid">{{ error.$message }}
+                <div class="text-danger" v-if="v$.formDados.cidade.$errors.length">
+                  <p class="fs-6" v-for="error of v$.formDados.cidade.$errors" :key="error.$uuid">{{ error.$message }}
                   </p>
                 </div>
               </div>
@@ -83,7 +83,7 @@
 import { defineComponent } from "vue";
 import { useVuelidate } from '@vuelidate/core';
 import { required, email, minLength, helpers, numeric } from '@vuelidate/validators';
-import axios from "axios";
+import { api } from "@/common/http";
 import { Toast } from "@/common/toast";
 
 export default defineComponent({
@@ -97,7 +97,7 @@ export default defineComponent({
 
   data() {
     return {
-      listaCidades: [] as Array<{ id: number; nome: string; id_est: number }>,
+      listaCidades: [],
       formDados: {
         nome: "",
         email: "",
@@ -105,7 +105,7 @@ export default defineComponent({
         admin: false,
         senha: "",
         avaliacao: 0,
-        id_cid: 0
+        cidade: 0
       }
     }
   },
@@ -116,7 +116,7 @@ export default defineComponent({
         nome: { required: helpers.withMessage('O nome é Obrigatório', required), minLength: helpers.withMessage('Nome precisa conter no mínimo 4 letras!', minLength(4)) },
         email: { required: helpers.withMessage('O email é obrigatório', required), email: helpers.withMessage('O email é inválido!', email) },
         contato: { required: helpers.withMessage('O telefone é obrigatório', required), numeric: helpers.withMessage('O telefone precisa ser apenas numeros <ex: (69) 99265-3985>', numeric) },
-        id_cid: { required: helpers.withMessage('A cidade é obrigatória', required) },
+        cidade: { required: helpers.withMessage('A cidade é obrigatória', required) },
         senha: { required: helpers.withMessage('A senha é obrigatória', required), minLength: helpers.withMessage('Senha precisa conter no mínimo 6 caracteres!', minLength(6)) }
       }
     }
@@ -129,7 +129,7 @@ export default defineComponent({
   methods: {
     async buscarIdUsuario(): Promise<number> {
       try {
-        const response = await axios.get('http://localhost:3000/usuario');
+        const response = await api.get('/usuario');
 
         if (response.status == 200) {
           const listaUsuario = response.data;
@@ -143,7 +143,7 @@ export default defineComponent({
     },
     async buscarCidades() {
       try {
-        const response = await axios.get('http://localhost:3000/cidade');
+        const response = await api.get('/cidade');
 
         if (response.status == 200) {
           this.listaCidades = response.data;
@@ -161,27 +161,28 @@ export default defineComponent({
       }
 
       const dados = {
-        ...this.formDados,
-        id: this.buscarIdUsuario()
+        ...this.formDados
       }
 
       try {
-        const response = await axios.post('http://localhost:3000/usuario', dados);
-
-        if (response.status == 201 || response.status == 200) {
+        const response = await api.post('/usuario', dados).then(() => {
           Toast.fire({
             icon: 'success',
             title: 'Usuario Adicionado com sucesso!'
           }).then(() => {
-            this.$router.push('/usuarios')
+            this.$router.push('/usuarios');
           });
+        });;
+
+        if (response.status == 201 || response.status == 200) {
+          
         }
       } catch (error) {
         Toast.fire({
           icon: 'error',
           title: 'Não foi possivel Cadastrar Usuario!'
         }).then(() => {
-          this.$router.push('/usuarios')
+          this.$router.push('/usuarios');
         });
         console.error(error);
       }

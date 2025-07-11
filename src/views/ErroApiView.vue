@@ -1,30 +1,45 @@
 <template>
-  <div class="vh-100 d-flex justify-content-center align-items-center bg-dark">
+  <div class="vh-100 d-flex  flex-column justify-content-center align-items-center bg-dark">
     <div class="text-center">
-      <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" fill="currentColor"
-        class="text-warning bi bi-exclamation-triangle-fill float-animation" viewBox="0 0 16 16">
-        <path
-          d="M8.982 1.566a1.13 1.13 0 0 0-1.964 0L.165 13.233c-.457.778.091 1.767.982 1.767h13.706c.89 0 1.438-.99.982-1.767L8.982 1.566zm-.982.874c.2 0 .378.118.463.3l.002.003 6.857 11.616a.535.535 0 0 1-.463.812H1.141a.535.535 0 0 1-.463-.812L7.537 2.743a.535.535 0 0 1 .463-.3zM8 5c-.535 0-.954.462-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507c.054-.533-.365-.995-.9-.995zm-.002 6a1 1 0 1 0 .002 2 1 1 0 0 0-.002-2z" />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="160" height="160" class="alert-3d-icon">
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffcc00" stop-opacity="1" />
+            <stop offset="100%" stop-color="#ff8800" stop-opacity="1" />
+          </radialGradient>
+          <filter id="shadow">
+            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.4" />
+          </filter>
+        </defs>
+
+        <polygon points="32,4 60,56 4,56" fill="url(#glow)" stroke="#000" stroke-width="1" filter="url(#shadow)" />
+        <rect x="30" y="22" width="4" height="18" fill="#000" rx="2" />
+        <circle cx="32" cy="46" r="3" fill="#000" />
       </svg>
     </div>
+
+    <div class="d-flex justify-content-center align-items-center mt-3 text-center text-white px-3">
+      <div>
+        <h2 class="mb-3">API Indisponível</h2>
+        <p>A aplicação não conseguiu se conectar ao servidor.</p>
+        <p>Verifique se API BiblioTroca está em execução.</p>
+        <RouterLink to="/" class="btn btn-warning mt-4">Tentar Novamente</RouterLink>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <style>
-.float-animation {
-  animation: floatUpDown 2s ease-in-out infinite;
+.alert-3d-icon {
+  animation: float3d 2s ease-in-out infinite;
   transform-origin: center;
+  transform-style: preserve-3d;
 }
 
-@keyframes floatUpDown {
-
-  0%,
-  100% {
-    transform: translateY(0) rotateX(0deg);
-  }
-
-  50% {
-    transform: translateY(-12px) rotateX(8deg);
-  }
+@keyframes float3d {
+  0%, 100% { transform: translateY(0) rotateX(0deg); }
+  50%      { transform: translateY(-10px) rotateX(6deg); }
 }
+
 </style>

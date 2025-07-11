@@ -103,6 +103,13 @@ const router = createRouter({
       name: 'Cadastrar Livro',
       component: () => import('../views/Livro/FormView.vue'),
     },
+
+    //Login
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('../views/Auth/LoginView.vue')
+    },
   ],
 })
 

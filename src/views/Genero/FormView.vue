@@ -42,10 +42,10 @@
   </div>
 </template>
 <script lang="ts">
+import { api } from "@/common/http";
 import { Toast } from "@/common/toast";
 import useVuelidate from "@vuelidate/core";
 import { helpers, minLength, required } from "@vuelidate/validators";
-import axios from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -84,7 +84,7 @@ export default defineComponent({
   methods: {
     async buscarIdGenero() {
       try {
-        const response = await axios.get('http://localhost:3000/genero');
+        const response = await api.get('/genero');
 
         if (response.status == 200) {
           const listaGenero = response.data;
@@ -111,7 +111,7 @@ export default defineComponent({
       }
 
       try {
-        const response = await axios.post('http://localhost:3000/genero', dados);
+        const response = await api.post('/genero', dados);
 
         if(response.status == 200 || response.status == 201){
           Toast.fire({

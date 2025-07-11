@@ -47,7 +47,7 @@
               <div class="col-5">
                 <label for="txtCidade" class="form-label">Cidade <a style="color: red;">*</a></label>
                 <select name="txtCidade" id="txtCidade" class="form-control px-2" v-model="formDados.cidade">
-                  <option disabled selected>Selecione uma Cidade</option>
+                  <option disabled value="0">Selecione uma Cidade</option>
                   <option v-for="(cidade, index) in listaCidades" :key="index" :value="cidade.id"> {{ cidade.nome }}
                   </option>
                 </select>
@@ -82,7 +82,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useVuelidate } from '@vuelidate/core';
-import { required, email, minLength, helpers, numeric } from '@vuelidate/validators';
+import { required, email, minLength, helpers, numeric, minValue } from '@vuelidate/validators';
 import { api } from "@/common/http";
 import { Toast } from "@/common/toast";
 import { AxiosError } from "axios";
@@ -135,8 +135,8 @@ export default defineComponent({
       formDados: {
         nome: { required: helpers.withMessage('O nome é Obrigatório', required), minLength: helpers.withMessage('Nome precisa conter no mínimo 4 letras!', minLength(4)) },
         email: { required: helpers.withMessage('O email é obrigatório', required), email: helpers.withMessage('O email é inválido!', email) },
-        contato: { required: helpers.withMessage('O telefone é obrigatório', required), numeric: helpers.withMessage('O telefone precisa ser apenas numeros <ex: (69) 99265-3985>', numeric) },
-        cidade: { required: helpers.withMessage('A cidade é obrigatória', required) },
+        contato: { required: helpers.withMessage('O telefone é obrigatório', required), numeric: helpers.withMessage('O telefone precisa ser apenas numeros <ex: 69992653985>', numeric) },
+        cidade: { required: helpers.withMessage('A cidade é obrigatória', required), minValue: helpers.withMessage('Selecione uma cidade!', minValue(1)) },
         senha: { required: helpers.withMessage('A senha é obrigatória', required), minLength: helpers.withMessage('Senha precisa conter no mínimo 6 caracteres!', minLength(6)) }
       }
     }

@@ -108,10 +108,19 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item d-flex align-items-center">
-            <a href="/login" class="nav-link text-body font-weight-bold px-0">
+          <li class="nav-item dropdown d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-body px-0" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="material-symbols-rounded">account_circle</i>
             </a>
+            <ul class="dropdown-menu dropdown-menu-end px-2 py-2 me-sm-n4">
+              <li>
+                <a class="dropdown-item border-radius-md" href="javascript:;" @click="fazerLogout">
+                  <i class="material-symbols-rounded me-2">logout</i> Sair
+                </a>
+              </li>
+              <!-- 👤 Aqui você pode futuramente adicionar outras opções -->
+              <!-- <li><a class="dropdown-item" href="/perfil"><i class="material-symbols-rounded me-2">manage_accounts</i> Perfil</a></li> -->
+            </ul>
           </li>
         </ul>
       </div>
@@ -121,6 +130,7 @@
 </template>
 
 <script lang="ts">
+import { Toast } from '@/common/toast';
 import { computed, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -138,6 +148,14 @@ export default defineComponent({
   },
   data() {
 
+  },
+  methods: {
+    fazerLogout() {
+      localStorage.removeItem('usuario'); // remove o usuário
+      this.$router.push('/login'); // redireciona para tela de login
+
+      Toast.fire({ icon: 'info', title: 'Sessão encerrada!' });
+    }
   }
 });
 </script>

@@ -48,9 +48,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Usuario` (
   `id_usu` INT NOT NULL,
   `nome_usu` VARCHAR(45) NOT NULL,
-  `email_usu` VARCHAR(45) NULL,
-  `contato_usu` VARCHAR(45) NOT NULL,
-  `admin_usu` boolean NOT NULL DEFAULT false,
+  `email_usu` VARCHAR(45) NOT NULL,
+  `contato_usu` VARCHAR(45) NULL,
+  `admin_usu` BOOLEAN NOT NULL DEFAULT FALSE,
   `senha_usu` VARCHAR(255) NOT NULL,
   `avaliacao_usu` INT NULL,
   `id_cid_fk` INT NOT NULL,

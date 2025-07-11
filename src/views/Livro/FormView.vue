@@ -114,6 +114,7 @@ import { defineComponent } from "vue";
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers, minLength } from '@vuelidate/validators';
 import axios, { AxiosError } from "axios";
+import Swal from 'sweetalert2';
 
 export default defineComponent({
   name: 'FormView',

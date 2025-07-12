@@ -18,7 +18,7 @@ USE `bd_bibliotroca` ;
 -- Table `bd_bibliotroca`.`Estado`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Estado` (
-  `id_est` INT NOT NULL,
+  `id_est` INT NOT NULL AUTO_INCREMENT,
   `uf_est` VARCHAR(45) NULL,
   `nome_est` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_est`))
@@ -29,7 +29,7 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Cidade`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Cidade` (
-  `id_cid` INT NOT NULL,
+  `id_cid` INT NOT NULL AUTO_INCREMENT,
   `nome_cid` VARCHAR(45) NOT NULL,
   `id_est_fk` INT NOT NULL,
   PRIMARY KEY (`id_cid`),
@@ -46,7 +46,7 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Usuario` (
-  `id_usu` INT NOT NULL,
+  `id_usu` INT NOT NULL AUTO_INCREMENT,
   `nome_usu` VARCHAR(45) NOT NULL,
   `email_usu` VARCHAR(45) NOT NULL,
   `contato_usu` VARCHAR(45) NULL,
@@ -68,7 +68,7 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Editora`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Editora` (
-  `id_edi` INT NOT NULL,
+  `id_edi` INT NOT NULL AUTO_INCREMENT,
   `nome_edi` VARCHAR(45) NOT NULL,
   `url_edi` VARCHAR(45) NULL,
   `contato_edi` VARCHAR(45) NULL,
@@ -80,7 +80,7 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Autor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Autor` (
-  `id_aut` INT NOT NULL,
+  `id_aut` INT NOT NULL AUTO_INCREMENT,
   `nome_aut` VARCHAR(45) NOT NULL,
   `email_aut` VARCHAR(45) NULL,
   `imagem_aut` LONGTEXT NULL,
@@ -94,7 +94,7 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Livro`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Livro` (
-  `id_liv` INT NOT NULL,
+  `id_liv` INT NOT NULL AUTO_INCREMENT,
   `nome_liv` VARCHAR(45) NOT NULL,
   `imagem_liv` LONGTEXT NULL,
   `descricao_liv` VARCHAR(45) NULL,
@@ -122,7 +122,7 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Genero`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Genero` (
-  `id_gen` INT NOT NULL,
+  `id_gen` INT NOT NULL AUTO_INCREMENT,
   `nome_gen` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_gen`))
 ENGINE = InnoDB;
@@ -132,7 +132,7 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Desejo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Desejo` (
-  `id_des` INT NOT NULL,
+  `id_des` INT NOT NULL AUTO_INCREMENT,
   `id_usu_fk` INT NOT NULL,
   `id_liv_fk` INT NOT NULL,
   PRIMARY KEY (`id_des`),
@@ -155,7 +155,7 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Genero_Livro`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Genero_Livro` (
-  `id_gen_liv` INT NOT NULL,
+  `id_gen_liv` INT NOT NULL AUTO_INCREMENT,
   `id_liv_fk` INT NOT NULL,
   `id_gen_fk` INT NOT NULL,
   PRIMARY KEY (`id_gen_liv`),

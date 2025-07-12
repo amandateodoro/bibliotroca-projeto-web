@@ -255,6 +255,7 @@ export default defineComponent({
         console.error(error);
       }
     },
+    
     notificarError(status: any) {
       if (status != 200 && status != 201) {
         Toast.fire({

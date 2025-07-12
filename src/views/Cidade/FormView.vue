@@ -24,7 +24,7 @@
             <div class="col-5">
               <label for="txtName" class="form-label">Estado <a style="color: red;">*</a></label>
               <select name="txtEstado" id="txtEstado" class="form-control px-2" v-model="formDados.estado">
-                <option disabled selected>Selecione um Estado</option>
+                <option disabled values="0">Selecione um Estado</option>
                 <option v-for="(estado, index) in listaEstados"
                 :key="index" :value="estado.id"> {{ estado.nome }} - {{ estado.uf }}</option>
               </select>
@@ -205,7 +205,7 @@ export default defineComponent({
         console.error(error);
       }
     },
-    
+
     notificarError(status: any) {
       if (status != 200 && status != 201) {
         Toast.fire({

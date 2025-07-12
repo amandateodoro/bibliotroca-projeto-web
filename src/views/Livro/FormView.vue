@@ -38,7 +38,7 @@
                   v-model="formDados.descricao"></textarea>
                 <div class="text-danger" v-if="v$.formDados.descricao.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.descricao.$errors" :key="error.$uuid">{{ error.$message
-                  }}</p>
+                    }}</p>
                 </div>
               </div>
             </div>
@@ -72,13 +72,13 @@
               <div class="col-5">
                 <label for="txtEditora" class="form-label">Editora <a style="color: red;">*</a></label>
                 <select name="txtEditora" id="txtEditora" class="form-control px-2" v-model="formDados.editora">
-                  <option disabled selected>Selecione uma Editora</option>
+                  <option disabled value="0">Selecione uma Editora</option>
                   <option v-for="(editora, index) in listaEditoras" :key="index" :value="editora.id"> {{ editora.nome }}
                   </option>
                 </select>
                 <div class="text-danger" v-if="v$.formDados.id_edi.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.id_edi.$errors" :key="error.$uuid">{{ error.$message
-                  }}</p>
+                    }}</p>
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@
               <div class="col-5">
                 <label for="txtAutor" class="form-label">Autor <a style="color: red;">*</a></label>
                 <select name="txtAutor" id="txtAutor" class="form-control px-2" v-model="formDados.autor">
-                  <option disabled selected>Selecione um Autor</option>
+                  <option disabled value="0">Selecione um Autor</option>
                   <option v-for="(autor, index) in listaAutores" :key="index" :value="autor.id"> {{ autor.nome }}
                   </option>
                 </select>
@@ -112,8 +112,7 @@ import { api } from '@/common/http';
 import { Toast } from '@/common/toast';
 import { defineComponent } from "vue";
 import { useVuelidate } from '@vuelidate/core'
-import { required, helpers, minLength } from '@vuelidate/validators';
-import axios, { AxiosError } from "axios";
+import { required, helpers, minLength, minValue } from '@vuelidate/validators';
 import Swal from 'sweetalert2';
 
 export default defineComponent({
@@ -131,7 +130,7 @@ export default defineComponent({
     },
 
     ehEdicao() {
-      return!!this.id;
+      return !!this.id;
     }
   },
 
@@ -152,8 +151,8 @@ export default defineComponent({
         descricao: '',
         dataAquisicao: '',
         conservacao: '',
-        editora: '',
-        autor: ''
+        editora: 0,
+        autor: 0
       },
       listaEditoras: [] as Array<{ id: number; nome: string; }>,
       listaAutores: [] as Array<{ id: number; nome: string; }>,
@@ -167,8 +166,8 @@ export default defineComponent({
         descricao: { required: helpers.withMessage('A descrição é obrigatória', required), minLength: helpers.withMessage('faça uma pequena descrição', minLength(3)) },
         dataAquisicao: { required: helpers.withMessage('A Data de Aquisição é obrigatório', required) },
         conservacao: { required: helpers.withMessage('O estado de conservação é obrigatório', required) },
-        editora: { required: helpers.withMessage('A editora é obrigatória', required) },
-        autor: { required: helpers.withMessage('O autor é obrigatório', required) }
+        editora: { required: helpers.withMessage('A editora é obrigatória', required), minValue: helpers.withMessage('Selecione uma Editora!', minValue(1)) },
+        autor: { required: helpers.withMessage('O autor é obrigatório', required), minValue: helpers.withMessage('Selecione um Autor!', minValue(1)) }
       }
     }
   },
@@ -246,15 +245,15 @@ export default defineComponent({
           Toast.fire({
             icon: 'success',
             title: 'Cadastro feito com sucesso!'
-          }).then (() => {
+          }).then(() => {
             this.$router.push('/livros')
           });
         });
       } catch (error) {
-        if (error instanceof AxiosError){
+        if (error instanceof AxiosError) {
           const { status, response } = error;
 
-          if(status && status >=500){
+          if (status && status >= 500) {
             Toast.fire({
               icon: 'error',
               title: 'Não foi possivel realizar o cadastro!'
@@ -277,11 +276,11 @@ export default defineComponent({
       }
     },
 
-    async edicaoSalvar(dados){
-      try{
+    async edicaoSalvar(dados) {
+      try {
         const response = await api.put(`/livro/${this.id}`, dados);
 
-        if (!this.notificarError(response.status)){
+        if (!this.notificarError(response.status)) {
           Toast.fire({
             icon: 'success',
             title: 'Atualizado com sucesso!'
@@ -289,7 +288,7 @@ export default defineComponent({
             this.$router.push('/livros');
           });
         }
-      }catch(error){
+      } catch (error) {
         console.error(error);
       }
     },

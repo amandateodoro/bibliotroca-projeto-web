@@ -64,8 +64,12 @@
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                    data-original-title="Edit user">
-                    Edit
+                    data-original-title="Edit user" @click="editar(livro)">
+                    🖊
+                  </a>
+                  <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                    data-original-title="Edit user" @click="excluir(livro)">
+                    🗑
                   </a>
                 </td>
               </tr>
@@ -78,7 +82,9 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
+import { api } from "@/common/http";
+import { Toast } from "@/common/toast";
+import Swal from "sweetalert2";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -86,7 +92,7 @@ export default defineComponent({
 
   data() {
     return {
-      listaLivros: [] as Array<{ id: number; imagem:string; nome: string; descricao: string, dataAquisicao: string; conservacao: string; id_edi: number; id_aut: number; }>,
+      listaLivros: [],
     }
   },
 
@@ -98,7 +104,7 @@ export default defineComponent({
   methods: {
     async buscarLivros() {
       try {
-        const response = await axios.get('http://localhost:3000/livro');
+        const response = await api.get('/livro');
 
         if (response.status == 200) {
           this.listaLivros = response.data;
@@ -108,36 +114,52 @@ export default defineComponent({
         console.error(error);
       }
     },
-    async buscarEditora(editora: number): Promise<string> {
-      try {
-        const response = await axios.get('http://localhost:3000/editora', {
-          params: {
-            id: editora
-          }
-        });
 
-        if (response.status == 200 || response.status == 201) {
-          return response.data.nome;
-        }
-      } catch (error) {
-        console.error(error);
-      }
-      return 'Desconhecida'
+    editar(id) {
+      this.$router.push(`/livros/${id}/update`);
     },
-    async buscarAutor(autor: number) {
+
+    excluir(livro) {
+
+      Swal.fire({
+        icon: "warning",
+        title: `Deseja realmente excluir o Livro ${livro.nome}?`,
+        // showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Sim",
+        // confirmButtonColor: "#F68537",
+        cancelButtonText: 'Não',
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.excluirSalvar(livro);
+        }
+      });
+
+    },
+
+    async excluirSalvar(livro) {
       try {
-        const response = await axios.get('http://localhost:3000/autor', {
-          params: {
-            id: autor
-          }
-        });
+
+        const response = await api.delete(`livro/${livro.id}`);
 
         if (response.status == 200) {
-          return response.data.nome.toString();
+          Toast.fire({
+            icon: "success",
+            title: `Livro excluido com sucesso!`
+          });
+
+          this.buscarLivros();
+
+          return;
         }
-      } catch (error) {
-        console.error(error);
-      }
+
+        Toast.fire({
+          icon: "error",
+          title: 'Ocorreram erros ao processar a solicitação'
+        });
+
+      } catch { }
     },
   }
 

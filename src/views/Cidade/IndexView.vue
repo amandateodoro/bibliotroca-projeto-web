@@ -24,22 +24,22 @@
               <tr v-for="(cidade, index) in listaCidades" :key="index">
                 <td>
                   <div class="d-flex px-2 py-1">
-                    <div>
-                      <img src="https://images-na.ssl-images-amazon.com/images/I/51S6Vya%2BjyL.__AC_SX300_QL70_ML2_.jpg"
-                        class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                    </div>
                     <div class="d-flex flex-column justify-content-center">
                       <h6 class="mb-0 text-sm">{{ cidade.nome }}</h6>
                     </div>
                   </div>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ cidade.id_est }}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ cidade.estado.nome }}</p>
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                    data-original-title="Edit user">
-                    Edit
+                    data-original-title="Edit user" @click="editar(cidade)">
+                    🖊
+                  </a>
+                  <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                    data-original-title="Edit user" @click="excluir(cidade)">
+                    🗑
                   </a>
                 </td>
               </tr>
@@ -52,7 +52,9 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
+import { api } from "@/common/http";
+import { Toast } from "@/common/toast";
+import Swal from "sweetalert2";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -60,7 +62,7 @@ export default defineComponent({
 
   data() {
     return {
-      listaCidades: [] as Array<{ id: number; nome: string; id_est: number; }>,
+      listaCidades: [],
     }
   },
 
@@ -69,24 +71,10 @@ export default defineComponent({
   },
 
   methods: {
-    async buscarEstadoId(estado: number) {
-      try {
-        const response = await axios.get('http://localhost:3000/estado', {
-          params: {
-            id: estado
-          }
-        });
 
-        if (response.status == 200) {
-          return response.data.nome.toString();
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    },
     async buscarCidades() {
       try {
-        const response = await axios.get('http://localhost:3000/cidade');
+        const response = await api.get('/cidade');
         if (response.status == 200) {
           this.listaCidades = response.data;
           console.log('Lista de Cidades Carregadas!');
@@ -95,6 +83,54 @@ export default defineComponent({
         console.error(error);
       }
     },
+    editar(id) {
+      this.$router.push(`/cidades/${id}/update`);
+    },
+
+    excluir(cidade) {
+
+      Swal.fire({
+        icon: "warning",
+        title: `Deseja realmente excluir o Cidade ${cidade.nome}?`,
+        // showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Sim",
+        // confirmButtonColor: "#F68537",
+        cancelButtonText: 'Não',
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.excluirSalvar(cidade);
+        }
+      });
+
+    },
+
+
+    async excluirSalvar(cidade) {
+      try {
+
+        const response = await api.delete(`cidade/${cidade.id}`);
+
+        if (response.status == 200) {
+          Toast.fire({
+            icon: "success",
+            title: `Cidade excluido com sucesso!`
+          });
+
+          this.buscarCidades();
+
+          return;
+        }
+
+        Toast.fire({
+          icon: "error",
+          title: 'Ocorreram erros ao processar a solicitação'
+        });
+
+      } catch { }
+    },
+
   }
 });
 </script>

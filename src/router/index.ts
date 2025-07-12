@@ -49,6 +49,12 @@ const router = createRouter({
       component: () => import('../views/Autor/FormView.vue'),
       meta: { requiresAuth: true, requiresAdmin: true }
     },
+    {
+      path: '/autores/:id/update',
+      name: 'Editar Autor',
+      component: () => import('../views/Autor/FormView.vue'),
+      meta: { requiresAuth: true, requiresAdmin: true }
+    },
 
     // CIDADE
     {
@@ -60,6 +66,12 @@ const router = createRouter({
     {
       path: '/cidades/create',
       name: 'Cadastrar Cidade',
+      component: () => import('../views/Cidade/FormView.vue'),
+      meta: { requiresAuth: true, requiresAdmin: true }
+    },
+    {
+      path: '/cidades/:id/update',
+      name: 'Editar Cidade',
       component: () => import('../views/Cidade/FormView.vue'),
       meta: { requiresAuth: true, requiresAdmin: true }
     },
@@ -77,6 +89,12 @@ const router = createRouter({
       component: () => import('../views/Editora/FormView.vue'),
       meta: { requiresAuth: true, requiresAdmin: true }
     },
+    {
+      path: '/editoras/:id/update',
+      name: 'Editar Editora',
+      component: () => import('../views/Editora/FormView.vue'),
+      meta: { requiresAuth: true, requiresAdmin: true }
+    },
 
     // ESTADO
     {
@@ -88,6 +106,12 @@ const router = createRouter({
     {
       path: '/estados/create',
       name: 'Cadastrar Estado',
+      component: () => import('../views/Estado/FormView.vue'),
+      meta: { requiresAuth: true, requiresAdmin: true }
+    },
+    {
+      path: '/estados/:id/update',
+      name: 'Editar Estado',
       component: () => import('../views/Estado/FormView.vue'),
       meta: { requiresAuth: true, requiresAdmin: true }
     },
@@ -105,6 +129,12 @@ const router = createRouter({
       component: () => import('../views/Genero/FormView.vue'),
       meta: { requiresAuth: true, requiresAdmin: true }
     },
+    {
+      path: '/generos/:id/update',
+      name: 'Editar Genero',
+      component: () => import('../views/Genero/FormView.vue'),
+      meta: { requiresAuth: true, requiresAdmin: true }
+    },
 
     // LIVRO
     {
@@ -117,7 +147,13 @@ const router = createRouter({
       path: '/livros/create',
       name: 'Cadastrar Livro',
       component: () => import('../views/Livro/FormView.vue'),
-      meta: { requiresAuth: true, requiresAdmin: true }
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/livros/:id/update',
+      name: 'Editar Livro',
+      component: () => import('../views/Livro/FormView.vue'),
+      meta: { requiresAuth: true }
     },
 
     //Login

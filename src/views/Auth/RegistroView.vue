@@ -127,7 +127,7 @@ export default defineComponent({
         const response = await api.get('/cidade');
         if (response.status == 200 || response.status == 201) {
           this.listaCidades = response.data;
-        } 
+        }
       } catch (error) {
         console.error('Erro ao carregar cidades:', error)
       }

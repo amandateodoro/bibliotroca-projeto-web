@@ -47,6 +47,8 @@ import { Toast } from "@/common/toast";
 import useVuelidate from "@vuelidate/core";
 import { helpers, minLength, required } from "@vuelidate/validators";
 import { defineComponent } from "vue";
+import Swal from "sweetalert2";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   name: 'FormView',
@@ -57,12 +59,28 @@ export default defineComponent({
     }
   },
 
+  computed: {
+    id() {
+      return this.$route.params.id || null;
+    },
+
+    ehEdicao() {
+      return !!this.id;
+    }
+  },
+
+  mounted() {
+    if (this.ehEdicao) {
+      this.carregarDados();
+    }
+  },
+
   data() {
     return {
       formDados:
       {
-        nome: '',
-        descricao: ''
+        nome: "",
+        descricao: ""
       },
     }
   },
@@ -77,28 +95,32 @@ export default defineComponent({
     }
   },
 
-  mounted() {
-
-  },
-
   methods: {
-    async buscarIdGenero() {
+    async carregarDados() {
       try {
-        const response = await api.get('/genero');
+        const response = await api.get(`/genero/${this.id}`);
 
-        if (response.status == 200) {
-          const listaGenero = response.data;
-          const ultimoid = listaGenero.length + 1;
-          return ultimoid;
-          }
-          else {
-            return 1;
-          }
-        } catch (error) {
+        if (response.status != 200) {
+          Toast.fire({
+            icon: "error",
+            title: "Ocorreram erros ao buscar a informação!"
+          }).then(() => {
+            this.$router.push('/generos');
+          });
+        } 
+
+        const dados = response.data;
+
+        this.formDados = {
+          nome: dados.nome,
+          descricao: dados.descricao
+        }
+
+      } catch (error) {
         console.error(error);
       }
-
     },
+
     async salvar() {
       const result = await this.v$.$validate()
       if (!result) {
@@ -106,31 +128,93 @@ export default defineComponent({
       }
 
       const dados = {
-        ...this.formDados,
-        id: this.buscarIdGenero()
+        ...this.formDados
       }
 
       try {
-        const response = await api.post('/genero', dados);
 
-        if(response.status == 200 || response.status == 201){
-          Toast.fire({
-            icon: "success",
-            title:"Gênero adicionado com Sucesso!"
-          }).then(() => {
-          this.$router.push('/generos')
-        });
+        if (this.ehEdicao) {
+          this.edicaoSalvar(dados);
+          return;
         }
 
-      } catch (error) {
-        Toast.fire({
-            icon: "error",
-            title:"Não foi possivel cadastrar Gênero!"
-          }).then(() => {
-          this.$router.push('/generos')
+        const response = await api.post('/genero', dados).then(() => {
+          Toast.fire({
+            icon: 'success',
+            title: 'Cadastro feito com sucesso!'
+          }).then (() => {
+            this.$router.push('/livros')
+          });
         });
+      } catch (error) {
+        if (error instanceof AxiosError){
+          const { status, response } = error;
+
+          if(status && status >=500){
+            Toast.fire({
+              icon: 'error',
+              title: 'Não foi possivel realizar o cadastro!'
+            }).then(() => {
+              this.$router.push('/livros');
+            });
+            console.error(error);
+          }
+
+          const mensagensError = this.extrairMensagensDeErro(response?.data?.errors);
+
+          Swal.fire({
+            text: mensagensError.join(', '),
+            icon: 'error',
+            showConfirmButton: true,
+            timer: 5000,
+          });
+
+        }
+      }
+    },
+
+    async edicaoSalvar(dados) {
+      try {
+        const response = await api.put(`/genero/${this.id}`, dados);
+
+        if (!this.notificarError(response.status)) {
+          Toast.fire({
+            icon: 'success',
+            title: 'Atualizado com sucesso!'
+          }).then(() => {
+            this.$router.push('/generos');
+          });
+        }
+      } catch (error) {
         console.error(error);
       }
+    },
+
+    notificarError(status: any) {
+      if (status != 200 && status != 201) {
+        Toast.fire({
+          icon: "error",
+          title: "Ocorreram erros ao processar os dados!"
+        });
+
+        return true;
+      }
+
+      return false;
+    },
+
+    extrairMensagensDeErro(errors: any) {
+      const mensagens = [];
+
+      if (errors) {
+        for (const campo in errors) {
+          if (Array.isArray(errors[campo])) {
+            mensagens.push(...errors[campo]);
+          }
+        }
+      }
+
+      return mensagens;
     }
   }
 });

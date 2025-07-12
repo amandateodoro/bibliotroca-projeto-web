@@ -23,7 +23,7 @@
           <div class="row mt-2">
             <div class="col-5">
               <label for="txtName" class="form-label">Estado <a style="color: red;">*</a></label>
-              <select name="txtEstado" id="txtEstado" class="form-control px-2" v-model="formDados.id_est">
+              <select name="txtEstado" id="txtEstado" class="form-control px-2" v-model="formDados.estado">
                 <option disabled selected>Selecione um Estado</option>
                 <option v-for="(estado, index) in listaEstados"
                 :key="index" :value="estado.id"> {{ estado.nome }} - {{ estado.uf }}</option>
@@ -46,8 +46,10 @@
 import { defineComponent } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { helpers, required, minLength } from "@vuelidate/validators";
-import axios from "axios";
 import { Toast } from "@/common/toast";
+import Swal from "sweetalert2";
+import { AxiosError } from "axios";
+import { api } from "@/common/http";
 
 export default defineComponent({
   name: 'FormView',
@@ -58,12 +60,30 @@ export default defineComponent({
     }
   },
 
+  computed: {
+    id() {
+      return this.$route.params.id || null;
+    },
+
+    ehEdicao() {
+      return !!this.id;
+    }
+  },
+
+  mounted() {
+    this.buscarEstados();
+
+    if (this.ehEdicao) {
+      this.carregarDados();
+    }
+  },
+
   data() {
     return {
-      listaEstados: [] as Array<{ id: number; nome: string; uf: string; }>,
+      listaEstados: [],
       formDados: {
         nome: '',
-        id_est: ''
+        estado: 0
       },
     }
   },
@@ -72,71 +92,145 @@ export default defineComponent({
     return {
       formDados: {
         nome: { required: helpers.withMessage('O nome é Obrigatório', required), minLength: helpers.withMessage('Nome precisa conter no mínimo 4 letras!', minLength(4)) },
-        id_est: { required: helpers.withMessage('O estado é obrigatório!', required) }
+        estado: { required: helpers.withMessage('O estado é obrigatório!', required) }
       },
     }
   },
 
-  mounted() {
-    this.buscarEstados();
-  },
-
   methods: {
+    async carregarDados() {
+
+      try {
+        const response = await api.get(`/cidade/${this.id}`);
+
+        if (response.status != 200) {
+          Toast.fire({
+            icon: 'error',
+            title: 'Ocorreram erros ao buscar a informação!'
+          }).then(() => {
+            this.$router.push('/cidades');
+          });
+        }
+
+        const dados = response.data;
+
+        this.formDados = {
+          nome: dados.nome,
+          estado: dados.estado.id
+        }
+
+      } catch (error) {
+        console.error(error);
+      }
+
+    },
+
     async buscarEstados() {
       try {
-        const response = await axios.get('http://localhost:3000/estado');
+        const response = await api.get('/estado');
+
         if (response.status == 200) {
-          this.listaEstados = response.data;
-          console.log('Estados Carregados!');
+          if (response.data.length > 0) {
+            this.listaEstados = response.data;
+          }
         }
-      } catch (error) {
-        console.error(error)
-      }
-    },
-    async buscarIdCidade() {
-      try {
-        const response = await axios.get('http://localhost:3000/cidade');
-        if (response.status == 200) {
-          const listaCidade = response.data;
-          const ultimoid = listaCidade.length + 1;
-          return ultimoid;
-        }
+
       } catch (error) {
         console.error(error);
       }
     },
+
     async salvar() {
       const result = await this.v$.$validate()
-
       if (!result) {
         return
       }
-
       const dados = {
-        ...this.formDados,
-        id: this.buscarIdCidade()
+        ...this.formDados
       }
-
       try {
-        const response = await axios.post('http://localhost:3000/cidade', dados);
+        if (this.ehEdicao) {
+          this.edicaoSalvar(dados);
 
-        if (response.status == 200 || response.status == 201) {
+          return;
+        }
+        const response = await api.post('/cidade', dados).then(() => {
           Toast.fire({
             icon: 'success',
-            title: 'Cidade Adicionada com sucesso!'
+            title: 'Cadastro feito com sucesso!'
           }).then(() => {
-            this.$router.push('/cidades')
+            this.$router.push('/cidades');
+          });
+        });
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          const { status, response } = error;
+
+          if (status && status >= 500) {
+            Toast.fire({
+              icon: 'error',
+              title: 'Não foi possivel realizar o cadastro!'
+            }).then(() => {
+              this.$router.push('/cidades');
+            });
+            console.error(error);
+          }
+
+          const mensagensError = this.extrairMensagensDeErro(response?.data?.errors);
+
+          Swal.fire({
+            text: mensagensError.join(', '),
+            icon: 'error',
+            showConfirmButton: true,
+            timer: 5000,
+          });
+
+        }
+      }
+    },
+
+     async edicaoSalvar(dados) {
+      try {
+        const response = await api.put(`/cidade/${this.id}`, dados);
+
+        if (!this.notificarError(response.status)) {
+          Toast.fire({
+            icon: 'success',
+            title: 'Atualizado com sucesso!'
+          }).then(() => {
+            this.$router.push('/cidades');
           });
         }
       } catch (error) {
-        Toast.fire({
-          icon: 'error',
-          title: 'Não foi possivel Cadastrar Cidade!'
-        }).then(() => {
-          this.$router.push('/cidades')
-        });
         console.error(error);
       }
+    },
+    
+    notificarError(status: any) {
+      if (status != 200 && status != 201) {
+        Toast.fire({
+          icon: "error",
+          title: "Ocorreram erros ao processar os dados!"
+        });
+
+        return true;
+      }
+
+      return false;
+    },
+
+    extrairMensagensDeErro(errors: any) {
+      const mensagens = [];
+
+      if (errors) {
+        for (const campo in errors) {
+          if (Array.isArray(errors[campo])) {
+            mensagens.push(...errors[campo]);
+          }
+        }
+      }
+
+      return mensagens;
     }
   }
 });

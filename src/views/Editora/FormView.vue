@@ -46,8 +46,10 @@
 import { Toast } from "@/common/toast";
 import useVuelidate from "@vuelidate/core";
 import { email, helpers, minLength, required } from "@vuelidate/validators";
-import axios from "axios";
 import { defineComponent } from "vue";
+import Swal from "sweetalert2";
+import { AxiosError } from "axios";
+import { api } from "@/common/http";
 
 export default defineComponent({
   name: 'FormView',
@@ -55,6 +57,22 @@ export default defineComponent({
   setup() {
     return {
       v$: useVuelidate()
+    }
+  },
+
+  computed: {
+    id() {
+      return this.$route.params.id || null;
+    },
+
+    ehEdicao() {
+      return !!this.id;
+    }
+  },
+
+  mounted() {
+    if (this.ehEdicao) {
+      this.carregarDados();
     }
   },
 
@@ -77,55 +95,127 @@ export default defineComponent({
     }
   },
 
-  mounted() {
-
-  },
-
   methods: {
-    async buscarIdEditora(){
+    async carregarDados() {
       try {
-        const response = await axios.get('http://localhost:3000/editora');
-        if (response.status == 200) {
-          const listaEditora = response.data;
+        const response = await api.get(`/editora/${this.id}`);
 
-          const ultimoid = listaEditora.length + 1;
-          return ultimoid;
+        if (response.status != 200) {
+          Toast.fire({
+            icon: "error",
+            title: "Ocorreram erros ao buscar a informação!"
+          }).then(() => {
+            this.$router.push('/editoras');
+          });
+        } 
+
+        const dados = response.data;
+
+        this.formDados = {
+          nome: dados.nome,
+          url: dados.url,
+          email: dados.email
         }
+
       } catch (error) {
         console.error(error);
       }
     },
+
     async salvar() {
       const result = await this.v$.$validate()
-
       if (!result) {
         return
       }
 
       const dados = {
-        ...this.formDados,
-        id: this.buscarIdEditora()
+        ...this.formDados
       }
 
       try {
-        const response = await axios.post('http://localhost:3000/editora', dados);
-        if (response.status == 200 || response.status == 201) {
+
+        if (this.ehEdicao) {
+          this.edicaoSalvar(dados);
+          return;
+        }
+
+        const response = await api.post('/editora', dados).then(() => {
           Toast.fire({
-            icon:'success',
-            title:'Editora Adicionada com Sucesso!'
-          }).then(()=>{
+            icon: 'success',
+            title: 'Cadastro feito com sucesso!'
+          }).then (() => {
             this.$router.push('/editoras')
+          });
+        });
+      } catch (error) {
+        if (error instanceof AxiosError){
+          const { status, response } = error;
+
+          if(status && status >=500){
+            Toast.fire({
+              icon: 'error',
+              title: 'Não foi possivel realizar o cadastro!'
+            }).then(() => {
+              this.$router.push('/editoras');
+            });
+            console.error(error);
+          }
+
+          const mensagensError = this.extrairMensagensDeErro(response?.data?.errors);
+
+          Swal.fire({
+            text: mensagensError.join(', '),
+            icon: 'error',
+            showConfirmButton: true,
+            timer: 5000,
+          });
+
+        }
+      }
+    },
+
+    async edicaoSalvar(dados) {
+      try {
+        const response = await api.put(`/editora/${this.id}`, dados);
+
+        if (!this.notificarError(response.status)) {
+          Toast.fire({
+            icon: 'success',
+            title: 'Atualizado com sucesso!'
+          }).then(() => {
+            this.$router.push('/editoras');
           });
         }
       } catch (error) {
-        Toast.fire({
-            icon:'error',
-            title:'não foi possivel Cadastrar Editora!'
-          }).then(()=>{
-            this.$router.push('/editoras')
-          });
         console.error(error);
       }
+    },
+
+    notificarError(status: any) {
+      if (status != 200 && status != 201) {
+        Toast.fire({
+          icon: "error",
+          title: "Ocorreram erros ao processar os dados!"
+        });
+
+        return true;
+      }
+
+      return false;
+    },
+
+    extrairMensagensDeErro(errors: any) {
+      const mensagens = [];
+
+      if (errors) {
+        for (const campo in errors) {
+          if (Array.isArray(errors[campo])) {
+            mensagens.push(...errors[campo]);
+          }
+        }
+      }
+
+      return mensagens;
     }
   }
 });

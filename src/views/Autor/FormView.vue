@@ -71,8 +71,10 @@
 import { defineComponent } from "vue";
 import { useVuelidate } from '@vuelidate/core';
 import { helpers, required, minLength, email } from "@vuelidate/validators";
-import axios from "axios";
 import { Toast } from "@/common/toast";
+import Swal from "sweetalert2";
+import { AxiosError } from "axios";
+import { api } from "@/common/http";
 
 export default defineComponent({
   name: 'FormView',
@@ -80,6 +82,22 @@ export default defineComponent({
   setup() {
     return {
       v$: useVuelidate()
+    }
+  },
+
+  computed: {
+    id() {
+      return this.$route.params.id || null;
+    },
+
+    ehEdicao() {
+      return !!this.id;
+    }
+  },
+
+  mounted() {
+    if (this.ehEdicao) {
+      this.carregarDados();
     }
   },
 
@@ -103,55 +121,131 @@ export default defineComponent({
         email: { required: helpers.withMessage('O Email é obrigatório', required), email: helpers.withMessage('O email é inválido!', email) }
       }
     }
-  },
-
-  mounted() {
-
-  },
+  },  
 
   methods: {
-    async buscarIdAutor(){
+    async carregarDados() {
       try {
-        const response = await axios.get('http://localhost:3000/autor');
-        if (response.status == 200) {
-          const listaAutor = response.data;
-          const ultimoid = listaAutor.length + 1;
-          return ultimoid;
+        const response = await api.get(`/autor/${this.id}`);
+
+        if (response.status != 200) {
+          Toast.fire({
+            icon: "error",
+            title: "Ocorreram erros ao buscar a informação!"
+          }).then(() => {
+            this.$router.push('/autores');
+          });
+        } 
+
+        const dados = response.data;
+
+        this.formDados = {
+          nome: dados.nome,
+          dataNascimento: dados.dataNascimento,
+          biografia: dados.biografia,
+          email: dados.email,
+          imagem: dados.imagem
         }
+
       } catch (error) {
         console.error(error);
       }
     },
+
     async salvar() {
       const result = await this.v$.$validate()
       if (!result) {
         return
       }
 
-      const dados ={
-        ...this.formDados,
-        id: this.buscarIdAutor()
+      const dados = {
+        ...this.formDados
       }
 
       try {
-        const response = await axios.post('http://localhost:3000/autor', dados);
-        if (response.status == 201 || response.status == 200) {
+
+        if (this.ehEdicao) {
+          this.edicaoSalvar(dados);
+          return;
+        }
+
+        const response = await api.post('/autor', dados).then(() => {
           Toast.fire({
             icon: 'success',
-            title: 'O Autor foi Adicionado com sucesso!'
-          }).then(()=>{
+            title: 'Cadastro feito com sucesso!'
+          }).then (() => {
             this.$router.push('/autores')
+          });
+        });
+      } catch (error) {
+        if (error instanceof AxiosError){
+          const { status, response } = error;
+
+          if(status && status >=500){
+            Toast.fire({
+              icon: 'error',
+              title: 'Não foi possivel realizar o cadastro!'
+            }).then(() => {
+              this.$router.push('/autores');
+            });
+            console.error(error);
+          }
+
+          const mensagensError = this.extrairMensagensDeErro(response?.data?.errors);
+
+          Swal.fire({
+            text: mensagensError.join(', '),
+            icon: 'error',
+            showConfirmButton: true,
+            timer: 5000,
+          });
+
+        }
+      }
+    },
+
+    async edicaoSalvar(dados) {
+      try {
+        const response = await api.put(`/autor/${this.id}`, dados);
+
+        if (!this.notificarError(response.status)) {
+          Toast.fire({
+            icon: 'success',
+            title: 'Atualizado com sucesso!'
+          }).then(() => {
+            this.$router.push('/autores');
           });
         }
       } catch (error) {
-        Toast.fire({
-            icon: 'error',
-            title: 'Não foi possivel Cadastrar Autor!'
-          }).then(()=>{
-            this.$router.push('/autores')
-          });
         console.error(error);
       }
+    },
+
+    notificarError(status: any) {
+      if (status != 200 && status != 201) {
+        Toast.fire({
+          icon: "error",
+          title: "Ocorreram erros ao processar os dados!"
+        });
+
+        return true;
+      }
+
+      return false;
+    },
+
+    extrairMensagensDeErro(errors: any) {
+      const mensagens = [];
+
+      if (errors) {
+        for (const campo in errors) {
+          if (Array.isArray(errors[campo])) {
+            mensagens.push(...errors[campo]);
+          }
+        }
+      }
+
+      return mensagens;
     }
   }
 });

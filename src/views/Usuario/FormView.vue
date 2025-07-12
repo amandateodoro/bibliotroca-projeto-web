@@ -4,7 +4,7 @@
       <div class="card my-4">
         <div
           class="bg-secondary shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-start align-items-center">
-          <h6 class="text-white  ps-3">Usuário</h6>
+          <h6 class="text-white  ps-3">Novo Cadastro de Usuário</h6>
         </div>
       </div>
       <div class="container px-0 pb-2">
@@ -151,7 +151,7 @@ export default defineComponent({
         if (response.status != 200) {
           Toast.fire({
             icon: 'error',
-            title: 'Ocorreram Erros ao buscar a Informação!'
+            title: 'Ocorreram erros ao buscar a informação!'
           }).then(() => {
             this.$router.push('/usuarios');
           });
@@ -191,27 +191,23 @@ export default defineComponent({
     },
 
     async salvar() {
-
       const result = await this.v$.$validate()
       if (!result) {
         return
       }
-
       const dados = {
         ...this.formDados
       }
-
       try {
         if (this.ehEdicao) {
           this.edicaoSalvar(dados);
 
           return;
         }
-
         const response = await api.post('/usuario', dados).then(() => {
           Toast.fire({
             icon: 'success',
-            title: 'Usuario Adicionado com sucesso!'
+            title: 'Cadastro feito com sucesso!'
           }).then(() => {
             this.$router.push('/usuarios');
           });
@@ -223,7 +219,7 @@ export default defineComponent({
           if (status && status >= 500) {
             Toast.fire({
               icon: 'error',
-              title: 'Não foi possivel Cadastrar Usuario!'
+              title: 'Não foi possivel realizar o cadastro!'
             }).then(() => {
               this.$router.push('/usuarios');
             });
@@ -250,7 +246,7 @@ export default defineComponent({
         if (!this.notificarError(response.status)) {
           Toast.fire({
             icon: 'success',
-            title: 'Usuario atualizado com sucesso!'
+            title: 'Atualizado com sucesso!'
           }).then(() => {
             this.$router.push('/usuarios');
           });

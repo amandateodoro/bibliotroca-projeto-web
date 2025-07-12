@@ -176,7 +176,7 @@ export default defineComponent({
   methods: {
     async carregarDados() {
       try {
-        const response = await axios.api(`/livro/${this.id}`);
+        const response = await api.get(`/livro/${this.id}`);
 
         if (response.status != 200) {
           Toast.fire({
@@ -234,22 +234,18 @@ export default defineComponent({
       if (!result) {
         return
       }
-
       const dados = {
         ...this.formDados
       }
-
       try {
-
         if (this.ehEdicao) {
           this.edicaoSalvar(dados);
           return;
         }
-
         const response = await api.post('/livro', dados).then(() => {
           Toast.fire({
             icon: 'success',
-            title: 'Livro Cadastrado com sucesso!'
+            title: 'Cadastro feito com sucesso!'
           }).then (() => {
             this.$router.push('/livros')
           });
@@ -261,7 +257,7 @@ export default defineComponent({
           if(status && status >=500){
             Toast.fire({
               icon: 'error',
-              title: 'Não foi possivel Cadastrar Livro!'
+              title: 'Não foi possivel realizar o cadastro!'
             }).then(() => {
               this.$router.push('/livros');
             });
@@ -288,7 +284,7 @@ export default defineComponent({
         if (!this.notificarError(response.status)){
           Toast.fire({
             icon: 'success',
-            title: 'Livro atualizado com sucesso!'
+            title: 'Atualizado com sucesso!'
           }).then(() => {
             this.$router.push('/livros');
           });

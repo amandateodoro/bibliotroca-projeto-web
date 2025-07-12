@@ -42,8 +42,10 @@
 import { Toast } from "@/common/toast";
 import useVuelidate from "@vuelidate/core";
 import { helpers, maxLength, minLength, required } from "@vuelidate/validators";
-import axios from "axios";
 import { defineComponent } from "vue";
+import Swal from "sweetalert2";
+import { AxiosError } from "axios";
+import { api } from "@/common/http";
 
 export default defineComponent({
   name: 'FormView',
@@ -51,6 +53,22 @@ export default defineComponent({
   setup() {
     return {
       v$: useVuelidate()
+    }
+  },
+
+  computed: {
+    id() {
+      return this.$route.params.id || null;
+    },
+
+    ehEdicao() {
+      return !!this.id;
+    }
+  },
+
+  mounted() {
+    if (this.ehEdicao) {
+      this.carregarDados();
     }
   },
 
@@ -70,28 +88,34 @@ export default defineComponent({
         nome: { required: helpers.withMessage('O nome é Obrigatório', required), minLength: helpers.withMessage('Nome precisa ser um Estado Válido!', minLength(4)) }
       },
     }
-  },
-
-  mounted() {
-
-  },
+  },  
 
   methods: {
-    async buscarIdEstado() {
+    async carregarDados() {
       try {
-        const response = await axios.get('http://localhost:3000/estado');
+        const response = await api.get(`/estado/${this.id}`);
 
-        if (response.status == 200) {
-          const listaEstado = response.data;
+        if (response.status != 200) {
+          Toast.fire({
+            icon: "error",
+            title: "Ocorreram erros ao buscar a informação!"
+          }).then(() => {
+            this.$router.push('/estados');
+          });
+        } 
 
-          const ultimoid = listaEstado.length + 1;
+        const dados = response.data;
 
-          return ultimoid;
+        this.formDados = {
+          nome: dados.nome,
+          uf: dados.uf
         }
+
       } catch (error) {
         console.error(error);
       }
     },
+
     async salvar() {
       const result = await this.v$.$validate()
       if (!result) {
@@ -99,30 +123,93 @@ export default defineComponent({
       }
 
       const dados = {
-        ...this.formDados,
-        id: this.buscarIdEstado()
+        ...this.formDados
       }
 
       try {
-        const response = await axios.post('http://localhost:3000/estado', dados);
 
-        if (response.status == 200 || response.status == 201) {
+        if (this.ehEdicao) {
+          this.edicaoSalvar(dados);
+          return;
+        }
+
+        const response = await api.post('/estado', dados).then(() => {
           Toast.fire({
             icon: 'success',
-            title: 'Estado Adicionado com sucesso!'
-          }).then(() => {
+            title: 'Cadastro feito com sucesso!'
+          }).then (() => {
             this.$router.push('/estados')
+          });
+        });
+      } catch (error) {
+        if (error instanceof AxiosError){
+          const { status, response } = error;
+
+          if(status && status >=500){
+            Toast.fire({
+              icon: 'error',
+              title: 'Não foi possivel realizar o cadastro!'
+            }).then(() => {
+              this.$router.push('/estados');
+            });
+            console.error(error);
+          }
+
+          const mensagensError = this.extrairMensagensDeErro(response?.data?.errors);
+
+          Swal.fire({
+            text: mensagensError.join(', '),
+            icon: 'error',
+            showConfirmButton: true,
+            timer: 5000,
+          });
+
+        }
+      }
+    },
+
+    async edicaoSalvar(dados) {
+      try {
+        const response = await api.put(`/estado/${this.id}`, dados);
+
+        if (!this.notificarError(response.status)) {
+          Toast.fire({
+            icon: 'success',
+            title: 'Atualizado com sucesso!'
+          }).then(() => {
+            this.$router.push('/estados');
           });
         }
       } catch (error) {
-        Toast.fire({
-          icon: 'error',
-          title: 'Não foi possivel Cadastrar Estado!'
-        }).then(() => {
-          this.$router.push('/estados')
-        });
         console.error(error);
       }
+    },
+
+    notificarError(status: any) {
+      if (status != 200 && status != 201) {
+        Toast.fire({
+          icon: "error",
+          title: "Ocorreram erros ao processar os dados!"
+        });
+
+        return true;
+      }
+
+      return false;
+    },
+
+    extrairMensagensDeErro(errors: any) {
+      const mensagens = [];
+
+      if (errors) {
+        for (const campo in errors) {
+          if (Array.isArray(errors[campo])) {
+            mensagens.push(...errors[campo]);
+          }
+        }
+      }
+
+      return mensagens;
     }
   }
 });

@@ -46,7 +46,7 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Usuario` (
-  `id_usu` INT NOT NULL AUTO_INCREMENT,
+  `id_usu` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `nome_usu` VARCHAR(45) NOT NULL,
   `email_usu` VARCHAR(45) NOT NULL,
   `contato_usu` VARCHAR(45) NULL,
@@ -54,7 +54,6 @@ CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Usuario` (
   `senha_usu` VARCHAR(255) NOT NULL,
   `avaliacao_usu` INT NULL,
   `id_cid_fk` INT NOT NULL,
-  PRIMARY KEY (`id_usu`),
   INDEX `fk_Usuario_Cidade1_idx` (`id_cid_fk` ASC) VISIBLE,
   CONSTRAINT `fk_Usuario_Cidade1`
     FOREIGN KEY (`id_cid_fk`)

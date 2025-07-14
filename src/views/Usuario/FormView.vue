@@ -71,7 +71,7 @@
             </div>
             <div class="d-flex justify-content-start gap-3">
               <RouterLink class="btn btn-warning mt-4 px-9" to="/usuarios">Voltar</RouterLink>
-              <button type="submit" class="btn btn-secondary mt-4 px-9">Cadastrar</button>
+              <button type="submit" class="btn btn-secondary mt-4 px-9">Salvar</button>
             </div>
           </div>
         </form>
@@ -196,7 +196,14 @@ export default defineComponent({
         return
       }
       const dados = {
-        ...this.formDados
+        nome: this.formDados.nome,
+        email: this.formDados.email,
+        contato: this.formDados.contato,
+        senha: this.formDados.senha,
+        cidade: {
+          id: this.formDados.cidade
+        }
+
       }
       try {
         if (this.ehEdicao) {
@@ -241,21 +248,23 @@ export default defineComponent({
 
     async edicaoSalvar(dados) {
       try {
-        const response = await api.put(`/usuario/${this.id}`, dados);
+        const response = await api.patch(`/usuario/${this.id}`, dados);
 
         if (!this.notificarError(response.status)) {
           Toast.fire({
             icon: 'success',
             title: 'Atualizado com sucesso!'
           }).then(() => {
-            this.$router.push('/usuarios');
+            this.$router.push('/usuarios').then(() => {
+              window.location.reload();
+            });;
           });
         }
       } catch (error) {
         console.error(error);
       }
     },
-    
+
     notificarError(status: any) {
       if (status != 200 && status != 201) {
         Toast.fire({

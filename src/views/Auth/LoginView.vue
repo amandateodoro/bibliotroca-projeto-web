@@ -103,9 +103,8 @@ export default defineComponent({
           });
         }
         else {
-          Toast.fire({ icon: 'success', title: `Bem-vindo ${usuario.nome}` }).then(() => {
-            this.$router.push('/');
-          });
+          Toast.fire({ icon: 'success', title: `Bem-vindo ${usuario.nome}` });
+          this.$router.push('/');
           localStorage.setItem('usuario', JSON.stringify(usuario));
 
         }

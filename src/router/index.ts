@@ -189,27 +189,29 @@ router.beforeEach((to, from, next) => {
 
   // ✅ Bloqueia acesso à rota protegida se não estiver logado
   if (precisaAutenticacao && !usuario) {
-    return next('/login');
+    return router.push('/login');
   }
 
   // ✅ Bloqueia rota de admin se não for admin
   if (precisaAdmin && (!usuario || !usuario.admin)) {
     Swal.fire({
-      icon: 'warning',
-      title: 'Acesso Negado!',
-      text: 'Você não tem acesso especial para esta função!',
+      icon: "warning",
+      title: `Acesso Negado!`,
+      text: 'Você não possui administrador no perfil',
+      // showDenyButton: true,
       showCancelButton: false,
-      showCloseButton: false,
-      showConfirmButton: true,
-      confirmButtonText: 'Ok',
-    }).then(() => {
-      return next('/');
+      confirmButtonText: "Ok",
+      // confirmButtonColor: "#F68537",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        router.push('/');
+      }
     });
   }
 
   // ✅ Impede que usuário logado acesse a tela de login
   if (to.path === '/login' && usuario) {
-    return next('/');
+    return router.push('/');
   }
 
   next();

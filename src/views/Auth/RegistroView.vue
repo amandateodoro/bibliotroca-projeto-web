@@ -38,22 +38,36 @@
                   </div>
                 </div>
 
-
-                <div class="mb-3">
+                <div class="mb-3 position-relative">
                   <label for="senha" class="form-label">Senha</label>
-                  <input type="password" class="form-control" id="senha" v-model="form.senha" />
+                  <div class="d-fle flex-row">
+                    <input :type="mostrarSenha ? 'text' : 'password'" class="form-control" id="senha"
+                      v-model="form.senha" />
+                    <a class="link-dark position-absolute top-50 end-0 mt-1 me-2" @click="mostrarSenha = !mostrarSenha"
+                      tabindex="-1">
+                      <i :class="mostrarSenha ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                    </a>
+                  </div>
                   <div class="text-danger small" v-if="v$.form.senha.$errors.length">
                     <p v-for="error of v$.form.senha.$errors" :key="error.$uid">{{ error.$message }}</p>
                   </div>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 position-relative">
                   <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
-                  <input type="password" class="form-control" id="confirmarSenha" v-model="form.confirmarSenha" />
+                  <div class="d-fle flex-row" style="height: 50px;">
+                    <input :type="mostrarConfirmarSenha ? 'text' : 'password'" class="form-control" id="confirmarSenha"
+                      v-model="form.confirmarSenha" />
+                    <a class="link-dark position-absolute top-50 end-0 mt-1 me-2"
+                      @click="mostrarConfirmarSenha = !mostrarConfirmarSenha" tabindex="-1">
+                      <i :class="mostrarConfirmarSenha ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                    </a>
+                  </div>
                   <div class="text-danger small" v-if="v$.form.confirmarSenha.$errors.length">
                     <p v-for="error of v$.form.confirmarSenha.$errors" :key="error.$uid">{{ error.$message }}</p>
                   </div>
                 </div>
+
 
                 <div class="d-flex justify-content-between">
                   <RouterLink to="/login" class="btn btn-warning">Voltar</RouterLink>
@@ -71,9 +85,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
-import { required, email, minLength, sameAs, helpers, minValue } from '@vuelidate/validators'
+import { required, email, minLength, helpers, minValue } from '@vuelidate/validators'
 import { api } from '@/common/http'
 import { Toast } from '@/common/toast'
+import { AxiosError } from 'axios'
 
 export default defineComponent({
   name: 'RegistroView',
@@ -91,10 +106,13 @@ export default defineComponent({
         confirmarSenha: '',
         cidade: 0
       },
+      mostrarSenha: false,
+      mostrarConfirmarSenha: false,
       listaCidades: []
     }
   },
   validations() {
+    const vm = this;
     return {
       form: {
         nome: { required: helpers.withMessage('Nome é obrigatório', required) },
@@ -108,7 +126,10 @@ export default defineComponent({
         },
         confirmarSenha: {
           required: helpers.withMessage('Confirme a senha', required),
-          sameAsSenha: helpers.withMessage('Senhas não coincidem', sameAs(() => this.form.senha))
+          sameAsSenha: {
+            $validator: (value: string) => value === vm.form.senha,
+            $message: 'Senhas não coincidem'
+          }
         },
         cidade: {
           required: helpers.withMessage('Cidade é obrigatória', required),
@@ -125,10 +146,18 @@ export default defineComponent({
     async carregarCidades() {
       try {
         const response = await api.get('/cidade');
-        if (response.status == 200 || response.status == 201) {
-          this.listaCidades = response.data;
-        }
+        this.listaCidades = response.data;
       } catch (error) {
+        if (error instanceof AxiosError) {
+          const { status, response } = error;
+
+          if (status && status >= 500) {
+
+            this.$router.push('/erro-api');
+            console.error(error);
+          }
+
+        }
         console.error('Erro ao carregar cidades:', error)
       }
     },
@@ -140,19 +169,24 @@ export default defineComponent({
         nome: this.form.nome,
         email: this.form.email,
         senha: this.form.senha,
-        cidade: this.form.cidade
+        cidade: {
+          id:this.form.cidade
+        }
       }
 
       try {
-        await api.post('/usuario', usuario)
+        const response = await api.post('/usuario', usuario);
 
-        Toast.fire({
-          icon: 'success',
-          title: 'Cadastro realizado com sucesso!'
-        }).then(() => {
-          this.$router.push('/')
-        })
+        if (response.status >= 200 || response.status < 300) {
 
+          Toast.fire({
+            icon: 'success',
+            title: 'Cadastro realizado com sucesso!'
+          }).then(() => {
+            this.$router.push('/')
+          })
+
+        }
       } catch (error) {
         Toast.fire({
           icon: 'error',

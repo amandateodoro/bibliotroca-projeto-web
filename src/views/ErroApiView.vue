@@ -23,7 +23,7 @@
         <h2 class="mb-3">API Indisponível</h2>
         <p>A aplicação não conseguiu se conectar ao servidor.</p>
         <p>Verifique se API BiblioTroca está em execução.</p>
-        <RouterLink to="/" class="btn btn-warning mt-4">Tentar Novamente</RouterLink>
+        <RouterLink to="/login" class="btn btn-warning mt-4">Tentar Novamente</RouterLink>
       </div>
     </div>
 
@@ -38,8 +38,14 @@
 }
 
 @keyframes float3d {
-  0%, 100% { transform: translateY(0) rotateX(0deg); }
-  50%      { transform: translateY(-10px) rotateX(6deg); }
-}
 
+  0%,
+  100% {
+    transform: translateY(0) rotateX(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotateX(6deg);
+  }
+}
 </style>

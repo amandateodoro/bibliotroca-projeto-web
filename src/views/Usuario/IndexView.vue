@@ -52,7 +52,7 @@
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                    data-original-title="Edit user" @click="editar(usuario)">
+                    data-original-title="Edit user" @click="editar(usuario.id)">
                     🖊
                   </a>
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"

@@ -173,15 +173,15 @@ export default defineComponent({
           Toast.fire({
             icon: 'success',
             title: 'Cadastro feito com sucesso!'
-          }).then (() => {
+          }).then(() => {
             this.$router.push('/autores')
           });
         });
       } catch (error) {
-        if (error instanceof AxiosError){
+        if (error instanceof AxiosError) {
           const { status, response } = error;
 
-          if(status && status >=500){
+          if (status && status >= 500) {
             Toast.fire({
               icon: 'error',
               title: 'Não foi possivel realizar o cadastro!'
@@ -206,7 +206,7 @@ export default defineComponent({
 
     async edicaoSalvar(dados) {
       try {
-        const response = await api.put(`/autor/${this.id}`, dados);
+        const response = await api.patch(`/autor/${this.id}`, dados);
 
         if (!this.notificarError(response.status)) {
           Toast.fire({

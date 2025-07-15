@@ -38,7 +38,7 @@
                   v-model="formDados.descricao"></textarea>
                 <div class="text-danger" v-if="v$.formDados.descricao.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.descricao.$errors" :key="error.$uuid">{{ error.$message
-                    }}</p>
+                  }}</p>
                 </div>
               </div>
             </div>
@@ -78,7 +78,7 @@
                 </select>
                 <div class="text-danger" v-if="v$.formDados.id_edi.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.id_edi.$errors" :key="error.$uuid">{{ error.$message
-                    }}</p>
+                  }}</p>
                 </div>
               </div>
             </div>
@@ -137,6 +137,7 @@ export default defineComponent({
   mounted() {
     this.buscarEditoras();
     this.buscarAutores();
+    this.carregarUsuario();
 
     if (this.ehEdicao) {
       this.carregarDados();
@@ -156,6 +157,7 @@ export default defineComponent({
       },
       listaEditoras: [] as Array<{ id: number; nome: string; }>,
       listaAutores: [] as Array<{ id: number; nome: string; }>,
+      usuario: {},
     }
   },
 
@@ -173,6 +175,17 @@ export default defineComponent({
   },
 
   methods: {
+    carregarUsuario() {
+      const usuarioSalvo = localStorage.getItem('usuario');
+      if (usuarioSalvo) {
+        this.usuario = JSON.parse(usuarioSalvo);
+      } else {
+        Toast.fire({
+          icon: 'warning',
+          title: 'Voce precisa está logado!'
+        });
+      }
+    },
     async carregarDados() {
       try {
         const response = await api.get(`/livro/${this.id}`);
@@ -244,6 +257,9 @@ export default defineComponent({
         },
         autor: {
           id: this.formDados.autor
+        },
+        usuario: {
+          id: this.usuario.id
         }
       }
       try {
@@ -288,7 +304,7 @@ export default defineComponent({
 
     async edicaoSalvar(dados) {
       try {
-        const response = await api.put(`/livro/${this.id}`, dados);
+        const response = await api.patch(`/livro/${this.id}`, dados);
 
         if (!this.notificarError(response.status)) {
           Toast.fire({

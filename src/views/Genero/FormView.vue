@@ -175,7 +175,7 @@ export default defineComponent({
 
     async edicaoSalvar(dados) {
       try {
-        const response = await api.put(`/genero/${this.id}`, dados);
+        const response = await api.patch(`/genero/${this.id}`, dados);
 
         if (!this.notificarError(response.status)) {
           Toast.fire({

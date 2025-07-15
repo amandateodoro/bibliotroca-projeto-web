@@ -38,7 +38,8 @@
                     </div>
                     <div class="d-flex flex-column justify-content-center ms-4">
                       <h6 class="mb-0 text-sm">{{ livro.nome }}</h6>
-                      <p class="text-xs text-secondary mb-0 text-wrap ms-1" style="white-space: pre-line;">{{ livro.descricao
+                      <p class="text-xs text-secondary mb-0 text-wrap ms-1" style="white-space: pre-line;">{{
+                        livro.descricao
                         }}</p>
                     </div>
                   </div>
@@ -115,8 +116,19 @@ export default defineComponent({
       }
     },
 
-    editar(id) {
-      this.$router.push(`/livros/${id}/update`);
+    editar(livro) {
+      const usuarioLogado = JSON.parse(localStorage.getItem('usuario') || 'null');
+
+      const podeExcluir = usuarioLogado?.admin || usuarioLogado?.id === livro.usuario.id;
+
+      if (!podeExcluir) {
+        Toast.fire({
+          icon: "warning",
+          title: "Você não tem permissão para editar este livro"
+        });
+        return;
+      }
+      this.$router.push(`/livros/${livro.id}/update`);
     },
 
     excluir(livro) {
@@ -139,6 +151,17 @@ export default defineComponent({
     },
 
     async excluirSalvar(livro) {
+      const usuarioLogado = JSON.parse(localStorage.getItem('usuario') || 'null');
+
+      const podeExcluir = usuarioLogado?.admin || usuarioLogado?.id === livro.usuario.id;
+
+      if (!podeExcluir) {
+        Toast.fire({
+          icon: "warning",
+          title: "Você não tem permissão para excluir este livro"
+        });
+        return;
+      }
       try {
 
         const response = await api.delete(`livro/${livro.id}`);

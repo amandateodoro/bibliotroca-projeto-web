@@ -52,7 +52,7 @@
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                    data-original-title="Edit user" @click="editar(usuario.id)">
+                    data-original-title="Edit user" @click="editar(usuario)">
                     🖊
                   </a>
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
@@ -101,8 +101,19 @@ export default defineComponent({
         console.error(error);
       }
     },
-    editar(id) {
-      this.$router.push(`/usuarios/${id}/update`);
+    editar(usuario) {
+      const usuarioLogado = JSON.parse(localStorage.getItem('usuario') || 'null');
+
+      const podeExcluir = usuarioLogado?.admin || usuarioLogado?.id === usuario.id;
+
+      if (!podeExcluir) {
+        Toast.fire({
+          icon: "warning",
+          title: "Você não tem permissão para editar este Usuario"
+        });
+        return;
+      }
+      this.$router.push(`/usuarios/${usuario.id}/update`);
     },
 
     excluir(usuario) {
@@ -126,6 +137,17 @@ export default defineComponent({
 
 
     async excluirSalvar(usuario) {
+      const usuarioLogado = JSON.parse(localStorage.getItem('usuario') || 'null');
+
+      const podeExcluir = usuarioLogado?.admin || usuarioLogado?.id === usuario.id;
+
+      if (!podeExcluir) {
+        Toast.fire({
+          icon: "warning",
+          title: "Você não tem permissão para excluir este usuário"
+        });
+        return;
+      }
       try {
 
         const response = await api.delete(`usuario/${usuario.id}`);
@@ -134,6 +156,14 @@ export default defineComponent({
           Toast.fire({
             icon: "success",
             title: `Usuario excluido com sucesso!`
+          }).then(() => {
+            if (usuarioLogado?.id === usuario.id) {
+              localStorage.clear();
+
+              this.$router.push('/login'); // redireciona para tela de login
+
+              Toast.fire({ icon: 'info', title: 'Sessão encerrada!' });
+            }
           });
 
           this.buscarUsuarios();

@@ -10,11 +10,6 @@ const router = createRouter({
       name: 'Home',
       component: HomeView,
     },
-    {
-      path: '/servidores',
-      name: 'Servidores',
-      component: () => import('../views/servidor/IndexView.vue'),
-    },
 
     // USUÁRIO
     {
@@ -117,6 +112,7 @@ const router = createRouter({
     },
 
     // GENERO
+    /*
     {
       path: '/generos',
       name: 'Generos',
@@ -135,7 +131,7 @@ const router = createRouter({
       component: () => import('../views/Genero/FormView.vue'),
       meta: { requiresAuth: true, requiresAdmin: true }
     },
-
+*/
     // LIVRO
     {
       path: '/livros',

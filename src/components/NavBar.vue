@@ -151,7 +151,8 @@ export default defineComponent({
   },
   methods: {
     fazerLogout() {
-      localStorage.removeItem('usuario'); // remove o usuário
+      localStorage.clear();
+
       this.$router.push('/login'); // redireciona para tela de login
 
       Toast.fire({ icon: 'info', title: 'Sessão encerrada!' });

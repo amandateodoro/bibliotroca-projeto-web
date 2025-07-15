@@ -38,7 +38,7 @@
                   v-model="formDados.descricao"></textarea>
                 <div class="text-danger" v-if="v$.formDados.descricao.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.descricao.$errors" :key="error.$uuid">{{ error.$message
-                  }}</p>
+                    }}</p>
                 </div>
               </div>
             </div>
@@ -57,7 +57,7 @@
               <div class="col-5">
                 <label for="txtEstado" class="form-label">Estado de Conservação <a style="color: red;">*</a></label>
                 <select name="txtEstado" id="txtEstado" class="form-control px-2" v-model="formDados.conservacao">
-                  <option disabled selected>Selecione o estado de conservação do livro</option>
+                  <option disabled value=''>Selecione o estado de conservação do livro</option>
                   <option value="NOVO">Novo</option>
                   <option value="USADO">Usado</option>
                   <option value="DANIFICADO">Danificado</option>
@@ -76,9 +76,9 @@
                   <option v-for="(editora, index) in listaEditoras" :key="index" :value="editora.id"> {{ editora.nome }}
                   </option>
                 </select>
-                <div class="text-danger" v-if="v$.formDados.id_edi.$errors.length">
-                  <p class="fs-6" v-for="error of v$.formDados.id_edi.$errors" :key="error.$uuid">{{ error.$message
-                  }}</p>
+                <div class="text-danger" v-if="v$.formDados.editora.$errors.length">
+                  <p class="fs-6" v-for="error of v$.formDados.editora.$errors" :key="error.$uuid">{{ error.$message
+                    }}</p>
                 </div>
               </div>
             </div>
@@ -90,8 +90,8 @@
                   <option v-for="(autor, index) in listaAutores" :key="index" :value="autor.id"> {{ autor.nome }}
                   </option>
                 </select>
-                <div class="text-danger" v-if="v$.formDados.id_aut.$errors.length">
-                  <p class="fs-6" v-for="error of v$.formDados.id_aut.$errors" :key="error.$uuid">{{ error.$message }}
+                <div class="text-danger" v-if="v$.formDados.autor.$errors.length">
+                  <p class="fs-6" v-for="error of v$.formDados.autor.$errors" :key="error.$uuid">{{ error.$message }}
                   </p>
                 </div>
               </div>
@@ -179,11 +179,6 @@ export default defineComponent({
       const usuarioSalvo = localStorage.getItem('usuario');
       if (usuarioSalvo) {
         this.usuario = JSON.parse(usuarioSalvo);
-      } else {
-        Toast.fire({
-          icon: 'warning',
-          title: 'Voce precisa está logado!'
-        });
       }
     },
     async carregarDados() {

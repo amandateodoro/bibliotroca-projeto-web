@@ -27,7 +27,7 @@
 
                 <div class="mb-3">
                   <label for="cidade" class="form-label">Cidade</label>
-                  <select class="form-select" id="cidade" v-model="form.cidade">
+                  <select class="form-control" id="cidade" v-model="form.cidade">
                     <option disabled value="0">Selecione uma cidade</option>
                     <option v-for="(cidade, index) in listaCidades" :key="index" :value="cidade.id">
                       {{ cidade.nome }}
@@ -170,7 +170,7 @@ export default defineComponent({
         email: this.form.email,
         senha: this.form.senha,
         cidade: {
-          id:this.form.cidade
+          id: this.form.cidade
         }
       }
 
@@ -183,7 +183,7 @@ export default defineComponent({
             icon: 'success',
             title: 'Cadastro realizado com sucesso!'
           }).then(() => {
-            this.$router.push('/')
+            this.$router.push('/login')
           })
 
         }

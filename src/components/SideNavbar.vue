@@ -18,6 +18,12 @@
             <span class="nav-link-text ms-1">Inicio</span>
           </RouterLink>
         </li>
+        <li class="nav-item">
+          <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/livros">
+            <i class="material-symbols-rounded opacity-5">table_view</i>
+            <span class="nav-link-text ms-1">Livro</span>
+          </RouterLink>
+        </li>
         <!--
                 <li class="nav-item">
                     <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/servidores">
@@ -60,20 +66,14 @@
             <span class="nav-link-text ms-1">Estado</span>
           </RouterLink>
         </li>
-
+        <!--
         <li class="nav-item">
           <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/generos">
             <i class="material-symbols-rounded opacity-5">table_view</i>
             <span class="nav-link-text ms-1">Genero</span>
           </RouterLink>
         </li>
-
-        <li class="nav-item">
-          <RouterLink class="nav-link text-dark" active-class="active bg-primary text-white" to="/livros">
-            <i class="material-symbols-rounded opacity-5">table_view</i>
-            <span class="nav-link-text ms-1">Livro</span>
-          </RouterLink>
-        </li>
+        -->
         <!--
 
                 <li class="nav-item">

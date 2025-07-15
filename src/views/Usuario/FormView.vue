@@ -228,7 +228,9 @@ export default defineComponent({
               icon: 'error',
               title: 'Não foi possivel realizar o cadastro!'
             }).then(() => {
-              this.$router.push('/usuarios');
+              this.$router.push('/usuarios').then(() => {
+                window.location.reload();
+              });;
             });
             console.error(error);
           }

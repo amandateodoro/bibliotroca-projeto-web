@@ -4,12 +4,16 @@
       <h2 v-if="usuario"> {{ usuario.nome }} Aproveite seu Bibliotrocas!</h2>
 
       <div class="livros-grid">
-        <div v-for="livro in livros" :key="livro.id" class="livro-card">
-          <img :src="livro.imagem" alt="Capa do livro" />
-          <h3>{{ livro.titulo }}</h3>
-          <p>{{ livro.descricao }}</p>
-          <small>Cadastrado por: {{ livro.usuario.nome }}</small>
-          <button @click="interesseLivro()">Tenho Interesse</button>
+        <div v-for="livro in livros" :key="livro.id"
+          class="livro-card d-flex flex-column align-items-center justify-content-center">
+          <img :src="livro.imagem ? livro.imagem : '/public/img/livro-realista-com-nuvens-em-fundo-azul.jpg'"
+            alt="Capa do livro" style="height: 360px; width: 200px;" />
+          <h3 class="fs-3">{{ livro.nome }}</h3>
+          <p class="fs-5 text-start">Data de Aquisição:{{ formatarData(livro.dataAquisicao) }}</p>
+          <p class="fs-5 text-start">Estado de Conservação: {{ livro.conservacao ? livro.conservacao : 'Não Informado'
+          }}</p>
+          <p class="fs-6 text-start">Cadastrado por: {{ livro.usuario.nome }}</p>
+          <button @click="interesseLivro(livro)">Tenho Interesse</button>
         </div>
       </div>
     </div>
@@ -34,6 +38,9 @@ export default defineComponent({
     this.carregarLivros();
   },
   methods: {
+    formatarData(data: string | Date) {
+      return new Intl.DateTimeFormat('pt-BR').format(new Date(data));
+    },
     carregarUsuario() {
       const usuarioSalvo = localStorage.getItem('usuario');
       if (usuarioSalvo) {
@@ -57,25 +64,28 @@ export default defineComponent({
         console.error(error);
       }
     },
-    interesseLivro() {
-      if (this.usuario) {
-        try {
-          const numeroOriginal = this.usuario.contato;
-
-          let numeroLimpo = numeroOriginal.replace(`/\D/g`, '');
-          if (numeroLimpo.length >= 8 && numeroLimpo.length <= 9) {
-            numeroLimpo = '69' + numeroLimpo;
-          }
-          window.open(`https://wa.me/55${numeroLimpo}`, '_blank');
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
+    interesseLivro(livro) {
+      if (!this.usuario || Object.keys(this.usuario).length === 0) {
         Toast.fire({
           icon: 'warning',
           title: 'Voce precisa estar logado!'
+        }).then(() => {
+          this.$router.push('/login');
         });
+        return;
       }
+      try {
+        const numeroOriginal = livro.usuario.contato;
+
+        let numeroLimpo = numeroOriginal.replace(`/\D/g`, '');
+        if (numeroLimpo.length >= 8 && numeroLimpo.length <= 9) {
+          numeroLimpo = '69' + numeroLimpo;
+        }
+        window.open(`https://wa.me/55${numeroLimpo}`, '_blank');
+      } catch (error) {
+        console.error(error);
+      }
+
     }
   }
 });

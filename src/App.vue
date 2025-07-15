@@ -9,7 +9,6 @@
       </div>
     </main>
 
-    <SettingsPlugin />
   </div>
 
   <div v-else>
@@ -22,7 +21,6 @@ import { RouterView, useRoute } from 'vue-router'
 import { computed } from 'vue'
 import SideNavbar from './components/SideNavbar.vue'
 import NavBar from './components/NavBar.vue'
-import SettingsPlugin from './components/SettingsPlugin.vue'
 
 const route = useRoute()
 

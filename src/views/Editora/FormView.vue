@@ -4,7 +4,7 @@
       <div class="card my-4">
         <div
           class="bg-secondary shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-start align-items-center">
-          <h6 class="text-white  ps-3">Novo Cadastro de Editora</h6>
+          <h6 class="text-white  ps-3">Editora</h6>
         </div>
       </div>
       <div class="container px-0 pb-2">
@@ -144,7 +144,9 @@ export default defineComponent({
             icon: 'success',
             title: 'Cadastro feito com sucesso!'
           }).then (() => {
-            this.$router.push('/editoras')
+            this.$router.push('/editoras').then(() => {
+              window.location.reload();
+            });;
           });
         });
       } catch (error) {
@@ -183,7 +185,9 @@ export default defineComponent({
             icon: 'success',
             title: 'Atualizado com sucesso!'
           }).then(() => {
-            this.$router.push('/editoras');
+            this.$router.push('/editoras').then(() => {
+              window.location.reload();
+            });;
           });
         }
       } catch (error) {

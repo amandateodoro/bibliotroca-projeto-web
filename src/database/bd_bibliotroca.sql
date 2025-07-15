@@ -18,10 +18,10 @@ USE `bd_bibliotroca` ;
 -- Table `bd_bibliotroca`.`Estado`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Estado` (
-  `id_est` INT NOT NULL AUTO_INCREMENT,
+  `id_est` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `uf_est` VARCHAR(45) NULL,
-  `nome_est` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_est`))
+  `nome_est` VARCHAR(45) NOT NULL
+  )
 ENGINE = InnoDB;
 
 
@@ -29,10 +29,9 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Cidade`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Cidade` (
-  `id_cid` INT NOT NULL AUTO_INCREMENT,
+  `id_cid` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `nome_cid` VARCHAR(45) NOT NULL,
   `id_est_fk` INT NOT NULL,
-  PRIMARY KEY (`id_cid`),
   INDEX `fk_Cidade_Estado_idx` (`id_est_fk` ASC) VISIBLE,
   CONSTRAINT `fk_Cidade_Estado`
     FOREIGN KEY (`id_est_fk`)
@@ -67,11 +66,11 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Editora`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Editora` (
-  `id_edi` INT NOT NULL AUTO_INCREMENT,
+  `id_edi` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `nome_edi` VARCHAR(45) NOT NULL,
   `url_edi` VARCHAR(45) NULL,
-  `contato_edi` VARCHAR(45) NULL,
-  PRIMARY KEY (`id_edi`))
+  `contato_edi` VARCHAR(45) NULL
+  )
 ENGINE = InnoDB;
 
 
@@ -79,13 +78,13 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Autor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Autor` (
-  `id_aut` INT NOT NULL AUTO_INCREMENT,
+  `id_aut` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `nome_aut` VARCHAR(45) NOT NULL,
   `email_aut` VARCHAR(45) NULL,
   `imagem_aut` LONGTEXT NULL,
   `dataNascimento_aut` DATE NULL,
-  `biografia` LONGTEXT NULL,
-  PRIMARY KEY (`id_aut`))
+  `biografia` LONGTEXT NULL
+  )
 ENGINE = InnoDB;
 
 
@@ -93,7 +92,7 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Livro`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Livro` (
-  `id_liv` INT NOT NULL AUTO_INCREMENT,
+  `id_liv` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `nome_liv` VARCHAR(45) NOT NULL,
   `imagem_liv` LONGTEXT NULL,
   `descricao_liv` VARCHAR(45) NULL,
@@ -101,9 +100,10 @@ CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Livro` (
   `conservacao_liv` VARCHAR(45) NULL,
   `id_edi_fk` INT NOT NULL,
   `id_aut_fk` INT NOT NULL,
-  PRIMARY KEY (`id_liv`),
+  `id_usu_fk` INT NOT NULL,
   INDEX `fk_Livro_Editora1_idx` (`id_edi_fk` ASC) VISIBLE,
   INDEX `fk_Livro_Autor1_idx` (`id_aut_fk` ASC) VISIBLE,
+  INDEX `fk_Livro_Usuario1_idx` (`id_usu_fk` ASC) VISIBLE,
   CONSTRAINT `fk_Livro_Editora1`
     FOREIGN KEY (`id_edi_fk`)
     REFERENCES `bd_bibliotroca`.`Editora` (`id_edi`)
@@ -113,6 +113,11 @@ CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Livro` (
     FOREIGN KEY (`id_aut_fk`)
     REFERENCES `bd_bibliotroca`.`Autor` (`id_aut`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Livro_Usuario1`
+    FOREIGN KEY (`id_usu_fk`)
+    REFERENCES `bd_bibliotroca`.`Usuario` (`id_usu`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -121,9 +126,9 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Genero`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Genero` (
-  `id_gen` INT NOT NULL AUTO_INCREMENT,
-  `nome_gen` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_gen`))
+  `id_gen` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nome_gen` VARCHAR(45) NOT NULL
+)
 ENGINE = InnoDB;
 
 
@@ -131,10 +136,9 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Desejo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Desejo` (
-  `id_des` INT NOT NULL AUTO_INCREMENT,
+  `id_des` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_usu_fk` INT NOT NULL,
   `id_liv_fk` INT NOT NULL,
-  PRIMARY KEY (`id_des`),
   INDEX `fk_Desejo_Usuario1_idx` (`id_usu_fk` ASC) VISIBLE,
   INDEX `fk_Desejo_Livro1_idx` (`id_liv_fk` ASC) VISIBLE,
   CONSTRAINT `fk_Desejo_Usuario1`
@@ -154,10 +158,9 @@ ENGINE = InnoDB;
 -- Table `bd_bibliotroca`.`Genero_Livro`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_bibliotroca`.`Genero_Livro` (
-  `id_gen_liv` INT NOT NULL AUTO_INCREMENT,
+  `id_gen_liv` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_liv_fk` INT NOT NULL,
   `id_gen_fk` INT NOT NULL,
-  PRIMARY KEY (`id_gen_liv`),
   INDEX `fk_Genero_Livro_Livro1_idx` (`id_liv_fk` ASC) VISIBLE,
   INDEX `fk_Genero_Livro_Genero1_idx` (`id_gen_fk` ASC) VISIBLE,
   CONSTRAINT `fk_Genero_Livro_Livro1`

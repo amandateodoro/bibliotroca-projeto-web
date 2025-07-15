@@ -59,7 +59,7 @@
             </div>
             <div class="d-flex justify-content-start gap-3">
               <RouterLink class="btn btn-warning mt-4 px-9" to="/autores">Voltar</RouterLink>
-              <button type="submit" class="btn btn-secondary mt-4 px-9">Cadastrar</button>
+              <button type="submit" class="btn btn-secondary mt-4 px-9">Salvar</button>
             </div>
           </div>
         </form>
@@ -121,7 +121,7 @@ export default defineComponent({
         email: { required: helpers.withMessage('O Email é obrigatório', required), email: helpers.withMessage('O email é inválido!', email) }
       }
     }
-  },  
+  },
 
   methods: {
     async carregarDados() {
@@ -135,7 +135,7 @@ export default defineComponent({
           }).then(() => {
             this.$router.push('/autores');
           });
-        } 
+        }
 
         const dados = response.data;
 

@@ -31,7 +31,7 @@
           </div>
           <div class="d-flex justify-content-start gap-3">
             <RouterLink to="/cidades" type="button" class="btn btn-secondary mt-4 px-9">Voltar</RouterLink>
-            <button type="submit" class="btn btn-secondary mt-4 px-9">Cadastrar</button>
+            <button type="submit" class="btn btn-secondary mt-4 px-9">Salvar</button>
           </div>
         </form>
       </div>
@@ -88,7 +88,7 @@ export default defineComponent({
         nome: { required: helpers.withMessage('O nome é Obrigatório', required), minLength: helpers.withMessage('Nome precisa ser um Estado Válido!', minLength(4)) }
       },
     }
-  },  
+  },
 
   methods: {
     async carregarDados() {
@@ -102,7 +102,7 @@ export default defineComponent({
           }).then(() => {
             this.$router.push('/estados');
           });
-        } 
+        }
 
         const dados = response.data;
 

@@ -98,7 +98,7 @@
             </div>
             <div class="d-flex justify-content-start gap-3">
               <RouterLink to="/livros" class="btn btn-secondary mt-4 px-9">Voltar</RouterLink>
-              <button type="submit" class="btn btn-secondary mt-4 px-9">Cadastrar</button>
+              <button type="submit" class="btn btn-secondary mt-4 px-9">Salvar</button>
             </div>
           </div>
         </form>
@@ -234,7 +234,17 @@ export default defineComponent({
         return
       }
       const dados = {
-        ...this.formDados
+        imagem: this.formDados.imagem,
+        nome: this.formDados.nome,
+        descricao: this.formDados.descricao,
+        dataAquisicao: this.formDados.dataAquisicao,
+        conservacao: this.formDados.conservacao,
+        editora: {
+          id: this.formDados.editora
+        },
+        autor: {
+          id: this.formDados.autor
+        }
       }
       try {
         if (this.ehEdicao) {

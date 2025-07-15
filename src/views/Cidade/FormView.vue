@@ -35,7 +35,7 @@
           </div>
           <div class="d-flex justify-content-start gap-3">
             <RouterLink class="btn btn-warning mt-4 px-9" to="/cidades">Voltar</RouterLink>
-            <button type="submit" class="btn btn-secondary mt-4 px-9">Cadastrar</button>
+            <button type="submit" class="btn btn-secondary mt-4 px-9">Salvar</button>
           </div>
         </form>
       </div>
@@ -146,7 +146,10 @@ export default defineComponent({
         return
       }
       const dados = {
-        ...this.formDados
+        nome: this.formDados.nome,
+        estado: {
+          id: this.formDados.estado
+        }
       }
       try {
         if (this.ehEdicao) {

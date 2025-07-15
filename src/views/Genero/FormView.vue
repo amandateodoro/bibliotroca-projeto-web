@@ -33,7 +33,7 @@
             </div>
             <div class="d-flex justify-content-start gap-3">
               <RouterLink class="btn btn-warning mt-4 px-9" to="/generos">Voltar</RouterLink>
-              <button type="submit" class="btn btn-secondary mt-4 px-9">Cadastrar</button>
+              <button type="submit" class="btn btn-secondary mt-4 px-9">Salvar</button>
             </div>
           </div>
         </form>
@@ -107,7 +107,7 @@ export default defineComponent({
           }).then(() => {
             this.$router.push('/generos');
           });
-        } 
+        }
 
         const dados = response.data;
 

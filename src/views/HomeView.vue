@@ -1,7 +1,8 @@
 <template>
   <div class="row">
     <div class="home">
-      <h2 v-if="usuario"> {{ usuario.nome }} Aproveite seu Bibliotrocas!</h2>
+      <h2 v-if="usuario"> {{ formatarNome(usuario.nome) }} Aproveite seu Bibliotrocas!</h2>
+
 
       <div class="livros-grid">
         <div v-for="livro in livros" :key="livro.id"
@@ -41,6 +42,10 @@ export default defineComponent({
     formatarData(data: string | Date) {
       return new Intl.DateTimeFormat('pt-BR').format(new Date(data));
     },
+    formatarNome(nome) {
+    if (!nome) return '';
+    return nome.charAt(0).toUpperCase() + nome.slice(1).toLowerCase();
+  },
     carregarUsuario() {
       const usuarioSalvo = localStorage.getItem('usuario');
       if (usuarioSalvo) {

@@ -35,7 +35,7 @@
                   <p class="text-xs text-secondary mb-0">{{ editora.url }}</p>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ editora.email }}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ editora.contato }}</p>
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
@@ -67,12 +67,7 @@ export default defineComponent({
 
   data() {
     return {
-      listaEditoras: [] as Array<{
-        id: number;
-        nome: string;
-        url: string;
-        email: string
-      }>,
+      listaEditoras: [],
     }
   },
 

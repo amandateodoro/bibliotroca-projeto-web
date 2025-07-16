@@ -34,34 +34,38 @@
                 <td>
                   <div class="d-flex px-2 py-1">
                     <div>
-                      <img :src="livro.imagem" class="img-thumbnail">
+                      <img :src="livro.imagem ? livro.imagem : '/img/livro-realista-com-nuvens-em-fundo-azul.jpg'"
+                        class="img-thumbnail" style="width: 70px;">
                     </div>
                     <div class="d-flex flex-column justify-content-center ms-4">
                       <h6 class="mb-0 text-sm">{{ livro.nome }}</h6>
                       <p class="text-xs text-secondary mb-0 text-wrap ms-1" style="white-space: pre-line;">{{
                         livro.descricao
-                        }}</p>
+                      }}</p>
                     </div>
                   </div>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ livro.dataAquisicao }}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ new Date(livro.dataAquisicao).toLocaleDateString('pt-BR') }}</p>
                 </td>
                 <td class="align-middle text-center text-sm">
                   <span class="badge badge-sm" :class="{
-                    'bg-success': livro.conservacao === 'Novo',
-                    'bg-warning': livro.conservacao === 'Usado',
-                    'bg-danger': livro.conservacao === 'Danificado'
+                    'bg-success': ['novo', 'seminovo'].some(val =>
+                      livro.conservacao?.toLowerCase().includes(val)
+                    ),
+                    'bg-warning': livro.conservacao?.toLowerCase().includes('regular'),
+                    'bg-danger': livro.conservacao?.toLowerCase().includes('ruim'),
+                    'bg-dark': !livro.conservacao?.trim(),
                   }">
-                    {{ livro.conservacao }}
+                    {{ livro.conservacao ? livro.conservacao : 'nao informado' }}
                   </span>
                 </td>
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ livro.id_edi }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">{{ livro.editora.nome }}</span>
                 </td>
 
                 <td class="align-middle text-center">
-                  <span class="text-secondary text-xs font-weight-bold">{{ livro.id_aut }}</span>
+                  <span class="text-secondary text-xs font-weight-bold">{{ livro.autor.nome }}</span>
                 </td>
                 <td class="align-middle">
                   <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"

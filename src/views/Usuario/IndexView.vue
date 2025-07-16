@@ -41,12 +41,21 @@
                   <p class="text-xs text-secondary mb-0">{{ usuario.email }}</p>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ usuario.contato }}</p>
+                  <p class="text-xs font-weight-bold mb-0">
+                    {{ formatarTelefone(usuario.contato) }}
+                  </p>
+
                 </td>
                 <td class="align-middle text-center text-sm">
-                  <span class="text-secondary text-xs font-weight-bold">{{ usuario.avaliacao
-                    }}</span>
+                  <span v-for="index in 5" :key="index">
+                    <i :class="[
+                      'fa-star',
+                      'fa',
+                      usuario.avaliacao >= index ? 'text-warning' : 'text-secondary'
+                    ]"></i>
+                  </span>
                 </td>
+
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ usuario.cidade.nome }}</span>
                 </td>
@@ -89,6 +98,19 @@ export default defineComponent({
   },
 
   methods: {
+    formatarTelefone(valor) {
+      if (!valor) return '';
+
+      const numeros = valor.replace(/\D/g, '');
+
+      const padrao = numeros.padStart(11, '0');
+
+      const ddd = padrao.slice(0, 2);
+      const parte1 = padrao.slice(2, 7);
+      const parte2 = padrao.slice(7, 11);
+
+      return `(${ddd}) ${parte1}-${parte2}`;
+    },
     async buscarUsuarios() {
       try {
         const response = await api.get('/usuario');

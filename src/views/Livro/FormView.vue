@@ -38,7 +38,7 @@
                   v-model="formDados.descricao"></textarea>
                 <div class="text-danger" v-if="v$.formDados.descricao.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.descricao.$errors" :key="error.$uuid">{{ error.$message
-                    }}</p>
+                  }}</p>
                 </div>
               </div>
             </div>
@@ -59,8 +59,9 @@
                 <select name="txtEstado" id="txtEstado" class="form-control px-2" v-model="formDados.conservacao">
                   <option disabled value=''>Selecione o estado de conservação do livro</option>
                   <option value="NOVO">Novo</option>
-                  <option value="USADO">Usado</option>
-                  <option value="DANIFICADO">Danificado</option>
+                  <option value="SEMINOVO">Semi Novo</option>
+                  <option value="REGULAR">Regular</option>
+                  <option value="RUIM">Ruim</option>
                 </select>
                 <div class="text-danger" v-if="v$.formDados.conservacao.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.conservacao.$errors" :key="error.$uuid">{{
@@ -78,7 +79,7 @@
                 </select>
                 <div class="text-danger" v-if="v$.formDados.editora.$errors.length">
                   <p class="fs-6" v-for="error of v$.formDados.editora.$errors" :key="error.$uuid">{{ error.$message
-                    }}</p>
+                  }}</p>
                 </div>
               </div>
             </div>

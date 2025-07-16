@@ -18,7 +18,7 @@
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Data de Nascimento
                 </th>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                  Nacionalidade</th>
+                  Contato</th>
                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                   Bibliografia
                 </th>
@@ -30,15 +30,19 @@
                 <td>
                   <div class="d-flex px-2 py-1">
                     <div>
-                      <img :src="autor.imagem" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                      <img
+                        :src="autor.imagem ? autor.imagem : 'https://i.pinimg.com/1200x/74/29/1f/74291f7447579619d38f70867c6ae122.jpg'"
+                        class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
                     </div>
                     <div class="d-flex flex-column justify-content-center">
                       <h6 class="mb-0 text-sm">{{ autor.nome }}</h6>
                     </div>
                   </div>
                 </td>
-                <td>
-                  <p class="text-xs text-secondary mb-0">{{ autor.dataNascimento }}</p>
+                <td class="align-middle text-center">
+                  <p class="text-xs text-secondary mb-0">
+                    {{ new Date(autor.dataNascimento).toLocaleDateString('pt-BR') }}
+                  </p>
                 </td>
                 <td>
                   <p class="text-xs font-weight-bold mb-0">{{ autor.email }}</p>

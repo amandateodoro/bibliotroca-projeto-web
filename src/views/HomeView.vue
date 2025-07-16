@@ -6,7 +6,7 @@
       <div class="livros-grid">
         <div v-for="livro in livros" :key="livro.id"
           class="livro-card d-flex flex-column align-items-center justify-content-center">
-          <img :src="livro.imagem ? livro.imagem : '/public/img/livro-realista-com-nuvens-em-fundo-azul.jpg'"
+          <img :src="livro.imagem ? livro.imagem : '/img/livro-realista-com-nuvens-em-fundo-azul.jpg'"
             alt="Capa do livro" style="height: 360px; width: 200px;" />
           <h3 class="fs-3">{{ livro.nome }}</h3>
           <p class="fs-5 text-start">Data de Aquisição:{{ formatarData(livro.dataAquisicao) }}</p>
